@@ -19,10 +19,13 @@ message("")
 
 # nti56acad 
 project(mdm_imcli_server)
-add_compile_options(-DHAVE_CONFIG_H -D_GNU_SOURCE -O0 -g3 -Wall -D${XHMDM_BUILD_TYPE} -DCMAKE_EXPORT_COMPILE_COMMANDS)
-include_directories(include/ src/ src/libxhhp/src/)
-link_directories(lib)
+set(ADDRESS_MODEL 64)
+set(NODE_TARGET x64)
+add_compile_options(-DUNICODE -D_UNICODE -m64 -DHAVE_CONFIG_H -D_GNU_SOURCE -O0 -g3 -Wall -D${XHMDM_BUILD_TYPE} -DCMAKE_EXPORT_COMPILE_COMMANDS)
+include_directories(include/ deps/arx/inc-x64/ deps/arx/inc/  src/ src/libxhhp/src/)
+link_directories(lib deps/arx/lib-x64/)
+link_libraries(accore acad acui22 adui22 ac1st22 acdb22 acge22 acgiapi rxapi)
 
-file(GLOB SRCS src/hello.c)
-add_library(nti56acad SHARED ${SRCS} )
+file(GLOB SRCS src/*)
+add_library(nti56acad SHARED ${SRCS})
 
