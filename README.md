@@ -8,3 +8,9 @@ cmake --no-warn-unused-cli -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE -Hnti56acad
 on vs2017 command line:
 cd /d h:\nti56acad.arx\build
 nmake
+pushd build && nmake && popd
+## build with nmake in vscode
+on vs2017 command line:
+cd /d h:\nti56acad.arx
+code .
+Shift+Ctrl+B to run .vscode/fask.json

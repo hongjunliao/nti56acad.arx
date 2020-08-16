@@ -6,3 +6,14 @@ http://download.autodesk.com/esd/objectarx/2018/Autodesk_ObjectARX_2018_Win_64_a
 http://download.autodesk.com/esd/objectarx/2017/Autodesk_ObjectARX_2017_Win_64_and_32_Bit.sfx.exe
 http://download.autodesk.com/esd/objectarx/2016/Autodesk_ObjectARX_2016_Win_64_and_32_Bit.exe
 http://download.autodesk.com/esd/objectarx/2014/Autodesk_ObjectARX_2014_Win_64_and_32Bit.sfx.exe
+
+# extract and rename root dir to arx:
+deps/ 
+  |_arx/
+  |  |_include/
+  |  |_lib-64/
+  |  |_...
+  |_libxhhp/
+  |_...
+src/
+REAMEME.md
