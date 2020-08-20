@@ -34,10 +34,18 @@ void nti56acad_cmd_load()
 	::UpdateWindow(hwnd);
 }
 
+void nti56acad_cmd_test()
+{
+	extern int wmain(int argc, wchar_t *argv[]);
+	wmain(0, 0);
+}
+
 void initApp()
 {
 	acedRegCmds->addCommand(_T("ASDK_DWG_COMMANDS"),
 		_T("asdk_nti56load"), _T("nti56load"), ACRX_CMD_MODAL, nti56acad_cmd_load);
+	acedRegCmds->addCommand(_T("ASDK_DWG_COMMANDS"),
+		_T("asdk_nti56test"), _T("nti56test"), ACRX_CMD_MODAL, nti56acad_cmd_test);
 }
 
 void unloadApp()
