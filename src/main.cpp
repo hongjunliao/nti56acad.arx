@@ -20,113 +20,74 @@ int g_display_w = 800;
 int g_display_h = 600;
 ImVec4 clear_color;
 int is_chld = 0;
-void CreateGlContext();
-void SetCurrentContext();
-LRESULT WINAPI WndProc(
-    HWND hWnd,
-    UINT msg,
-    WPARAM wParam,
-    LPARAM lParam);
 
-bool Init(
-    HINSTANCE hInstance);
+extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-void Cleanup(
-    HINSTANCE hInstance);
-
-extern IApplication *CreateApplication();
-
-int wmain(int argc, wchar_t *argv[])
+void CreateGlContext()
 {
-    HINSTANCE hInstance = GetModuleHandle(NULL);
-    IApplication *app = CreateApplication();
-
-    if (!Init(hInstance))
-    {
-        return 1;
-    }
-
-    if (!app->Setup())
-    {
-        Cleanup(
-            hInstance);
-
-        return 1;
-    }
-    // Main loop
-    MSG msg;
-    ZeroMemory(
-        &msg,
-        sizeof(msg));
-
-    while (msg.message != WM_QUIT)
-    {
-        // Poll and handle messages (inputs, window resize, etc.)
-        // You can read the io.WantCaptureMouse, io.WantCaptureKeyboard flags to tell if dear imgui wants to use your inputs.
-        // - When io.WantCaptureMouse is true, do not dispatch mouse input data to your main application.
-        // - When io.WantCaptureKeyboard is true, do not dispatch keyboard input data to your main application.
-        // Generally you may always pass all inputs to dear imgui, and hide them from your application based on those two flags.
-        if (PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE))
+    PIXELFORMATDESCRIPTOR pfd =
         {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
-            continue;
-        }
-        // Start the Dear ImGui frame
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplWin32_NewFrame();
-        ImGui::NewFrame();
+            sizeof(PIXELFORMATDESCRIPTOR),
+            1,
+            PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER, //Flags
+            PFD_TYPE_RGBA,                                              // The kind of framebuffer. RGBA or palette.
+            32,                                                         // Colordepth of the framebuffer.
+            0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0,
+            24, // Number of bits for the depthbuffer
+            8,  // Number of bits for the stencilbuffer
+            0,  // Number of Aux buffers in the framebuffer.
+            PFD_MAIN_PLANE,
+            0, 0, 0, 0};
+    g_HDCDeviceContext = GetDC(g_hwnd);
+    int pixelFormat = ChoosePixelFormat(g_HDCDeviceContext, &pfd);
 
-        ImGui::ShowDemoWindow(0);
-        app->Render2d();
+    SetPixelFormat(g_HDCDeviceContext, pixelFormat, &pfd);
 
-        // Rendering
-        ImGui::Render();
+    g_GLRenderContext = wglCreateContext(g_HDCDeviceContext);
 
-        wglMakeCurrent(
-            g_HDCDeviceContext,
-            g_GLRenderContext);
-
-        glViewport(
-            0,
-            0,
-            g_display_w,
-            g_display_h);
-
-        glClearColor(
-            clear_color.x,
-            clear_color.y,
-            clear_color.z,
-            clear_color.w);
-
-        glClear(
-            GL_COLOR_BUFFER_BIT);
-
-        app->Render3d();
-
-        ImGui_ImplOpenGL3_RenderDrawData(
-            ImGui::GetDrawData());
-
-        wglMakeCurrent(
-            g_HDCDeviceContext,
-            g_GLRenderContext);
-
-        SwapBuffers(
-            g_HDCDeviceContext);
-    }
-    Cleanup(
-        hInstance);
-    return 0;
+    wglMakeCurrent(g_HDCDeviceContext, g_GLRenderContext);
+    gladLoadGL();
 }
+
+LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+    if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam))
+        return true;
+    switch (msg)
+    {
+    case WM_SIZE:
+    {
+        if (wParam != SIZE_MINIMIZED)
+        {
+            g_display_w = (UINT)LOWORD(lParam);
+            g_display_h = (UINT)HIWORD(lParam);
+        }
+        return 0;
+    }
+    case WM_SYSCOMMAND:  {
+        if ((wParam & 0xfff0) == SC_KEYMENU) // Disable ALT application menu
+        {
+            return 0;
+        }
+        break;
+    }
+    case WM_DESTROY:
+    {
+        PostQuitMessage(0);
+        return 0;
+    }
+    }
+    return DefWindowProc(hWnd, msg, wParam, lParam);
+}
+
 bool Init(HINSTANCE hInstance)
-{   
-    int style = (is_chld? (WS_OVERLAPPEDWINDOW | WS_CHILD | WS_VISIBLE | WS_POPUP)
-            : (WS_OVERLAPPEDWINDOW | WS_VISIBLE));
+{
+    int style = (is_chld ? (WS_OVERLAPPEDWINDOW | WS_CHILD | WS_VISIBLE | WS_POPUP)
+                         : (WS_OVERLAPPEDWINDOW | WS_VISIBLE));
     static WNDCLASSEX wc = {sizeof(WNDCLASSEX), CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(NULL), NULL, NULL, NULL, NULL, _T("nti56acad"), NULL};
     ::RegisterClassEx(&wc);
-    g_hwnd = ::CreateWindowEx(WS_EX_TOPMOST, wc.lpszClassName, _T("nti56acad")
-    , style
-    , 100, 100, 200, 100, 0, NULL, wc.hInstance, NULL);
+    g_hwnd = ::CreateWindowEx(WS_EX_TOPMOST, wc.lpszClassName, _T("nti56acad"), style, 100, 100, 200, 100, 0, NULL, wc.hInstance, NULL);
 
     // Show the window
     ShowWindow(g_hwnd, SW_SHOWDEFAULT);
@@ -138,7 +99,10 @@ bool Init(HINSTANCE hInstance)
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO &io = ImGui::GetIO();
-    (void)io;
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
+    //io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;     // Enable Docking
+    //io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;   // Enable Multi-Viewport / Platform Windows
+
     //Init Win32
     ImGui_ImplWin32_Init(g_hwnd);
 
@@ -154,8 +118,8 @@ bool Init(HINSTANCE hInstance)
 
     return true;
 }
-void Cleanup(
-    HINSTANCE hInstance)
+
+void Cleanup(HINSTANCE hInstance)
 {
     // Cleanup
     ImGui_ImplOpenGL3_Shutdown();
@@ -168,88 +132,56 @@ void Cleanup(
     ImGui_ImplWin32_Shutdown();
     DestroyWindow(g_hwnd);
 
-    UnregisterClass(
-        L"IMGUI",
-        hInstance);
+    UnregisterClass(L"IMGUI", hInstance);
 }
-extern LRESULT ImGui_ImplWin32_WndProcHandler(
-    HWND hWnd,
-    UINT msg,
-    WPARAM wParam,
-    LPARAM lParam);
-LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
+
+int wmain(int argc, wchar_t *argv[])
 {
-    if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam))
-    {
-        return true;
-    }
-    switch (msg)
-    {
-    case WM_SIZE:
-    {
-        if (wParam != SIZE_MINIMIZED)
-        {
-            g_display_w = (UINT)LOWORD(lParam);
-            g_display_h = (UINT)HIWORD(lParam);
+    HINSTANCE hInstance = GetModuleHandle(NULL);
+    if (!Init(hInstance))
+        return 1;
+
+    ImGuiIO &io = ImGui::GetIO();
+    // Main loop
+    MSG msg;
+    ZeroMemory(&msg, sizeof(msg));
+    while (msg.message != WM_QUIT)  {
+        // Poll and handle messages (inputs, window resize, etc.)
+        // You can read the io.WantCaptureMouse, io.WantCaptureKeyboard flags to tell if dear imgui wants to use your inputs.
+        // - When io.WantCaptureMouse is true, do not dispatch mouse input data to your main application.
+        // - When io.WantCaptureKeyboard is true, do not dispatch keyboard input data to your main application.
+        // Generally you may always pass all inputs to dear imgui, and hide them from your application based on those two flags.
+        if (PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE)) {
+            TranslateMessage(&msg);
+            DispatchMessage(&msg);
+            continue;
         }
-        return 0;
-    }
-    case WM_SYSCOMMAND:
-    {
-        if ((wParam & 0xfff0) == SC_KEYMENU) // Disable ALT application menu
-        {
-            return 0;
+        // Start the Dear ImGui frame
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplWin32_NewFrame();
+        ImGui::NewFrame();
+
+        ImGui::ShowDemoWindow(0);
+
+        // Rendering
+        ImGui::Render();
+
+        wglMakeCurrent(g_HDCDeviceContext, g_GLRenderContext);
+
+        glViewport(0, 0, g_display_w, g_display_h);
+        glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+        // Update and Render additional Platform Windows
+        if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
+            ImGui::UpdatePlatformWindows();
+            ImGui::RenderPlatformWindowsDefault();
         }
-        break;
+        wglMakeCurrent(g_HDCDeviceContext, g_GLRenderContext);
+        SwapBuffers(g_HDCDeviceContext);
     }
-    case WM_DESTROY:
-    {
-        PostQuitMessage(0);
-        return 0;
-    }
-    }
-    return DefWindowProc(
-        hWnd,
-        msg,
-        wParam,
-        lParam);
-}
-void CreateGlContext()
-{
-    PIXELFORMATDESCRIPTOR pfd =
-        {
-            sizeof(PIXELFORMATDESCRIPTOR),
-            1,
-            PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER, //Flags
-            PFD_TYPE_RGBA,                                              // The kind of framebuffer. RGBA or palette.
-            32,                                                         // Colordepth of the framebuffer.
-            0, 0, 0, 0, 0, 0,
-            0,
-            0,
-            0,
-            0, 0, 0, 0,
-            24, // Number of bits for the depthbuffer
-            8,  // Number of bits for the stencilbuffer
-            0,  // Number of Aux buffers in the framebuffer.
-            PFD_MAIN_PLANE,
-            0,
-            0, 0, 0};
-    g_HDCDeviceContext = GetDC(
-        g_hwnd);
-    int pixelFormat = ChoosePixelFormat(
-        g_HDCDeviceContext,
-        &pfd);
-
-    SetPixelFormat(
-        g_HDCDeviceContext,
-        pixelFormat,
-        &pfd);
-
-    g_GLRenderContext = wglCreateContext(
-        g_HDCDeviceContext);
-
-    wglMakeCurrent(
-        g_HDCDeviceContext,
-        g_GLRenderContext);
-    gladLoadGL();
+    Cleanup(hInstance);
+    return 0;
 }
