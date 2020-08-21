@@ -36,16 +36,19 @@ void nti56acad_cmd_load()
 
 void nti56acad_cmd_test()
 {
+	extern int is_chld;
 	extern int wmain(int argc, wchar_t *argv[]);
+
+	is_chld = 1;
 	wmain(0, 0);
 }
 
 void initApp()
 {
+	//acedRegCmds->addCommand(_T("ASDK_DWG_COMMANDS"),
+	//	_T("asdk_nti56load"), _T("nti56load"), ACRX_CMD_MODAL, nti56acad_cmd_load);
 	acedRegCmds->addCommand(_T("ASDK_DWG_COMMANDS"),
-		_T("asdk_nti56load"), _T("nti56load"), ACRX_CMD_MODAL, nti56acad_cmd_load);
-	acedRegCmds->addCommand(_T("ASDK_DWG_COMMANDS"),
-		_T("asdk_nti56test"), _T("nti56test"), ACRX_CMD_MODAL, nti56acad_cmd_test);
+		_T("asdk_nti56acad"), _T("nti56acad"), ACRX_CMD_MODAL, nti56acad_cmd_test);
 }
 
 void unloadApp()
