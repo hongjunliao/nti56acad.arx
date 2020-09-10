@@ -34,13 +34,16 @@ void nti56acad_cmd_load()
 	::UpdateWindow(hwnd);
 }
 
+int sdl_main(int argc, char ** argv);
+int win32_main(int argc, char *argv[]);
+int win32_docking(int, char**);
+
 void nti56acad_cmd_test()
 {
 	extern int is_chld;
-	extern int wmain(int argc, wchar_t *argv[]);
 
 	is_chld = 1;
-	wmain(0, 0);
+	win32_docking(0, 0);
 }
 
 void initApp()
