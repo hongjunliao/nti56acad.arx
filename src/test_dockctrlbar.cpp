@@ -18,9 +18,9 @@ void nti56acad_dockctrlbar2()
 	static CAcUiDockControlBar * dockBar = 0;
 	if(!dockBar){
 		dockBar = new nti_dockbar;
-		dockBar->Create(acedGetAcadFrame(), _T("DockControlBar"), 209349);
+		dockBar->Create(acedGetAcadFrame(), _T("nti_dockbar"), 209349);
 		dockBar->EnableDocking(CBRS_ALIGN_ANY);
-		dockBar->SetWindowText(_T("Dock Tool"));
+		dockBar->SetWindowText(_T("nti56acad"));
 	}
 	// Now display it   
 	acedGetAcadFrame()->FloatControlBar(dockBar, CPoint(750, 150), CBRS_ALIGN_RIGHT);    // FloatControBar(...)   

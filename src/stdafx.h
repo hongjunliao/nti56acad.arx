@@ -5,13 +5,14 @@
 
 #pragma once
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif /* HAVE_CONFIG_H */
+
 #include "targetver.h"
 
 #define WIN32_LEAN_AND_MEAN             // 从 Windows 头文件中排除极少使用的内容
 
-#include <afxwin.h>         // MFC core and standard components
-#include <afxext.h>         // MFC extensions
-#include <afxcmn.h>
 // C 运行时头文件
 #include <stdlib.h>
 #include <malloc.h>
@@ -20,7 +21,12 @@
 #include <stdio.h>
 #include <stdarg.h>
 
+#include <afxwin.h>         // MFC core and standard components
+#include <afxext.h>         // MFC extensions
+#include <afxcmn.h>
+
 // 在此处引用程序需要的其他标头
+#ifndef NTI56_WITHOUT_ARX
 #define _AFXEXT
 //-----------------------------------------------------------------------------
 //----- Include ObjectDBX/ObjectARX headers
@@ -34,3 +40,4 @@
 //#define _ARX_CUSTOM_DRAG_N_DROP_	//- Support for the ObjectARX Drag'n Drop API
 //#define _INC_LEAGACY_HEADERS_		//- Include legacy headers in this project
 #include "arxHeaders.h"
+#endif //NTI56_WITHOUT_ARX
