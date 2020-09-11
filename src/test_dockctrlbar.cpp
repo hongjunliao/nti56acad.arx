@@ -11,13 +11,18 @@ int win32_docking2(int, char**);
 void nti56acad_dockctrlbar()
 {
 	// Redirect the resource override   
-	//CAcModuleResourceOverride res;
+	CAcModuleResourceOverride res;
 	//// Create the dock ctrl bar   
-	//dockBar = new CAcuiDockControlBar;
-	//// Now display it   
-	//dockBar->Create(acedGetAcadFrame(), "DockControlBar");
-	//dockBar->EnableDocking(CBRS_ALIGN_ANY);
-	//dockBar->SetWindowText(_T("Dock Tool"));
+	static CAcUiDockControlBar * dockBar = 0;
+	if(!dockBar){
+		dockBar = new CAcUiDockControlBar;
+		dockBar->Create(acedGetAcadFrame(), _T("DockControlBar"), 209349);
+		dockBar->EnableDocking(CBRS_ALIGN_ANY);
+		dockBar->SetWindowText(_T("Dock Tool"));
+	}
+	// Now display it   
+	acedGetAcadFrame()->FloatControlBar(dockBar, CPoint(750, 150), CBRS_ALIGN_RIGHT);    // FloatControBar(...)   
+	acedGetAcadFrame()->ShowControlBar(dockBar, TRUE, FALSE);
 }
 
 // Win32 message handler

@@ -12,6 +12,15 @@
 #error _DEBUG should not be defined except in internal Adesk debug builds
 #endif
 
+/////////////////////////////////////////////////////////////////////////////
+// Define the sole extension module object.
+AC_IMPLEMENT_EXTENSION_MODULE(modelessDll);
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Rx interface
+//
+/////////////////////////////////////////////////////////////////////////////
 void nti56acad_dockctrlbar();
 void nti56acad_win32();
 void nti56acad_imgui();
@@ -32,6 +41,26 @@ void initApp()
 void unloadApp()
 {
 	acedRegCmds->removeGroup(_T("ASDK_DWG_COMMANDS"));
+}
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Entry points
+//
+/////////////////////////////////////////////////////////////////////////////
+
+extern "C" int APIENTRY
+DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
+{
+	// Remove this if you use lpReserved
+	UNREFERENCED_PARAMETER(lpReserved);
+
+	if (dwReason == DLL_PROCESS_ATTACH)
+		modelessDll.AttachInstance(hInstance);
+	else if (dwReason == DLL_PROCESS_DETACH)
+		modelessDll.DetachInstance();
+
+	return 1;   // ok
 }
 
 extern "C" AcRx::AppRetCode acrxEntryPoint(AcRx::AppMsgCode msg, void* appId)
