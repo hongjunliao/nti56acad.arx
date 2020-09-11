@@ -12,46 +12,21 @@
 #error _DEBUG should not be defined except in internal Adesk debug builds
 #endif
 
-// Win32 message handler
-static LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
-{
-	return ::DefWindowProc(hWnd, msg, wParam, lParam);
-}
-
-void nti56acad_cmd_load()
-{
-	//CAcModuleResourceOverride resOverride;
-	//acedGetAcadFrame
-
-// Create application window
-	static WNDCLASSEX wc = { sizeof(WNDCLASSEX), CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(NULL), NULL, NULL, NULL, NULL, _T("ImGui Example"), NULL };
-	::RegisterClassEx(&wc);
-	static HWND hwnd = ::CreateWindowEx(WS_EX_TOPMOST, wc.lpszClassName, _T("chld")
-		, WS_OVERLAPPEDWINDOW | WS_CHILD | WS_VISIBLE | WS_POPUP
-		, 100, 100, 200, 100, 0, NULL, wc.hInstance, NULL);
-	// Show the window
-	::ShowWindow(hwnd, SW_SHOWDEFAULT);
-	::UpdateWindow(hwnd);
-}
-
-int sdl_main(int argc, char ** argv);
-int win32_main(int argc, char *argv[]);
-int win32_docking(int, char**);
-
-void nti56acad_cmd_test()
-{
-	extern int is_chld;
-
-	is_chld = 1;
-	win32_docking(0, 0);
-}
+void nti56acad_dockctrlbar();
+void nti56acad_win32();
+void nti56acad_imgui();
+void nti56acad_imgui2();
 
 void initApp()
 {
-	//acedRegCmds->addCommand(_T("ASDK_DWG_COMMANDS"),
-	//	_T("asdk_nti56load"), _T("nti56load"), ACRX_CMD_MODAL, nti56acad_cmd_load);
 	acedRegCmds->addCommand(_T("ASDK_DWG_COMMANDS"),
-		_T("asdk_nti56acad"), _T("nti56acad"), ACRX_CMD_MODAL, nti56acad_cmd_test);
+	_T("nti56acad_imgui"), _T("nti56acad_imgui"), ACRX_CMD_MODAL, nti56acad_imgui);
+	acedRegCmds->addCommand(_T("ASDK_DWG_COMMANDS"),
+		_T("nti56acad_imgui2"), _T("nti56acad_imgui2"), ACRX_CMD_MODAL, nti56acad_imgui2);
+	acedRegCmds->addCommand(_T("ASDK_DWG_COMMANDS"),
+		_T("nti56acad_win32"), _T("nti56acad_win32"), ACRX_CMD_MODAL, nti56acad_win32);
+	acedRegCmds->addCommand(_T("ASDK_DWG_COMMANDS"),
+		_T("nti56acad_dockctrlbar"), _T("nti56acad_dockctrlbar"), ACRX_CMD_MODAL, nti56acad_dockctrlbar);
 }
 
 void unloadApp()

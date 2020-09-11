@@ -14,3 +14,9 @@ on vs2017 command line:
 cd /d h:\nti56acad.arx
 code .
 Shift+Ctrl+B to run .vscode/fask.json
+
+# docs for imgui win32 openGL docking
+
+https://github.com/ocornut/imgui/pull/2772
+https://github.com/danec020/imgui.git
+https://github.com/n00bmind/imgui.git

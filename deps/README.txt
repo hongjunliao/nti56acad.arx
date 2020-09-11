@@ -17,3 +17,6 @@ deps/
   |_...
 src/
 REAMEME.md
+
+# docs for ObjectARX
+http://help.autodesk.com/view/OARX/2019/ENU/?guid=OREF-CAcUiDockControlBar

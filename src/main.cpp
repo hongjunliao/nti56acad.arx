@@ -10,8 +10,9 @@ int is_chld = 0;
 extern int sdl_main(int, char**);
 int win32_main(int argc, char *argv[]);
 int win32_docking(int, char**);
+int win32_docking2(int, char**);
 
 int main(int argc, char ** argv)
 {
-	return win32_docking(argc, argv);
+	return win32_docking2(argc, argv);
 }
