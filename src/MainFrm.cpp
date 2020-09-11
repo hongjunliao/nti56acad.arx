@@ -1,5 +1,5 @@
 
-// MainFrm.cpp : CMainFrame ÀàµÄÊµÏÖ
+// MainFrm.cpp : CMainFrame ï¿½ï¿½ï¿½Êµï¿½ï¿½
 //
 
 #include "stdafx.h"
@@ -22,17 +22,17 @@ END_MESSAGE_MAP()
 
 static UINT indicators[] =
 {
-	ID_SEPARATOR,           // ×´Ì¬ÐÐÖ¸Ê¾Æ÷
+	ID_SEPARATOR,           // ×´Ì¬ï¿½ï¿½Ö¸Ê¾ï¿½ï¿½
 	ID_INDICATOR_CAPS,
 	ID_INDICATOR_NUM,
 	ID_INDICATOR_SCRL,
 };
 
-// CMainFrame ¹¹Ôì/Îö¹¹
+// CMainFrame ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½
 
 CMainFrame::CMainFrame()
 {
-	// TODO: ÔÚ´ËÌí¼Ó³ÉÔ±³õÊ¼»¯´úÂë
+	// TODO: ï¿½Ú´ï¿½ï¿½ï¿½ï¿½Ó³ï¿½Ô±ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 }
 
 CMainFrame::~CMainFrame()
@@ -44,31 +44,40 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if (CFrameWnd::OnCreate(lpCreateStruct) == -1)
 		return -1;
 
-	// ´´½¨Ò»¸öÊÓÍ¼ÒÔÕ¼ÓÃ¿ò¼ÜµÄ¹¤×÷Çø
+	// ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½Õ¼ï¿½Ã¿ï¿½ÜµÄ¹ï¿½ï¿½ï¿½ï¿½ï¿½
 	if (!m_wndView.Create(NULL, NULL, AFX_WS_DEFAULT_VIEW, CRect(0, 0, 0, 0), this, AFX_IDW_PANE_FIRST, NULL))
 	{
-		TRACE0("Î´ÄÜ´´½¨ÊÓÍ¼´°¿Ú\n");
+		TRACE0("Î´ï¿½Ü´ï¿½ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½ï¿½ï¿½\n");
 		return -1;
 	}
 
 	if (!m_wndToolBar.CreateEx(this, TBSTYLE_FLAT, WS_CHILD | WS_VISIBLE | CBRS_TOP | CBRS_GRIPPER | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC) ||
 		!m_wndToolBar.LoadToolBar(IDR_MAINFRAME))
 	{
-		TRACE0("Î´ÄÜ´´½¨¹¤¾ßÀ¸\n");
-		return -1;      // Î´ÄÜ´´½¨
+		TRACE0("Î´ï¿½Ü´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\n");
+		return -1;      // Î´ï¿½Ü´ï¿½ï¿½ï¿½
+	}
+
+	if (!m_dockbar.Create(this, _T("")) ||
+		!m_dockbar.LoadToolBar(IDR_MAINFRAME))
+	{
+		TRACE0("Î´ï¿½Ü´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\n");
+		return -1;      // Î´ï¿½Ü´ï¿½ï¿½ï¿½
 	}
 
 	if (!m_wndStatusBar.Create(this))
 	{
-		TRACE0("Î´ÄÜ´´½¨×´Ì¬À¸\n");
-		return -1;      // Î´ÄÜ´´½¨
+		TRACE0("Î´ï¿½Ü´ï¿½ï¿½ï¿½×´Ì¬ï¿½ï¿½\n");
+		return -1;      // Î´ï¿½Ü´ï¿½ï¿½ï¿½
 	}
 	m_wndStatusBar.SetIndicators(indicators, sizeof(indicators)/sizeof(UINT));
 
-	// TODO: Èç¹û²»ÐèÒª¿ÉÍ£¿¿¹¤¾ßÀ¸£¬ÔòÉ¾³ýÕâÈýÐÐ
+	// TODO: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½Í£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	m_wndToolBar.EnableDocking(CBRS_ALIGN_ANY);
+	m_dockbar.EnableDocking(CBRS_ALIGN_ANY);
 	EnableDocking(CBRS_ALIGN_ANY);
 	DockControlBar(&m_wndToolBar);
+	DockControlBar(&m_dockbar);
 
 
 	return 0;
@@ -78,15 +87,15 @@ BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 {
 	if( !CFrameWnd::PreCreateWindow(cs) )
 		return FALSE;
-	// TODO: ÔÚ´Ë´¦Í¨¹ýÐÞ¸Ä
-	//  CREATESTRUCT cs À´ÐÞ¸Ä´°¿ÚÀà»òÑùÊ½
+	// TODO: ï¿½Ú´Ë´ï¿½Í¨ï¿½ï¿½ï¿½Þ¸ï¿½
+	//  CREATESTRUCT cs ï¿½ï¿½ï¿½Þ¸Ä´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½
 
 	cs.dwExStyle &= ~WS_EX_CLIENTEDGE;
 	cs.lpszClass = AfxRegisterWndClass(0);
 	return TRUE;
 }
 
-// CMainFrame Õï¶Ï
+// CMainFrame ï¿½ï¿½ï¿½
 
 #ifdef _DEBUG
 void CMainFrame::AssertValid() const
@@ -101,21 +110,21 @@ void CMainFrame::Dump(CDumpContext& dc) const
 #endif //_DEBUG
 
 
-// CMainFrame ÏûÏ¢´¦Àí³ÌÐò
+// CMainFrame ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 void CMainFrame::OnSetFocus(CWnd* /*pOldWnd*/)
 {
-	// ½«½¹µãÇ°ÒÆµ½ÊÓÍ¼´°¿Ú
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½Æµï¿½ï¿½ï¿½Í¼ï¿½ï¿½ï¿½ï¿½
 	m_wndView.SetFocus();
 }
 
 BOOL CMainFrame::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo)
 {
-	// ÈÃÊÓÍ¼µÚÒ»´Î³¢ÊÔ¸ÃÃüÁî
+	// ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½Ò»ï¿½Î³ï¿½ï¿½Ô¸ï¿½ï¿½ï¿½ï¿½ï¿½
 	if (m_wndView.OnCmdMsg(nID, nCode, pExtra, pHandlerInfo))
 		return TRUE;
 
-	// ·ñÔò£¬Ö´ÐÐÄ¬ÈÏ´¦Àí
+	// ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ï¿½Ä¬ï¿½Ï´ï¿½ï¿½ï¿½
 	return CFrameWnd::OnCmdMsg(nID, nCode, pExtra, pHandlerInfo);
 }
 

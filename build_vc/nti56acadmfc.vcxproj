@@ -87,7 +87,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>E:\home\nti56acad.arx\include;;E:\home\nti56acad.arx\deps\SDL\include\;E:\home\nti56acad.arx\include;E:\home\nti56acad.arx\src;E:\home\nti56acad.arx\src\libxhhp\src;E:\home\nti56acad.arx\imgui;%(AdditionalIncludeDirectories);build_vc\;../</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\home\nti56acad.arx\include;;E:\home\nti56acad.arx\deps\SDL\include\;E:\home\nti56acad.arx\include;E:\home\nti56acad.arx\src;E:\home\nti56acad.arx\src\libxhhp\src;E:\home\nti56acad.arx\imgui;%(AdditionalIncludeDirectories);build_vc\;../;E:\home\nti56acad.arx\deps\arx\inc;</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -115,13 +115,12 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;SDL2-staticd.lib;SDL2maind.lib;SDL2d.lib;Winmm.lib;Version.lib;Setupapi.lib;</AdditionalDependencies>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);E:\home\nti56acad.arx\lib\;;E:\home\nti56acad.arx\lib\;;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;SDL2-staticd.lib;SDL2maind.lib;SDL2d.lib;Winmm.lib;Version.lib;Setupapi.lib;;acpal.lib;;adui22.lib;</AdditionalDependencies>
+      <AdditionalLibraryDirectories>E:/home/nti56acad.arx/lib;E:/home/nti56acad.arx/lib/$(Configuration);E:/home/nti56acad.arx/deps/arx/lib-x64;E:/home/nti56acad.arx/deps/arx/lib-x64/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ImportLibrary>E:/home/nti56acad.arx/build_vc/Debug/nti56acadmfc.lib</ImportLibrary>
-      <ProgramDataBaseFile>E:/home/nti56acad.arx/build_vc/Debug/nti56acadmfc.pdb</ProgramDataBaseFile>
       <SubSystem>Windows</SubSystem>
     </Link>
     <ProjectReference>
@@ -130,11 +129,11 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>E:\home\nti56acad.arx\deps\SDL\include\;E:\home\nti56acad.arx\include;E:\home\nti56acad.arx\src;E:\home\nti56acad.arx\src\libxhhp\src;E:\home\nti56acad.arx\imgui;%(AdditionalIncludeDirectories);build_vc\;../</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\home\nti56acad.arx\deps\SDL\include\;E:\home\nti56acad.arx\include;E:\home\nti56acad.arx\src;E:\home\nti56acad.arx\src\libxhhp\src;E:\home\nti56acad.arx\imgui;%(AdditionalIncludeDirectories);build_vc\;../;E:\home\nti56acad.arx\deps\arx\inc;</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ExceptionHandling>Sync</ExceptionHandling>
-      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
-      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <Optimization>Disabled</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
@@ -158,13 +157,12 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;;SDL2main.lib;SDL2.lib;</AdditionalDependencies>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);E:\home\nti56acad.arx\lib\;;;E:\home\nti56acad.arx\lib\;;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;;SDL2main.lib;SDL2.lib;;acpal.lib;;adui22.lib;</AdditionalDependencies>
+      <AdditionalLibraryDirectories>E:/home/nti56acad.arx/lib;E:/home/nti56acad.arx/lib/$(Configuration);E:/home/nti56acad.arx/deps/arx/lib-x64;E:/home/nti56acad.arx/deps/arx/lib-x64/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
-      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ImportLibrary>E:/home/nti56acad.arx/build_vc/Release/nti56acadmfc.lib</ImportLibrary>
-      <ProgramDataBaseFile>E:/home/nti56acad.arx/build_vc/Release/nti56acadmfc.pdb</ProgramDataBaseFile>
       <SubSystem>Windows</SubSystem>
     </Link>
     <ProjectReference>
@@ -173,11 +171,11 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>E:\home\nti56acad.arx\include;;E:\home\nti56acad.arx\include;E:\home\nti56acad.arx\src;E:\home\nti56acad.arx\src\libxhhp\src;E:\home\nti56acad.arx\imgui;%(AdditionalIncludeDirectories);build_vc\;../</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\home\nti56acad.arx\include;;E:\home\nti56acad.arx\include;E:\home\nti56acad.arx\src;E:\home\nti56acad.arx\src\libxhhp\src;E:\home\nti56acad.arx\imgui;%(AdditionalIncludeDirectories);build_vc\;../;E:\home\nti56acad.arx\deps\arx\inc;</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ExceptionHandling>Sync</ExceptionHandling>
-      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <Optimization>MinSpace</Optimization>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <Optimization>Disabled</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
@@ -201,13 +199,12 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);;E:\home\nti56acad.arx\lib\;;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;;acpal.lib;;adui22.lib;</AdditionalDependencies>
+      <AdditionalLibraryDirectories>E:/home/nti56acad.arx/lib;E:/home/nti56acad.arx/lib/$(Configuration);E:/home/nti56acad.arx/deps/arx/lib-x64;E:/home/nti56acad.arx/deps/arx/lib-x64/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
-      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ImportLibrary>E:/home/nti56acad.arx/build_vc/MinSizeRel/nti56acadmfc.lib</ImportLibrary>
-      <ProgramDataBaseFile>E:/home/nti56acad.arx/build_vc/MinSizeRel/nti56acadmfc.pdb</ProgramDataBaseFile>
       <SubSystem>Windows</SubSystem>
     </Link>
     <ProjectReference>
@@ -216,12 +213,12 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>E:\home\nti56acad.arx\include;;E:\home\nti56acad.arx\include;E:\home\nti56acad.arx\src;E:\home\nti56acad.arx\src\libxhhp\src;E:\home\nti56acad.arx\imgui;%(AdditionalIncludeDirectories);build_vc\;../</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\home\nti56acad.arx\include;;E:\home\nti56acad.arx\include;E:\home\nti56acad.arx\src;E:\home\nti56acad.arx\src\libxhhp\src;E:\home\nti56acad.arx\imgui;%(AdditionalIncludeDirectories);build_vc\;../;E:\home\nti56acad.arx\deps\arx\inc;</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ExceptionHandling>Sync</ExceptionHandling>
-      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <Optimization>Disabled</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
@@ -243,13 +240,12 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);;E:\home\nti56acad.arx\lib\;;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;;acpal.lib;;adui22.lib;</AdditionalDependencies>
+      <AdditionalLibraryDirectories>E:/home/nti56acad.arx/lib;E:/home/nti56acad.arx/lib/$(Configuration);E:/home/nti56acad.arx/deps/arx/lib-x64;E:/home/nti56acad.arx/deps/arx/lib-x64/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ImportLibrary>E:/home/nti56acad.arx/build_vc/RelWithDebInfo/nti56acadmfc.lib</ImportLibrary>
-      <ProgramDataBaseFile>E:/home/nti56acad.arx/build_vc/RelWithDebInfo/nti56acadmfc.pdb</ProgramDataBaseFile>
       <SubSystem>Windows</SubSystem>
     </Link>
     <ProjectReference>
@@ -334,6 +330,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\src\nti_dockbar.cpp" />
     <ClCompile Include="..\src\nti_imgui.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Use</PrecompiledHeader>
@@ -372,7 +369,9 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="..\src\ChildView.h" />
     <ClInclude Include="..\src\MainFrm.h" />
     <ClInclude Include="..\src\nti56acadmfc.h" />
+    <ClInclude Include="..\src\nti_dockbar.h" />
     <ClInclude Include="..\src\nti_imgui.h" />
+    <ClInclude Include="..\src\stdafx.h" />
     <ClInclude Include="E:\home\nti56acad.arx\imgui\imgui.h" />
     <ClCompile Include="E:\home\nti56acad.arx\imgui\imgui_demo.cpp" />
     <ClCompile Include="E:\home\nti56acad.arx\imgui\imgui_draw.cpp" />
@@ -400,6 +399,10 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="nti56acadmfc.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\nti56acadmfc.ico" />
+    <Image Include="res\Toolbar.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

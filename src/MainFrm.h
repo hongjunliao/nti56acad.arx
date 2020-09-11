@@ -4,6 +4,7 @@
 
 #pragma once
 #include "ChildView.h"
+#include "nti_dockbar.h" //nti_dockbar
 
 class CMainFrame : public CFrameWnd
 {
@@ -33,6 +34,7 @@ public:
 #endif
 
 protected:  // 控件条嵌入成员
+	nti_dockbar		m_dockbar;
 	CToolBar          m_wndToolBar;
 	CStatusBar        m_wndStatusBar;
 	CChildView    m_wndView;

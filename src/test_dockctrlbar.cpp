@@ -15,10 +15,10 @@ void nti56acad_dockctrlbar2()
 	// Redirect the resource override   
 	CAcModuleResourceOverride res;
 	//// Create the dock ctrl bar   
-	static CAcUiDockControlBar * dockBar = 0;
+	static nti_dockbar * dockBar = 0;
 	if(!dockBar){
 		dockBar = new nti_dockbar;
-		dockBar->Create(acedGetAcadFrame(), _T("nti_dockbar"), 209349);
+		dockBar->Create(acedGetAcadFrame(), _T("nti_dockbar"));
 		dockBar->EnableDocking(CBRS_ALIGN_ANY);
 		dockBar->SetWindowText(_T("nti56acad"));
 	}

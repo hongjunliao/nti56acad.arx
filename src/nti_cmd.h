@@ -17,6 +17,6 @@ void nti56acad_imgui();
 void nti56acad_imgui2();
 void nti56acad_win32();
 void nti56acad_dockctrlbar();
-void nti56acad_dockctrlbar();
+void nti56acad_dockctrlbar2();
 
 #endif //NTI_CMD_H
