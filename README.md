@@ -20,3 +20,14 @@ Shift+Ctrl+B to run .vscode/fask.json
 https://github.com/ocornut/imgui/pull/2772
 https://github.com/danec020/imgui.git
 https://github.com/n00bmind/imgui.git
+
+
+# build for MFC
+1.make sure
+${nti56acad.arx}/
+    resource.h    
+    build/
+        XXX.vcxproj
+        XXX.rc
+2.add include dir:
+    ../

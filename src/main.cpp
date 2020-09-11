@@ -17,6 +17,8 @@
 HWND g_hwnd;
 int is_chld = 0;
 
+#ifndef NTI56_WITHOUT_MFC
+
 int sdl_main(int, char**);
 int win32_main(int argc, char *argv[]);
 int win32_docking(int, char**);
@@ -30,3 +32,5 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 {
 	return test_nti_imgui_main(0, 0);
 }
+
+#endif
