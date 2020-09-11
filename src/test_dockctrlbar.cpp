@@ -1,4 +1,6 @@
 #include "stdafx.h"
+#include "nti_cmd.h"
+#include "nti_dockbar.h" //nti_dockbar
 
 extern HWND g_hwnd;
 extern int is_chld;
@@ -7,6 +9,23 @@ int sdl_main(int argc, char ** argv);
 int win32_main(int argc, char *argv[]);
 int win32_docking(int, char**);
 int win32_docking2(int, char**);
+
+void nti56acad_dockctrlbar2()
+{
+	// Redirect the resource override   
+	CAcModuleResourceOverride res;
+	//// Create the dock ctrl bar   
+	static CAcUiDockControlBar * dockBar = 0;
+	if(!dockBar){
+		dockBar = new nti_dockbar;
+		dockBar->Create(acedGetAcadFrame(), _T("DockControlBar"), 209349);
+		dockBar->EnableDocking(CBRS_ALIGN_ANY);
+		dockBar->SetWindowText(_T("Dock Tool"));
+	}
+	// Now display it   
+	acedGetAcadFrame()->FloatControlBar(dockBar, CPoint(750, 150), CBRS_ALIGN_RIGHT);    // FloatControBar(...)   
+	acedGetAcadFrame()->ShowControlBar(dockBar, TRUE, FALSE);
+}
 
 void nti56acad_dockctrlbar()
 {

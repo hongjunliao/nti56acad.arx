@@ -7,6 +7,7 @@
 #include "dbents.h"
 #include "tchar.h"
 
+#include "nti_cmd.h"
 //
 #if defined(_DEBUG) && !defined(AC_FULL_DEBUG)
 #error _DEBUG should not be defined except in internal Adesk debug builds
