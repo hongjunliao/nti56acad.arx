@@ -3,6 +3,7 @@
 // =============================================================================
 #include "stdafx.h"
 #include <Windows.h>
+#include <string>
 #include <random>
 #include <stdio.h>
 #include <glad/glad.h>
@@ -13,6 +14,8 @@
 #include <imgui_internal.h>
 #include <application.h>
 #include <tchar.h>
+#include "gbk-utf8/utf8.h"
+#include "sds/win32_sds.h"
 IApplication::~IApplication() = default;
 HGLRC g_GLRenderContext;
 HDC g_HDCDeviceContext;
@@ -21,6 +24,19 @@ extern int is_chld;
 int g_display_w = 800;
 int g_display_h = 600;
 ImVec4 clear_color;
+ImVec2 g_wnd_size(400, 200);
+
+std::string gb2utf8(char const * s) 
+{
+	sds str = sdsMakeRoomFor(sdsempty(), strlen(s) * 2);
+	gb_to_utf8(s, str, sdsavail(str));
+	
+	std::string ret(str);
+	sdsfree(str);
+
+	return ret;
+}
+#define U8(s) gb2utf8(s).c_str()
 
 extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -60,6 +76,8 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
         if (wParam != SIZE_MINIMIZED)  {
             g_display_w = (UINT)LOWORD(lParam);
             g_display_h = (UINT)HIWORD(lParam);
+			g_wnd_size.x = g_display_w;
+			g_wnd_size.y = g_display_h + 20;
         }
         return 0;
     }
@@ -81,10 +99,10 @@ bool Init(HINSTANCE hInstance)
     ImGui_ImplWin32_EnableDpiAwareness();
 
     int wstyle = (is_chld ? (WS_OVERLAPPEDWINDOW | WS_CHILD | WS_VISIBLE | WS_POPUP)
-                         : (WS_OVERLAPPEDWINDOW | WS_VISIBLE));
+                         : (WS_OVERLAPPEDWINDOW | WS_SYSMENU | WS_SIZEBOX));
     static WNDCLASSEX wc = {sizeof(WNDCLASSEX), CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(NULL), NULL, NULL, NULL, NULL, _T("nti56acad"), NULL};
     ::RegisterClassEx(&wc);
-    g_hwnd = ::CreateWindowEx(WS_EX_TOPMOST, wc.lpszClassName, _T("nti56acad"), wstyle, 100, 100, 200, 100, 0, NULL, wc.hInstance, NULL);
+    g_hwnd = ::CreateWindowEx(WS_EX_TOPMOST, wc.lpszClassName, _T("nti56acad"), wstyle, 100, 100, 400, 200, 0, NULL, wc.hInstance, NULL);
 
     // Show the window
     ShowWindow(g_hwnd, SW_SHOWDEFAULT);
@@ -97,8 +115,8 @@ bool Init(HINSTANCE hInstance)
     ImGui::CreateContext();
     ImGuiIO &io = ImGui::GetIO();
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
-    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;     // Enable Docking
-    io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;   // Enable Multi-Viewport / Platform Windows
+    //io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;     // Enable Docking
+    //io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;   // Enable Multi-Viewport / Platform Windows
 
     // Setup Dear ImGui style
     ImGui::StyleColorsDark();
@@ -121,7 +139,22 @@ bool Init(HINSTANCE hInstance)
     //Set Window bg color
     clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
-    return true;
+	// Load Fonts
+	// - If no fonts are loaded, dear imgui will use the default font. You can also load multiple fonts and use ImGui::PushFont()/PopFont() to select them.
+	// - AddFontFromFileTTF() will return the ImFont* so you can store it if you need to select the font among multiple.
+	// - If the file cannot be loaded, the function will return NULL. Please handle those errors in your application (e.g. use an assertion, or display an error and quit).
+	// - The fonts will be rasterized at a given size (w/ oversampling) and stored into a texture when calling ImFontAtlas::Build()/GetTexDataAsXXXX(), which ImGui_ImplXXXX_NewFrame below will call.
+	// - Read 'docs/FONTS.txt' for more instructions and details.
+	// - Remember that in C/C++ if you want to include a backslash \ in a string literal you need to write a double backslash \\ !
+	//io.Fonts->AddFontDefault();
+	//io.Fonts->AddFontFromFileTTF("../../misc/fonts/Roboto-Medium.ttf", 16.0f);
+	//io.Fonts->AddFontFromFileTTF("../../misc/fonts/Cousine-Regular.ttf", 15.0f);
+	//io.Fonts->AddFontFromFileTTF("../../misc/fonts/DroidSans.ttf", 16.0f);
+	//io.Fonts->AddFontFromFileTTF("../../misc/fonts/ProggyTiny.ttf", 10.0f);
+	ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\simsun.ttc", 13.0f, NULL, io.Fonts->GetGlyphRangesChineseSimplifiedCommon());
+	IM_ASSERT(font != NULL);
+
+	return true;
 }
 
 void Cleanup(HINSTANCE hInstance)
@@ -167,16 +200,19 @@ int win32_main(int argc, char *argv[])
         ImGui_ImplWin32_NewFrame();
         ImGui::NewFrame();
 
-        ImGui::ShowDemoWindow(0);
+        //ImGui::ShowDemoWindow(0);
 
 		// 2. Show a simple window that we create ourselves. We use a Begin/End pair to created a named window.
 		{
 			static float f = 0.0f;
 			static int counter = 0;
 
+			ImGui::SetNextWindowSize(g_wnd_size);
 			ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
 
 			ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
+
+			ImGui::Text("中文测试");
 
 			ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
 			ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color

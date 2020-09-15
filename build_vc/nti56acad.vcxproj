@@ -362,6 +362,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="E:\home\nti56acad.arx\imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="E:\home\nti56acad.arx\imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="E:\home\nti56acad.arx\imgui\imgui_widgets.cpp" />
+    <None Include="..\TODOList" />
     <None Include="E:\home\nti56acad.arx\src\TESTDB.CPP.bak">
     </None>
     <ClCompile Include="E:\home\nti56acad.arx\src\arximpl.cpp">

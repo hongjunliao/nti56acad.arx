@@ -13,6 +13,10 @@
 
 #define WIN32_LEAN_AND_MEAN             // 从 Windows 头文件中排除极少使用的内容
 
+#ifdef _MSC_VER
+#include "sds/win32_interop/win32_types.h"
+#endif /* _MSC_VER */
+
 // C 运行时头文件
 #include <stdlib.h>
 #include <malloc.h>
@@ -48,3 +52,4 @@
 //#define _INC_LEAGACY_HEADERS_		//- Include legacy headers in this project
 #include "arxHeaders.h"
 #endif //NTI56_WITHOUT_ARX
+

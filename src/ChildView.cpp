@@ -1,5 +1,5 @@
 
-// ChildView.cpp : CChildView юЮ╣дй╣ож
+// ChildView.cpp : CChildView О©╫О©╫О©╫й╣О©╫О©╫
 //
 
 #include "stdafx.h"
@@ -28,7 +28,7 @@ END_MESSAGE_MAP()
 
 
 
-// CChildView оШо╒╢╕юМЁлпР
+// CChildView О©╫О©╫о╒О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫
 
 BOOL CChildView::PreCreateWindow(CREATESTRUCT& cs) 
 {
@@ -45,10 +45,13 @@ BOOL CChildView::PreCreateWindow(CREATESTRUCT& cs)
 
 void CChildView::OnPaint() 
 {
-	CPaintDC dc(this); // сцсз╩Фжф╣диХ╠╦иообнд
+	CPaintDC dc(this); // О©╫О©╫О©╫з╩О©╫О©╫ф╣О©╫О©╫Х╠╦О©╫О©╫О©╫О©╫О©╫О©╫
 	
-	// TODO: тз╢к╢╕лМ╪соШо╒╢╕юМЁлпР╢ЗбК
+	// TODO: О©╫з╢к╢О©╫О©╫О©╫О©╫О©╫О©╫О©╫о╒О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫
 	
-	// ╡╩р╙н╙╩ФжфоШо╒╤Ь╣Всц CWnd::OnPaint()
+	// О©╫О©╫р╙н╙О©╫О©╫О©╫О©╫О©╫О©╫о╒О©╫О©╫О©╫О©╫О©╫О©╫ CWnd::OnPaint()
+	CRect rect;
+	GetClientRect(&rect);
+	dc.DrawText(_T("hello"), rect, DT_CENTER);
 }
 

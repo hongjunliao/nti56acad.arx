@@ -30,7 +30,7 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
                      _In_ LPWSTR    lpCmdLine,
                      _In_ int       nCmdShow)
 {
-	return test_nti_imgui_main(0, 0);
+	return win32_main(0, 0);
 }
 
 #endif
