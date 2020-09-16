@@ -58,7 +58,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;      // δ�ܴ���
 	}
 
-	if (!m_dockbar.Create(this, _T("")) ||
+	if (!m_dockbar.CreateEx(this, TBSTYLE_FLAT, WS_CHILD | WS_VISIBLE | CBRS_TOP | CBRS_GRIPPER | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC) ||
 		!m_dockbar.LoadToolBar(IDR_MAINFRAME))
 	{
 		TRACE0("δ�ܴ���������\n");

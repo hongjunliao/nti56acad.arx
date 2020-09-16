@@ -26,11 +26,18 @@
 
 class nti_dockbar : public nti_dockbase{
 public:
-	virtual BOOL Create(CWnd* pParent, LPCTSTR lpszTitle); 
+	nti_dockbar();
+	virtual ~nti_dockbar();
+public:
+	//virtual BOOL Create(CWnd* pParent, LPCTSTR lpszTitle); 
 protected: 
 	//{{AFX_MSG(CDockControlBar) 
-	afx_msg void OnPaint(); 
+	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	//afx_msg void OnPaint();
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	//}}AFX_MSG 
 	DECLARE_MESSAGE_MAP() 
+
+	//virtual void AssertValid() const { } 
 };
 #endif //NTI_DOCKBAR_H

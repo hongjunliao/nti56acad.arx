@@ -216,8 +216,8 @@ int nti_imgui_paint()
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 
 	// Our state
-	bool show_demo_window = true;
-	bool show_another_window = false;
+	static bool show_demo_window = true;
+	static bool show_another_window = false;
 	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
 	// Start the Dear ImGui frame
@@ -228,6 +228,13 @@ int nti_imgui_paint()
 	if (show_demo_window)
 		ImGui::ShowDemoWindow(&show_demo_window);
 
+	//reactor window
+	{
+		ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
+		ImGui::Text("counter = %d", counter);
+		ImGui::InputText("what", what, strlen(what));
+		ImGui::End();
+	}
 	// 2. Show a simple window that we create ourselves. We use a Begin/End pair to created a named window.
 	{
 		static float f = 0.0f;
@@ -316,10 +323,6 @@ LRESULT WINAPI nti_imgui_WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lPar
 			g_Height = HIWORD(lParam);
 		}
 		break;
-	case WM_DESTROY: {
-		nti_imgui_destroy(hWnd);
-		break;
-	}
 	case WM_DPICHANGED:
 		if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_DpiEnableScaleViewports)
 		{

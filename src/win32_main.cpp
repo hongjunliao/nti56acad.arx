@@ -9,38 +9,27 @@
 #include <glad/glad.h>
 #include <imgui.h>
 #include <imgui_impl_win32.h>
-#define IMGUI_IMPL_OPENGL_LOADER_GLAD
 #include <imgui_impl_opengl3.h>
 #include <imgui_internal.h>
 #include <application.h>
 #include <tchar.h>
+#include "libxhhp/string_util.h"
 #include "gbk-utf8/utf8.h"
 #include "sds/win32_sds.h"
-IApplication::~IApplication() = default;
-HGLRC g_GLRenderContext;
-HDC g_HDCDeviceContext;
+
+static HGLRC g_GLRenderContext;
+static HDC g_HDCDeviceContext;
 extern HWND g_hwnd;
 extern int is_chld;
-int g_display_w = 800;
-int g_display_h = 600;
-ImVec4 clear_color;
-ImVec2 g_wnd_size(400, 200);
+static int g_display_w = 800;
+static int g_display_h = 600;
+static ImVec4 clear_color;
+static ImVec2 g_wnd_size(400, 200);
 
-std::string gb2utf8(char const * s) 
-{
-	sds str = sdsMakeRoomFor(sdsempty(), strlen(s) * 2);
-	gb_to_utf8(s, str, sdsavail(str));
-	
-	std::string ret(str);
-	sdsfree(str);
-
-	return ret;
-}
-#define U8(s) gb2utf8(s).c_str()
 
 extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-void CreateGlContext()
+static void CreateGlContext()
 {
     PIXELFORMATDESCRIPTOR pfd =
         {
@@ -67,7 +56,7 @@ void CreateGlContext()
     gladLoadGL();
 }
 
-LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
+static LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
     if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam))
         return true;
@@ -94,8 +83,11 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
     return DefWindowProc(hWnd, msg, wParam, lParam);
 }
 
-bool Init(HINSTANCE hInstance)
+static bool Init(HINSTANCE hInstance)
 {
+	if(g_hwnd)
+		return 1; 
+
     ImGui_ImplWin32_EnableDpiAwareness();
 
     int wstyle = (is_chld ? (WS_OVERLAPPEDWINDOW | WS_CHILD | WS_VISIBLE | WS_POPUP)
@@ -157,7 +149,7 @@ bool Init(HINSTANCE hInstance)
 	return true;
 }
 
-void Cleanup(HINSTANCE hInstance)
+static void Cleanup(HINSTANCE hInstance)
 {
     // Cleanup
     ImGui_ImplOpenGL3_Shutdown();
@@ -169,7 +161,7 @@ void Cleanup(HINSTANCE hInstance)
 
     DestroyWindow(g_hwnd);
 
-    UnregisterClass(L"IMGUI", hInstance);
+    UnregisterClass(_T("IMGUI"), hInstance);
 }
 
 int win32_main(int argc, char *argv[])

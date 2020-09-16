@@ -29,6 +29,10 @@
 #define GIT_BRANCH_NAME "(unknown)"
 #endif /* GIT_BRANCH_NAME */
 
+#ifndef IMGUI_IMPL_OPENGL_LOADER_GLAD
+#define IMGUI_IMPL_OPENGL_LOADER_GLAD
+#endif
+
 #endif /* HAVE_CONFIG_H */
 
 #endif /* CONFIG_H */

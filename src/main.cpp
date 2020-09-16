@@ -24,13 +24,14 @@ int win32_main(int argc, char *argv[]);
 int win32_docking(int, char**);
 int win32_docking2(int, char**);
 int test_nti_imgui_main(int, char**);
+int win32_docking_gl3(int, char**);
 
 int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
-                     _In_ LPWSTR    lpCmdLine,
+                     _In_ LPTSTR    lpCmdLine,
                      _In_ int       nCmdShow)
 {
-	return win32_main(0, 0);
+	return test_nti_imgui_main(0, 0);
 }
 
 #endif

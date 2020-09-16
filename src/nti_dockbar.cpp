@@ -16,38 +16,33 @@
 
 BEGIN_MESSAGE_MAP(nti_dockbar, nti_dockbase)
 	//{{AFX_MSG_MAP(nti_dockbar)
-	ON_WM_PAINT()   
+	ON_WM_CREATE()
+	//ON_WM_PAINT()   
+	ON_WM_TIMER()
 	//}}AFX_MSG_MAP   
 END_MESSAGE_MAP()
 
-BOOL nti_dockbar::Create(CWnd* pParent, LPCTSTR lpszTitle)   
-{   
-#ifndef NTI56_WITHOUT_ARX
-	CString strWndClass;
-	strWndClass = AfxRegisterWndClass(CS_DBLCLKS, LoadCursor(NULL, IDC_ARROW));
-	CRect rect(0, 0, 250, 250);
+nti_dockbar::nti_dockbar()
+{
+}
 
-	if (!nti_dockbase::Create(strWndClass, lpszTitle, WS_VISIBLE|WS_CHILD|WS_CLIPCHILDREN,rect,pParent,0))
-	{   
-		return (FALSE);   
-	}
-#else
-	if (!CToolBar::Create(pParent))
-	{
-		return (FALSE);
-	}
-#endif //NTI56_WITHOUT_ARX		
+nti_dockbar::~nti_dockbar()
+{
 
-	if(nti_imgui_create(m_hWnd) != 0)
-		return FALSE;
+}
 
-	return (TRUE);   
-}   
+int nti_dockbar::OnCreate(LPCREATESTRUCT lpCreateStruct)
+{
+	int r = nti_dockbase::OnCreate(lpCreateStruct);
 
-void nti_dockbar::OnPaint()
+	HWND hwnd = GetSafeHwnd();
+	nti_imgui_create(hwnd);
+
+	SetTimer(1, 16, NULL);
+	return r;
+}
+
+void nti_dockbar::OnTimer(UINT_PTR nIDEvent)
 {
 	nti_imgui_paint();
-	nti_dockbase::OnPaint();
-
-	//Invalidate(0);
 }

@@ -17,17 +17,9 @@ extern int is_chld;
 static LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	nti_imgui_WndProc(hWnd, msg, wParam, lParam);
-	static int flag = 0;
-	
-	if(flag)
-		InvalidateRect(g_hwnd, NULL, TRUE);
-	
+
 	switch (msg) {
 	case WM_CREATE:
-		break;
-	case WM_PAINT:
-		flag = 1;
-		nti_imgui_paint();
 		break;
 	case WM_DESTROY: {
 		//::UnregisterClass(wc.lpszClassName, wc.hInstance); 
@@ -50,7 +42,7 @@ int test_nti_imgui_main(int, char**)
 		: (WS_OVERLAPPEDWINDOW | WS_VISIBLE));
 	static WNDCLASSEX wc = { sizeof(WNDCLASSEX), CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(NULL), NULL, NULL, NULL, NULL, _T("nti56acad"), NULL };
 	::RegisterClassEx(&wc);
-	g_hwnd = ::CreateWindowEx(WS_EX_TOPMOST, wc.lpszClassName, _T("nti56acad"), wstyle, 100, 100, 200, 100, 0, NULL, wc.hInstance, NULL);
+	g_hwnd = ::CreateWindowEx(WS_EX_TOPMOST, wc.lpszClassName, _T("nti56acad"), wstyle, 100, 100, 400, 200, 0, NULL, wc.hInstance, NULL);
 
 	rc = nti_imgui_create(g_hwnd);
 	if(rc != 0)
@@ -64,8 +56,7 @@ int test_nti_imgui_main(int, char**)
 		// Main loop
 		MSG msg;
 		ZeroMemory(&msg, sizeof(msg));
-		while (msg.message != WM_QUIT)
-		{
+		while (msg.message != WM_QUIT) {
 			// Poll and handle messages (inputs, window resize, etc.)
 			// You can read the io.WantCaptureMouse, io.WantCaptureKeyboard flags to tell if dear imgui wants to use your inputs.
 			// - When io.WantCaptureMouse is true, do not dispatch mouse input data to your main application.
@@ -77,9 +68,14 @@ int test_nti_imgui_main(int, char**)
 				::DispatchMessage(&msg);
 				continue;
 			}
+
+			nti_imgui_paint();
 		}
 	}
 
+	nti_imgui_destroy(g_hwnd);
+	DestroyWindow(g_hwnd);
+	
 	return 0;
 }
 

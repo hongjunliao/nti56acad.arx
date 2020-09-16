@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "nti_cmd.h"
 #include "nti_dockbar.h" //nti_dockbar
+#include "nti_imgui.h"		//nti_imgui_create
 
 extern HWND g_hwnd;
 extern int is_chld;
@@ -18,7 +19,7 @@ void nti56acad_dockctrlbar2()
 	static nti_dockbar * dockBar = 0;
 	if(!dockBar){
 		dockBar = new nti_dockbar;
-		dockBar->Create(acedGetAcadFrame(), _T("nti_dockbar"));
+		dockBar->Create(acedGetAcadFrame(), _T("nti_dockbar"), 12345);
 		dockBar->EnableDocking(CBRS_ALIGN_ANY);
 		dockBar->SetWindowText(_T("nti56acad"));
 	}
@@ -31,7 +32,7 @@ void nti56acad_dockctrlbar()
 {
 	// Redirect the resource override   
 	CAcModuleResourceOverride res;
-	//// Create the dock ctrl bar   
+	// Create the dock ctrl bar   
 	static CAcUiDockControlBar * dockBar = 0;
 	if(!dockBar){
 		dockBar = new CAcUiDockControlBar;
@@ -65,6 +66,7 @@ void nti56acad_win32()
 	::ShowWindow(hwnd, SW_SHOWDEFAULT);
 	::UpdateWindow(hwnd);
 }
+
 void nti56acad_imgui()
 {
 	is_chld = 1;

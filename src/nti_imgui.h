@@ -24,6 +24,16 @@ int nti_imgui_paint();
 int nti_imgui_destroy(HWND hwnd);
 LRESULT WINAPI nti_imgui_WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
+typedef struct nti_wnddata nti_wnddata;
+struct nti_wnddata {
+    struct {
+        TCHAR what[128];
+		TCHAR cls[128];
+		TCHAR obj_id[128];
+		TCHAR handle[128];
+    } reactor;
+};
+
 /////////////////////////////////////////////////////////////////////////////////////////
 
 #ifdef __cplusplus

@@ -1,3 +1,13 @@
+/*!
+* This file is PART of nti56acad project
+* @author hongjun.liao <docici@126.com>, @date 2020/09/11
+*
+* arx main
+* */
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif /* HAVE_CONFIG_H */
+
 #include "StdAfx.h"
 #include "rxregsvc.h"
 //#include "AcExtensionModule.h"
@@ -7,12 +17,21 @@
 #include "dbents.h"
 #include "tchar.h"
 
+#include "nti_imgui.h" /*nti_wnddata*/
 #include "nti_cmd.h"
-//
-#if defined(_DEBUG) && !defined(AC_FULL_DEBUG)
-#error _DEBUG should not be defined except in internal Adesk debug builds
-#endif
+#include "nti_reactor.h" /**/
 
+/////////////////////////////////////////////////////////////////////////////////////
+static nti_wnddata g_wnddataobj = { 0 };
+
+HWND g_hwnd = 0;
+int is_chld = 1;
+nti_wnddata * g_wnddata = &g_wnddataobj;
+// per app
+CDocReactor* gpDocReactor = NULL;
+CEdReactor* gpEdReactor = NULL;
+// per doc
+CDbModReactor *gpDbReactor = NULL;
 /////////////////////////////////////////////////////////////////////////////
 // Define the sole extension module object.
 AC_IMPLEMENT_EXTENSION_MODULE(modelessDll);
@@ -25,23 +44,43 @@ AC_IMPLEMENT_EXTENSION_MODULE(modelessDll);
 
 void initApp()
 {
-	acedRegCmds->addCommand(_T("ASDK_DWG_COMMANDS"),
-		_T("nti56acad_win32"), _T("nti56acad_win32"), ACRX_CMD_MODAL, nti56acad_win32);
-	acedRegCmds->addCommand(_T("ASDK_DWG_COMMANDS"),
-		_T("nti56acad_imgui"), _T("nti56acad_imgui"), ACRX_CMD_MODAL, nti56acad_imgui);
-	acedRegCmds->addCommand(_T("ASDK_DWG_COMMANDS"),
-		_T("nti56acad_imgui2"), _T("nti56acad_imgui2"), ACRX_CMD_MODAL, nti56acad_imgui2);
-	acedRegCmds->addCommand(_T("ASDK_DWG_COMMANDS"),
-		_T("nti56acad_dockctrlbar"), _T("nti56acad_dockctrlbar"), ACRX_CMD_MODAL, nti56acad_dockctrlbar);
-	acedRegCmds->addCommand(_T("ASDK_DWG_COMMANDS"),
-		_T("nti56acad_dockctrlbar2"), _T("nti56acad_dockctrlbar2"), ACRX_CMD_MODAL, nti56acad_dockctrlbar2);
+	gpDocReactor = new CDocReactor();
+	acDocManager->addReactor(gpDocReactor);
+
+	gpEdReactor = new CEdReactor();
+	acedEditor->addReactor(gpEdReactor);
+
+	acedRegCmds->addCommand(_T("ASDK_NTI56ACAD"),
+		_T("NTI56ACAD"), _T("NTI56ACAD"), ACRX_CMD_MODAL, nti56acad);
+
+	//acedRegCmds->addCommand(_T("ASDK_DWG_COMMANDS"),
+	//	_T("nti56acad_win32"), _T("nti56acad_win32"), ACRX_CMD_MODAL, nti56acad_win32);
+	//acedRegCmds->addCommand(_T("ASDK_DWG_COMMANDS"),
+	//	_T("nti56acad_imgui"), _T("nti56acad_imgui"), ACRX_CMD_MODAL, nti56acad_imgui);
+	//acedRegCmds->addCommand(_T("ASDK_DWG_COMMANDS"),
+	//	_T("nti56acad_imgui2"), _T("nti56acad_imgui2"), ACRX_CMD_MODAL, nti56acad_imgui2);
+	//acedRegCmds->addCommand(_T("ASDK_DWG_COMMANDS"),
+	//	_T("nti56acad_dockctrlbar"), _T("nti56acad_dockctrlbar"), ACRX_CMD_MODAL, nti56acad_dockctrlbar);
+	//acedRegCmds->addCommand(_T("ASDK_DWG_COMMANDS"),
+	//	_T("nti56acad_dockctrlbar2"), _T("nti56acad_dockctrlbar2"), ACRX_CMD_MODAL, nti56acad_dockctrlbar2);
 }
 
 void unloadApp()
 {
-	acedRegCmds->removeGroup(_T("ASDK_DWG_COMMANDS"));
-}
+	if (gpEdReactor)
+	{
+		acedEditor->removeReactor(gpEdReactor);
+		delete gpEdReactor;
+		gpEdReactor = NULL;
+	}
+	if (gpDocReactor)
+	{
+		acDocManager->removeReactor(gpDocReactor);
+		delete gpDocReactor;
+	}
 
+	acedRegCmds->removeGroup(_T("ASDK_NTI56ACAD"));
+}
 /////////////////////////////////////////////////////////////////////////////
 //
 // Entry points

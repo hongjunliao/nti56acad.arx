@@ -13,6 +13,8 @@
 #define new DEBUG_NEW
 #endif
 
+HWND g_hwnd;
+int is_chld = 0;
 
 // Cnti56acadmfcApp
 

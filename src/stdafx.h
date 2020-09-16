@@ -13,43 +13,73 @@
 
 #define WIN32_LEAN_AND_MEAN             // 从 Windows 头文件中排除极少使用的内容
 
-#ifdef _MSC_VER
-#include "sds/win32_interop/win32_types.h"
+#ifdef _MSC_VER
+
+#include "sds/win32_interop/win32_types.h"
+
 #endif /* _MSC_VER */
 
-// C 运行时头文件
-#include <stdlib.h>
-#include <malloc.h>
-#include <memory.h>
-#include <tchar.h>
-#include <stdio.h>
-#include <stdarg.h>
+//////////////////////////////////////////////////////////////////////////////
+//
+// Check if the build is DEBUG version and it's intended
+// to be used with Non-DEBUG AutoCAD.
+// In this case, for MFC header files, we need to undefine
+// _DEBUG symbol
+// Read this project readme.txt for more detail
+//#define AC_FULL_DEBUG
+#if defined( _DEBUG) && !defined(AC_FULL_DEBUG)
+#pragma message("Building debug modeless.arx to be used with release AutoCAD")
+#define _DEBUG_THIS_ONLY
+#undef _DEBUG
+#endif
+
+#ifndef WINVER
+#define WINVER 0x501
+#endif
 
 #include <afxwin.h>         // MFC core and standard components
 #include <afxext.h>         // MFC extensions
-#ifndef _AFX_NO_OLE_SUPPORT
-#include <afxdtctl.h>           // MFC 对 Internet Explorer 4 公共控件的支持
+#include <afxcmn.h>
+
+// Turn on the _DEBUG symbol if it was defined, before including
+// non-MFC header files.
+//
+#ifdef _DEBUG_THIS_ONLY
+#define _DEBUG
+#undef _DEBUG_THIS_ONLY
 #endif
-#ifndef _AFX_NO_AFXCMN_SUPPORT
-#include <afxcmn.h>             // MFC 对 Windows 公共控件的支持
-#endif // _AFX_NO_AFXCMN_SUPPORT
 
-#include <afxcontrolbars.h>     // 功能区和控件条的 MFC 支持
-
-// 在此处引用程序需要的其他标头
 #ifndef NTI56_WITHOUT_ARX
-#define _AFXEXT
-//-----------------------------------------------------------------------------
-//----- Include ObjectDBX/ObjectARX headers
-//----- Uncomment one of the following lines to bring a given library in your project.
-//#define _BREP_SUPPORT_			//- Support for the BRep API
-//#define _HLR_SUPPORT_				//- Support for the Hidden Line Removal API
-//#define _IE_SDK_SUPPORT_			//- Support for the Autodesk Image Engine API
-//#define _AMODELER_SUPPORT_		//- Support for the AModeler API
-//#define _ASE_SUPPORT_				//- Support for the ASI/ASE API
-//#define _RENDER_SUPPORT_			//- Support for the AutoCAD Render API
-//#define _ARX_CUSTOM_DRAG_N_DROP_	//- Support for the ObjectARX Drag'n Drop API
-//#define _INC_LEAGACY_HEADERS_		//- Include legacy headers in this project
-#include "arxHeaders.h"
+
+#include <dbapserv.h>
+#include <rxregsvc.h>
+#include <AcExtensionModule.h>
+#include <stdio.h>
+#include <stdarg.h>
+#include <aced.h>
+#include <adslib.h>
+#include <dbapserv.h>
+#include <rxmfcapi.h>
+#include <adeskabb.h>
+#include <axlock.h>
+#include <acdocman.h>
+
+#if defined(_DEBUG) && !defined(AC_FULL_DEBUG)
+#define _DEBUG_WAS_DEFINED
+#pragma message ("     Compiling MFC / STL / ATL header files in release mode.")
+#undef _DEBUG
+#endif
+#include <aced.h>
+#ifdef _DEBUG_WAS_DEFINED
+#define _DEBUG
+#endif
+
+#include <dbsymtb.h>
+#include <dbapserv.h>
+#include <adslib.h>
+#include <adui.h>
+#include <acui.h>
+
+#include <arxHeaders.h>
+
 #endif //NTI56_WITHOUT_ARX
-
