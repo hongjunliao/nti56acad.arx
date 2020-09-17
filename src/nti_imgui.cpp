@@ -15,11 +15,13 @@
 #include "imgui_impl_win32.h"
 #include <GL/GL.h>
 #include "nti_imgui.h"		//nti_imgui_create
+#include "nti_str.h"		//
 
 #ifndef WM_DPICHANGED
 #define WM_DPICHANGED 0x02E0 // From Windows SDK 8.1+ headers
 #endif
 
+extern nti_wnddata * g_wnddata;
 /////////////////////////////////////////////////////////////////////////////////////
 
 // Forward declare message handler from imgui_impl_win32.cpp
@@ -201,8 +203,8 @@ int nti_imgui_create(HWND hwnd)
 	//io.Fonts->AddFontFromFileTTF("../../misc/fonts/Cousine-Regular.ttf", 15.0f);
 	//io.Fonts->AddFontFromFileTTF("../../misc/fonts/DroidSans.ttf", 16.0f);
 	//io.Fonts->AddFontFromFileTTF("../../misc/fonts/ProggyTiny.ttf", 10.0f);
-	//ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f, NULL, io.Fonts->GetGlyphRangesJapanese());
-	//IM_ASSERT(font != NULL);
+	ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\simsun.ttc", 13.0f, NULL, io.Fonts->GetGlyphRangesChineseSimplifiedCommon());
+	IM_ASSERT(font != NULL);
 
 	// Show the window
 	// ::ShowWindow(hwnd, SW_SHOWDEFAULT);
@@ -228,11 +230,36 @@ int nti_imgui_paint()
 	if (show_demo_window)
 		ImGui::ShowDemoWindow(&show_demo_window);
 
+	//tabs window
+	{
+		ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags_None;
+		if (ImGui::BeginTabBar("tab", tab_bar_flags))
+		{
+			if (ImGui::BeginTabItem(("图块")))
+			{
+				ImGui::Text("This is the Avocado tab!\nblah blah blah blah blah");
+				ImGui::EndTabItem();
+			}
+			if (ImGui::BeginTabItem("Broccoli"))
+			{
+				ImGui::Text("This is the Broccoli tab!\nblah blah blah blah blah");
+				ImGui::EndTabItem();
+			}
+			if (ImGui::BeginTabItem(("打印")))
+			{
+				ImGui::Text("This is the Cucumber tab!\nblah blah blah blah blah");
+				ImGui::EndTabItem();
+			}
+			ImGui::EndTabBar();
+		}
+	}
 	//reactor window
 	{
-		ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
-		ImGui::Text("counter = %d", counter);
-		ImGui::InputText("what", what, strlen(what));
+		ImGui::Begin("reactor");                          // Create a window called "Hello, world!" and append into it.
+		ImGui::InputText("what:", g_wnddata->reactor.what, IM_ARRAYSIZE(g_wnddata->reactor.what));
+		ImGui::InputText("class:", g_wnddata->reactor.cls, IM_ARRAYSIZE(g_wnddata->reactor.cls));
+		ImGui::InputText("object id:", g_wnddata->reactor.obj_id, IM_ARRAYSIZE(g_wnddata->reactor.obj_id));
+		ImGui::InputText("handle:", g_wnddata->reactor.handle, IM_ARRAYSIZE(g_wnddata->reactor.handle));
 		ImGui::End();
 	}
 	// 2. Show a simple window that we create ourselves. We use a Begin/End pair to created a named window.

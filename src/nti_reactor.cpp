@@ -16,10 +16,11 @@
 #include <cinttypes>
 #include "nti_imgui.h" /*nti_wnddata*/
 #include "nti_reactor.h" /**/
+#include "nti_str.h"		//
 
 extern nti_wnddata * g_wnddata;
 extern CDbModReactor * gpDbReactor;
-#define cpy(buff, s) _tcscpy_s(buff, _countof(buff), s);
+#define wcpy(buff, s) strncpy(buff, WA(s), _countof(buff));
 /////////////////////////////////////////////////////////////////////////////////////
 
 class CDocInfo
@@ -65,10 +66,10 @@ void objDisplay(const TCHAR* pWhat, const AcDbObject* pDbObj)
         _tcscpy_s(idstr, _countof(idstr), _T(""));
     }
 
-	cpy(g_wnddata->reactor.what, pWhat);
-	cpy(g_wnddata->reactor.cls, pClsName);
-	cpy(g_wnddata->reactor.obj_id, idstr);
-	cpy(g_wnddata->reactor.handle, hstr);
+	wcpy(g_wnddata->reactor.what, pWhat);
+	wcpy(g_wnddata->reactor.cls, pClsName);
+	wcpy(g_wnddata->reactor.obj_id, idstr);
+	wcpy(g_wnddata->reactor.handle, hstr);
 
     // g_hwnd->SetDlgItemText(IDC_EDIT_CLASS, pClsName);
     // g_hwnd->SetDlgItemText(IDC_EDIT_OBJID, idstr);

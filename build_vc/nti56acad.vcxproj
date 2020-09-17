@@ -333,6 +333,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\src\nti_reactor.cpp" />
+    <ClCompile Include="..\src\nti_str.cpp" />
     <ClCompile Include="..\src\test_nti_imgui.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Use</PrecompiledHeader>
@@ -370,6 +371,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="..\src\nti_arx.h" />
     <ClInclude Include="..\src\nti_imgui.h" />
     <ClInclude Include="..\src\nti_reactor.h" />
+    <ClInclude Include="..\src\nti_str.h" />
     <ClInclude Include="E:\home\nti56acad.arx\src\stdafx.h" />
     <ClInclude Include="E:\home\nti56acad.arx\src\targetver.h" />
   </ItemGroup>

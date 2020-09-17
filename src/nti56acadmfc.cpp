@@ -7,11 +7,14 @@
 #include "afxdialogex.h"
 #include "nti56acadmfc.h"
 #include "MainFrm.h"
-
+#include "nti_imgui.h" /*nti_wnddata*/
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
+
+static nti_wnddata g_wnddataobj = { 0 };
+nti_wnddata * g_wnddata = &g_wnddataobj;
 
 HWND g_hwnd;
 int is_chld = 0;

@@ -27,10 +27,10 @@ LRESULT WINAPI nti_imgui_WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lPar
 typedef struct nti_wnddata nti_wnddata;
 struct nti_wnddata {
     struct {
-        TCHAR what[128];
-		TCHAR cls[128];
-		TCHAR obj_id[128];
-		TCHAR handle[128];
+        char what[128];
+		char cls[128];
+		char obj_id[128];
+		char handle[128];
     } reactor;
 };
 
