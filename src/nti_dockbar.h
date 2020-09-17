@@ -16,6 +16,7 @@
 #include "acuidock.h" //CAcUiDockControlBar
 #endif //NTI56_WITHOUT_ARX
 
+#include "nti_cmn.h"	//nti_wnddata
 /////////////////////////////////////////////////////////////////////////////////////
 
 #ifndef NTI56_WITHOUT_ARX
@@ -28,6 +29,8 @@ class nti_dockbar : public nti_dockbase{
 public:
 	nti_dockbar();
 	virtual ~nti_dockbar();
+public:
+	nti_wnddata * wnddata;
 public:
 	//virtual BOOL Create(CWnd* pParent, LPCTSTR lpszTitle); 
 protected: 

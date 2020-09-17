@@ -17,6 +17,7 @@
 #include "nti_imgui.h" /*nti_wnddata*/
 #include "nti_reactor.h" /**/
 #include "nti_str.h"		//
+#include "nti_cmn.h"	//nti_wnddata
 
 extern nti_wnddata * g_wnddata;
 extern CDbModReactor * gpDbReactor;

@@ -12,8 +12,6 @@
 #include "config.h"
 #endif /* HAVE_CONFIG_H */
 
-#include <adachar.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif

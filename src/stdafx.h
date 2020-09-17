@@ -83,3 +83,7 @@
 #include <arxHeaders.h>
 
 #endif //NTI56_WITHOUT_ARX
+
+#ifdef _DEBUG_WAS_DEFINED
+#define _DEBUG
+#endif

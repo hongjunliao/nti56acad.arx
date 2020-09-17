@@ -19,20 +19,21 @@ extern "C" {
 #endif
 /////////////////////////////////////////////////////////////////////////////////////
 
+struct nti_imgui_wnddata {
+	int is_hide;
+};
+
+struct nti_imgui_render {
+	nti_imgui_wnddata * wnddata;
+	void(* render)(nti_imgui_wnddata * wnddata);
+};
+
 int nti_imgui_create(HWND hwnd);
+int nti_imgui_add_render(void(*render)(nti_imgui_wnddata * wnddata), nti_imgui_wnddata * wnddata);
 int nti_imgui_paint();
 int nti_imgui_destroy(HWND hwnd);
 LRESULT WINAPI nti_imgui_WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-typedef struct nti_wnddata nti_wnddata;
-struct nti_wnddata {
-    struct {
-        char what[128];
-		char cls[128];
-		char obj_id[128];
-		char handle[128];
-    } reactor;
-};
 
 /////////////////////////////////////////////////////////////////////////////////////////
 

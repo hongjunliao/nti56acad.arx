@@ -20,6 +20,7 @@
 #include "nti_imgui.h" /*nti_wnddata*/
 #include "nti_cmd.h"
 #include "nti_reactor.h" /**/
+#include "nti_cmn.h"	//nti_wnddata
 
 /////////////////////////////////////////////////////////////////////////////////////
 static nti_wnddata g_wnddataobj = { 0 };

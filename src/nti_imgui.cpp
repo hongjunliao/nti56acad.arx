@@ -16,12 +16,18 @@
 #include <GL/GL.h>
 #include "nti_imgui.h"		//nti_imgui_create
 #include "nti_str.h"		//
+#include "nti_cmn.h"		//nti_new
+
+extern "C" {
+#include "adlist.h"	//list
+}
 
 #ifndef WM_DPICHANGED
 #define WM_DPICHANGED 0x02E0 // From Windows SDK 8.1+ headers
 #endif
 
 extern nti_wnddata * g_wnddata;
+static list * g_renderlist = 0;
 /////////////////////////////////////////////////////////////////////////////////////
 
 // Forward declare message handler from imgui_impl_win32.cpp
@@ -135,8 +141,21 @@ static void CleanupDeviceOpenGL2(HWND hWnd, RendererData* data)
 	ReleaseDC(hWnd, data->hDC);
 }
 
+static void renderlist_free(void *ptr)
+{
+	nti_imgui_render * msg = (nti_imgui_render *)ptr;
+	assert(ptr);
+	free(ptr);
+}
+
+
 int nti_imgui_create(HWND hwnd)
 {
+	if (!g_renderlist) {
+		g_renderlist = listCreate();
+		listSetFreeMethod(g_renderlist, renderlist_free);
+	}
+
 	ImGui_ImplWin32_EnableDpiAwareness();
 
 	// Initialize Direct3D
@@ -213,86 +232,46 @@ int nti_imgui_create(HWND hwnd)
 	return 0;
 }
 
+int nti_imgui_add_render(void(* render)(nti_imgui_wnddata * wnddata), nti_imgui_wnddata * wnddata)
+{
+	if(!(render))
+		return -1;
+
+	nti_imgui_render * ir = nti_new(nti_imgui_render);
+	ir->render = render;
+	ir->wnddata = wnddata;
+
+	listAddNodeTail(g_renderlist, ir);
+
+	return 0;
+}
+
 int nti_imgui_paint()
 {
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 
 	// Our state
-	static bool show_demo_window = true;
-	static bool show_another_window = false;
 	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
 	// Start the Dear ImGui frame
 	ImGui_ImplOpenGL2_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
-	// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
-	if (show_demo_window)
-		ImGui::ShowDemoWindow(&show_demo_window);
 
-	//tabs window
-	{
-		ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags_None;
-		if (ImGui::BeginTabBar("tab", tab_bar_flags))
-		{
-			if (ImGui::BeginTabItem(("图块")))
-			{
-				ImGui::Text("This is the Avocado tab!\nblah blah blah blah blah");
-				ImGui::EndTabItem();
-			}
-			if (ImGui::BeginTabItem("Broccoli"))
-			{
-				ImGui::Text("This is the Broccoli tab!\nblah blah blah blah blah");
-				ImGui::EndTabItem();
-			}
-			if (ImGui::BeginTabItem(("打印")))
-			{
-				ImGui::Text("This is the Cucumber tab!\nblah blah blah blah blah");
-				ImGui::EndTabItem();
-			}
-			ImGui::EndTabBar();
+	/* render window */
+	if (g_renderlist) {
+		listIter * iter = listGetIterator(g_renderlist, 0);
+		for (listNode * node = listNext(iter); node; ) {
+			
+			nti_imgui_render * ir = (nti_imgui_render *)listNodeValue(node);
+			assert(ir && ir->render);
+
+			if(!ir->wnddata || !ir->wnddata->is_hide)
+				ir->render(ir->wnddata);
+
+			node = listNext(iter);
 		}
-	}
-	//reactor window
-	{
-		ImGui::Begin("reactor");                          // Create a window called "Hello, world!" and append into it.
-		ImGui::InputText("what:", g_wnddata->reactor.what, IM_ARRAYSIZE(g_wnddata->reactor.what));
-		ImGui::InputText("class:", g_wnddata->reactor.cls, IM_ARRAYSIZE(g_wnddata->reactor.cls));
-		ImGui::InputText("object id:", g_wnddata->reactor.obj_id, IM_ARRAYSIZE(g_wnddata->reactor.obj_id));
-		ImGui::InputText("handle:", g_wnddata->reactor.handle, IM_ARRAYSIZE(g_wnddata->reactor.handle));
-		ImGui::End();
-	}
-	// 2. Show a simple window that we create ourselves. We use a Begin/End pair to created a named window.
-	{
-		static float f = 0.0f;
-		static int counter = 0;
-
-		ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
-
-		ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
-		ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
-		ImGui::Checkbox("Another Window", &show_another_window);
-
-		ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-		ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
-
-		if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
-			counter++;
-		ImGui::SameLine();
-		ImGui::Text("counter = %d", counter);
-
-		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-		ImGui::End();
-	}
-
-	// 3. Show another simple window.
-	if (show_another_window)
-	{
-		ImGui::Begin("Another Window", &show_another_window);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
-		ImGui::Text("Hello from another window!");
-		if (ImGui::Button("Close Me"))
-			show_another_window = false;
-		ImGui::End();
+		listReleaseIterator(iter);
 	}
 
 	// Rendering

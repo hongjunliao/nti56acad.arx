@@ -87,7 +87,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>E:\home\nti56acad.arx\deps\SDL\include\;;E:\home\nti56acad.arx\deps\SDL\include\;;E:\home\nti56acad.arx\include;E:\home\nti56acad.arx\deps\arx\inc-x64;E:\home\nti56acad.arx\deps\arx\inc;E:\home\nti56acad.arx\src;E:\home\nti56acad.arx\src\libxhhp\src;E:\home\nti56acad.arx\imgui;%(AdditionalIncludeDirectories);..\deps;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\home\nti56acad.arx\deps\SDL\include\;;E:\home\nti56acad.arx\deps\SDL\include\;;E:\home\nti56acad.arx\include;E:\home\nti56acad.arx\deps\arx\inc-x64;E:\home\nti56acad.arx\deps\arx\inc;E:\home\nti56acad.arx\src;E:\home\nti56acad.arx\src\libxhhp\src;E:\home\nti56acad.arx\imgui;%(AdditionalIncludeDirectories);..\deps;;..\deps\redis\src;</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -99,7 +99,7 @@
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;UNICODE;_UNICODE;NDEBUG;IMGUI_IMPL_WIN32_DISABLE_GAMEPAD;CMAKE_INTDIR="Debug";nti56acad_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;UNICODE;_UNICODE;IMGUI_IMPL_WIN32_DISABLE_GAMEPAD;CMAKE_INTDIR="Debug";nti56acad_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
     </ClCompile>
     <ResourceCompile>
@@ -131,7 +131,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>E:\home\nti56acad.arx\deps\SDL\include\;;E:\home\nti56acad.arx\include;E:\home\nti56acad.arx\deps\arx\inc-x64;E:\home\nti56acad.arx\deps\arx\inc;E:\home\nti56acad.arx\src;E:\home\nti56acad.arx\src\libxhhp\src;E:\home\nti56acad.arx\imgui;%(AdditionalIncludeDirectories);..\deps;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\home\nti56acad.arx\deps\SDL\include\;;E:\home\nti56acad.arx\include;E:\home\nti56acad.arx\deps\arx\inc-x64;E:\home\nti56acad.arx\deps\arx\inc;E:\home\nti56acad.arx\src;E:\home\nti56acad.arx\src\libxhhp\src;E:\home\nti56acad.arx\imgui;%(AdditionalIncludeDirectories);..\deps;;..\deps\redis\src;</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ExceptionHandling>Sync</ExceptionHandling>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
@@ -174,7 +174,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>E:\home\nti56acad.arx\include;E:\home\nti56acad.arx\deps\arx\inc-x64;E:\home\nti56acad.arx\deps\arx\inc;E:\home\nti56acad.arx\src;E:\home\nti56acad.arx\src\libxhhp\src;E:\home\nti56acad.arx\imgui;%(AdditionalIncludeDirectories);..\deps;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\home\nti56acad.arx\include;E:\home\nti56acad.arx\deps\arx\inc-x64;E:\home\nti56acad.arx\deps\arx\inc;E:\home\nti56acad.arx\src;E:\home\nti56acad.arx\src\libxhhp\src;E:\home\nti56acad.arx\imgui;%(AdditionalIncludeDirectories);..\deps;;..\deps\redis\src;</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ExceptionHandling>Sync</ExceptionHandling>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
@@ -217,7 +217,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>E:\home\nti56acad.arx\include;E:\home\nti56acad.arx\deps\arx\inc-x64;E:\home\nti56acad.arx\deps\arx\inc;E:\home\nti56acad.arx\src;E:\home\nti56acad.arx\src\libxhhp\src;E:\home\nti56acad.arx\imgui;%(AdditionalIncludeDirectories);..\deps;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\home\nti56acad.arx\include;E:\home\nti56acad.arx\deps\arx\inc-x64;E:\home\nti56acad.arx\deps\arx\inc;E:\home\nti56acad.arx\src;E:\home\nti56acad.arx\src\libxhhp\src;E:\home\nti56acad.arx\imgui;%(AdditionalIncludeDirectories);..\deps;;..\deps\redis\src;</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -316,6 +316,8 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\deps\gbk-utf8\utf8.c" />
+    <ClCompile Include="..\deps\redis\src\adlist.c" />
+    <ClCompile Include="..\deps\redis\src\zmalloc.c" />
     <ClCompile Include="..\deps\sds\win32_sds.c" />
     <ClCompile Include="..\imgui\imgui_impl_opengl2.cpp" />
     <ClCompile Include="..\src\nti_arx.cpp" />
@@ -333,6 +335,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\src\nti_reactor.cpp" />
+    <ClCompile Include="..\src\nti_render.cpp" />
     <ClCompile Include="..\src\nti_str.cpp" />
     <ClCompile Include="..\src\test_nti_imgui.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
@@ -367,10 +370,14 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClInclude Include="..\config.h" />
+    <ClInclude Include="..\deps\redis\src\adlist.h" />
+    <ClInclude Include="..\deps\redis\src\zmalloc.h" />
     <ClInclude Include="..\imgui\imgui_impl_opengl2.h" />
     <ClInclude Include="..\src\nti_arx.h" />
+    <ClInclude Include="..\src\nti_cmn.h" />
     <ClInclude Include="..\src\nti_imgui.h" />
     <ClInclude Include="..\src\nti_reactor.h" />
+    <ClInclude Include="..\src\nti_render.h" />
     <ClInclude Include="..\src\nti_str.h" />
     <ClInclude Include="E:\home\nti56acad.arx\src\stdafx.h" />
     <ClInclude Include="E:\home\nti56acad.arx\src\targetver.h" />
