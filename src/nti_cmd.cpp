@@ -33,6 +33,7 @@ extern nti_wnddata * g_wnddata;
 
 void nti56acad()
 {
+	int rc;
 	// Redirect the resource override   
 	CAcModuleResourceOverride res;
 	//// Create the dock ctrl bar   
@@ -41,6 +42,16 @@ void nti56acad()
 		dockBar = new nti_dockbar;
 		dockBar->wnddata = g_wnddata;
 		dockBar->Create(acedGetAcadFrame(), _T("nti_dockbar"), 12345);
+
+		rc = nti_imgui_add_render(nti_tabswnd_render, (nti_imgui_wnddata *)&g_wnddata->reactor);
+		assert(rc == 0);
+
+		//nti_imgui_add_render(nti_tabswnd_render, 0);
+
+		//nti_imgui_add_render(nti_tabswnd_simple, 0);
+		//nti_imgui_add_render(nti_tabswnd_another, 0);
+
+
 		dockBar->EnableDocking(CBRS_ALIGN_ANY);
 		dockBar->SetWindowText(_T("nti56acad"));
 		acedGetAcadFrame()->DockControlBar(dockBar);

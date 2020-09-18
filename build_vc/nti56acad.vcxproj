@@ -60,25 +60,25 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:\home\nti56acad.arx\build_vc\Debug\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">nti56acad.dir\Debug\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">nti56acad</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.arx</TargetExt>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\home\nti56acad.arx\build_vc\Release\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">nti56acad.dir\Release\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">nti56acad</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.arx</TargetExt>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">E:\home\nti56acad.arx\build_vc\MinSizeRel\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">$(ProjectDir)$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">nti56acad.dir\MinSizeRel\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">nti56acad</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.arx</TargetExt>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">true</GenerateManifest>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">E:\home\nti56acad.arx\build_vc\RelWithDebInfo\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">$(ProjectDir)$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">nti56acad.dir\RelWithDebInfo\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">nti56acad</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.arx</TargetExt>
@@ -87,7 +87,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>E:\home\nti56acad.arx\deps\SDL\include\;;E:\home\nti56acad.arx\deps\SDL\include\;;E:\home\nti56acad.arx\include;E:\home\nti56acad.arx\deps\arx\inc-x64;E:\home\nti56acad.arx\deps\arx\inc;E:\home\nti56acad.arx\src;E:\home\nti56acad.arx\src\libxhhp\src;E:\home\nti56acad.arx\imgui;%(AdditionalIncludeDirectories);..\deps;;..\deps\redis\src;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include\;..\deps\arx\inc-x64;..\deps\arx\inc;..\src;..\src\libxhhp\src;..\imgui;%(AdditionalIncludeDirectories);..\deps;;..\deps\redis\src;</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -104,10 +104,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;UNICODE;_UNICODE;NDEBUG;IMGUI_IMPL_WIN32_DISABLE_GAMEPAD;CMAKE_INTDIR=\"Debug\";nti56acad_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>E:\home\nti56acad.arx\include;E:\home\nti56acad.arx\deps\arx\inc-x64;E:\home\nti56acad.arx\deps\arx\inc;E:\home\nti56acad.arx\src;E:\home\nti56acad.arx\src\libxhhp\src;E:\home\nti56acad.arx\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;E:\home\nti56acad.arx\deps\arx\inc-x64;E:\home\nti56acad.arx\deps\arx\inc;E:\home\nti56acad.arx\src;E:\home\nti56acad.arx\src\libxhhp\src;E:\home\nti56acad.arx\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>E:\home\nti56acad.arx\include;E:\home\nti56acad.arx\deps\arx\inc-x64;E:\home\nti56acad.arx\deps\arx\inc;E:\home\nti56acad.arx\src;E:\home\nti56acad.arx\src\libxhhp\src;E:\home\nti56acad.arx\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;E:\home\nti56acad.arx\deps\arx\inc-x64;E:\home\nti56acad.arx\deps\arx\inc;E:\home\nti56acad.arx\src;E:\home\nti56acad.arx\src\libxhhp\src;E:\home\nti56acad.arx\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -116,7 +116,7 @@
     </Midl>
     <Link>
       <AdditionalDependencies>accore.lib;acad.lib;acui22.lib;adui22.lib;ac1st22.lib;acdb22.lib;acge22.lib;acgiapi.lib;rxapi.lib;opengl32.lib;glu32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>E:/home/nti56acad.arx/lib;E:/home/nti56acad.arx/lib/$(Configuration);E:/home/nti56acad.arx/deps/arx/lib-x64;E:/home/nti56acad.arx/deps/arx/lib-x64/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../lib;../lib/$(Configuration);../deps/arx/lib-x64;../deps/arx/lib-x64/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64 /NODEFAULTLIB:libc.lib /NODEFAULTLIB:libcmt.lib /NODEFAULTLIB:libcd.lib /NODEFAULTLIB:libcmtd.lib /NODEFAULTLIB:msvcrtd.lib</AdditionalOptions>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
@@ -131,7 +131,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>E:\home\nti56acad.arx\deps\SDL\include\;;E:\home\nti56acad.arx\include;E:\home\nti56acad.arx\deps\arx\inc-x64;E:\home\nti56acad.arx\deps\arx\inc;E:\home\nti56acad.arx\src;E:\home\nti56acad.arx\src\libxhhp\src;E:\home\nti56acad.arx\imgui;%(AdditionalIncludeDirectories);..\deps;;..\deps\redis\src;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include\;..\deps\arx\inc-x64;..\deps\arx\inc;..\src;..\src\libxhhp\src;..\imgui;%(AdditionalIncludeDirectories);..\deps;;..\deps\redis\src;</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ExceptionHandling>Sync</ExceptionHandling>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
@@ -147,10 +147,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;UNICODE;_UNICODE;IMGUI_IMPL_WIN32_DISABLE_GAMEPAD;CMAKE_INTDIR=\"Release\";nti56acad_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>E:\home\nti56acad.arx\include;E:\home\nti56acad.arx\deps\arx\inc-x64;E:\home\nti56acad.arx\deps\arx\inc;E:\home\nti56acad.arx\src;E:\home\nti56acad.arx\src\libxhhp\src;E:\home\nti56acad.arx\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;E:\home\nti56acad.arx\deps\arx\inc-x64;E:\home\nti56acad.arx\deps\arx\inc;E:\home\nti56acad.arx\src;E:\home\nti56acad.arx\src\libxhhp\src;E:\home\nti56acad.arx\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>E:\home\nti56acad.arx\include;E:\home\nti56acad.arx\deps\arx\inc-x64;E:\home\nti56acad.arx\deps\arx\inc;E:\home\nti56acad.arx\src;E:\home\nti56acad.arx\src\libxhhp\src;E:\home\nti56acad.arx\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;E:\home\nti56acad.arx\deps\arx\inc-x64;E:\home\nti56acad.arx\deps\arx\inc;E:\home\nti56acad.arx\src;E:\home\nti56acad.arx\src\libxhhp\src;E:\home\nti56acad.arx\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -159,7 +159,7 @@
     </Midl>
     <Link>
       <AdditionalDependencies>accore.lib;acad.lib;acui22.lib;adui22.lib;ac1st22.lib;acdb22.lib;acge22.lib;acgiapi.lib;rxapi.lib;opengl32.lib;glu32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;</AdditionalDependencies>
-      <AdditionalLibraryDirectories>E:/home/nti56acad.arx/lib;E:/home/nti56acad.arx/lib/$(Configuration);E:/home/nti56acad.arx/deps/arx/lib-x64;E:/home/nti56acad.arx/deps/arx/lib-x64/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../lib;../lib/$(Configuration);../deps/arx/lib-x64;../deps/arx/lib-x64/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
@@ -174,7 +174,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>E:\home\nti56acad.arx\include;E:\home\nti56acad.arx\deps\arx\inc-x64;E:\home\nti56acad.arx\deps\arx\inc;E:\home\nti56acad.arx\src;E:\home\nti56acad.arx\src\libxhhp\src;E:\home\nti56acad.arx\imgui;%(AdditionalIncludeDirectories);..\deps;;..\deps\redis\src;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include\;..\deps\arx\inc-x64;..\deps\arx\inc;..\src;..\src\libxhhp\src;..\imgui;%(AdditionalIncludeDirectories);..\deps;;..\deps\redis\src;</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ExceptionHandling>Sync</ExceptionHandling>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
@@ -190,10 +190,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;UNICODE;_UNICODE;IMGUI_IMPL_WIN32_DISABLE_GAMEPAD;CMAKE_INTDIR=\"MinSizeRel\";nti56acad_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>E:\home\nti56acad.arx\include;E:\home\nti56acad.arx\deps\arx\inc-x64;E:\home\nti56acad.arx\deps\arx\inc;E:\home\nti56acad.arx\src;E:\home\nti56acad.arx\src\libxhhp\src;E:\home\nti56acad.arx\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;E:\home\nti56acad.arx\deps\arx\inc-x64;E:\home\nti56acad.arx\deps\arx\inc;E:\home\nti56acad.arx\src;E:\home\nti56acad.arx\src\libxhhp\src;E:\home\nti56acad.arx\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>E:\home\nti56acad.arx\include;E:\home\nti56acad.arx\deps\arx\inc-x64;E:\home\nti56acad.arx\deps\arx\inc;E:\home\nti56acad.arx\src;E:\home\nti56acad.arx\src\libxhhp\src;E:\home\nti56acad.arx\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;E:\home\nti56acad.arx\deps\arx\inc-x64;E:\home\nti56acad.arx\deps\arx\inc;E:\home\nti56acad.arx\src;E:\home\nti56acad.arx\src\libxhhp\src;E:\home\nti56acad.arx\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -202,7 +202,7 @@
     </Midl>
     <Link>
       <AdditionalDependencies>accore.lib;acad.lib;acui22.lib;adui22.lib;ac1st22.lib;acdb22.lib;acge22.lib;acgiapi.lib;rxapi.lib;opengl32.lib;glu32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>E:/home/nti56acad.arx/lib;E:/home/nti56acad.arx/lib/$(Configuration);E:/home/nti56acad.arx/deps/arx/lib-x64;E:/home/nti56acad.arx/deps/arx/lib-x64/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../lib;../lib/$(Configuration);../deps/arx/lib-x64;../deps/arx/lib-x64/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
@@ -217,7 +217,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>E:\home\nti56acad.arx\include;E:\home\nti56acad.arx\deps\arx\inc-x64;E:\home\nti56acad.arx\deps\arx\inc;E:\home\nti56acad.arx\src;E:\home\nti56acad.arx\src\libxhhp\src;E:\home\nti56acad.arx\imgui;%(AdditionalIncludeDirectories);..\deps;;..\deps\redis\src;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include\;..\deps\arx\inc-x64;..\deps\arx\inc;..\src;..\src\libxhhp\src;..\imgui;%(AdditionalIncludeDirectories);..\deps;;..\deps\redis\src;</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -233,10 +233,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;UNICODE;_UNICODE;IMGUI_IMPL_WIN32_DISABLE_GAMEPAD;CMAKE_INTDIR=\"RelWithDebInfo\";nti56acad_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>E:\home\nti56acad.arx\include;E:\home\nti56acad.arx\deps\arx\inc-x64;E:\home\nti56acad.arx\deps\arx\inc;E:\home\nti56acad.arx\src;E:\home\nti56acad.arx\src\libxhhp\src;E:\home\nti56acad.arx\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;E:\home\nti56acad.arx\deps\arx\inc-x64;E:\home\nti56acad.arx\deps\arx\inc;E:\home\nti56acad.arx\src;E:\home\nti56acad.arx\src\libxhhp\src;E:\home\nti56acad.arx\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>E:\home\nti56acad.arx\include;E:\home\nti56acad.arx\deps\arx\inc-x64;E:\home\nti56acad.arx\deps\arx\inc;E:\home\nti56acad.arx\src;E:\home\nti56acad.arx\src\libxhhp\src;E:\home\nti56acad.arx\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;E:\home\nti56acad.arx\deps\arx\inc-x64;E:\home\nti56acad.arx\deps\arx\inc;E:\home\nti56acad.arx\src;E:\home\nti56acad.arx\src\libxhhp\src;E:\home\nti56acad.arx\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -245,7 +245,7 @@
     </Midl>
     <Link>
       <AdditionalDependencies>accore.lib;acad.lib;acui22.lib;adui22.lib;ac1st22.lib;acdb22.lib;acge22.lib;acgiapi.lib;rxapi.lib;opengl32.lib;glu32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>E:/home/nti56acad.arx/lib;E:/home/nti56acad.arx/lib/$(Configuration);E:/home/nti56acad.arx/deps/arx/lib-x64;E:/home/nti56acad.arx/deps/arx/lib-x64/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../lib;../lib/$(Configuration);../deps/arx/lib-x64;../deps/arx/lib-x64/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>

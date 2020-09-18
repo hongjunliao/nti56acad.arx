@@ -41,14 +41,6 @@ int nti_dockbar::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	HWND hwnd = GetSafeHwnd();
 	nti_imgui_create(hwnd);
 
-	assert(wnddata);
-	rc = nti_imgui_add_render(nti_tabswnd_reactor, (nti_imgui_wnddata *)&wnddata->reactor);
-	assert(rc == 0);
-
-	nti_imgui_add_render(nti_tabswnd_render, 0);
-	nti_imgui_add_render(nti_tabswnd_simple, 0);
-	nti_imgui_add_render(nti_tabswnd_another, 0);
-
 	SetTimer(1, 16, NULL);
 	return rc;
 }

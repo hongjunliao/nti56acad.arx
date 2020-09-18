@@ -575,7 +575,8 @@ int nti_arx_blocks()
 		const TCHAR *pCname = pBlkRef->isA()->name();
 		acutPrintf(_T("name='%s', Object Id %lx, handle %s, class %s.\n"),
 			  _T(""), pBlkRef->objectId().asOldId(), handleStr, pCname);
-		pBlkRef->close();
+
+	    pBlkRef->close();
 	}
 
 	return 0;
@@ -584,6 +585,7 @@ int nti_arx_blocks()
 #ifndef NDEBUG
 int test_nti_arx_main(int argc, char ** argv)
 {
+	printf(("%s: \n"), __FUNCTION__);
 	int rc; 
 
 	rc = nti_arx_blocks();

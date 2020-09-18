@@ -28,23 +28,40 @@
 //tabs window
 void nti_tabswnd_render(nti_imgui_wnddata * wnddata)
 {
+	if (!wnddata)
+		return;
+	nti_wnddata_reactor * reactor = (nti_wnddata_reactor *)wnddata;
 	ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags_None;
 	if (ImGui::BeginTabBar("tab", tab_bar_flags))
 	{
 		if (ImGui::BeginTabItem(("图块")))
 		{
 			ImGui::Text("This is the Avocado tab!\nblah blah blah blah blah");
+			ImGui::InputText("what:", reactor->what, IM_ARRAYSIZE(reactor->what));
+			ImGui::InputText("class:", reactor->cls, IM_ARRAYSIZE(reactor->cls));
+			ImGui::InputText("object id:", reactor->obj_id, IM_ARRAYSIZE(reactor->obj_id));
+			ImGui::InputText("handle:", reactor->handle, IM_ARRAYSIZE(reactor->handle));
 			if (ImGui::Button("test")) {
 				int rc = test_nti_arx_main(0, 0);
 			}
 			ImGui::EndTabItem();
 		}
-		if (ImGui::BeginTabItem("Broccoli"))
+		if (ImGui::BeginTabItem(("工具")))
+		{
+			ImGui::Text("This is the Cucumber tab!\nblah blah blah blah blah");
+			ImGui::EndTabItem();
+		}
+		if (ImGui::BeginTabItem("导入/导出"))
 		{
 			ImGui::Text("This is the Broccoli tab!\nblah blah blah blah blah");
 			ImGui::EndTabItem();
 		}
 		if (ImGui::BeginTabItem(("打印")))
+		{
+			ImGui::Text("This is the Cucumber tab!\nblah blah blah blah blah");
+			ImGui::EndTabItem();
+		}
+		if (ImGui::BeginTabItem(("设置")))
 		{
 			ImGui::Text("This is the Cucumber tab!\nblah blah blah blah blah");
 			ImGui::EndTabItem();
