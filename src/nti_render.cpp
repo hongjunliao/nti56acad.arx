@@ -30,12 +30,11 @@ void nti_tabswnd_render(nti_imgui_wnddata * wnddata)
 {
 	if (!wnddata)
 		return;
+	ImGui::Begin(wnddata->title);
 	nti_wnddata_reactor * reactor = (nti_wnddata_reactor *)wnddata;
 	ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags_None;
-	if (ImGui::BeginTabBar("tab", tab_bar_flags))
-	{
-		if (ImGui::BeginTabItem(("图块")))
-		{
+	if (ImGui::BeginTabBar("tab", tab_bar_flags)) {
+		if (ImGui::BeginTabItem(("图块"))) {
 			ImGui::Text("This is the Avocado tab!\nblah blah blah blah blah");
 
 			listIter * iter = listGetIterator(reactor->block_list, 0);
@@ -54,36 +53,45 @@ void nti_tabswnd_render(nti_imgui_wnddata * wnddata)
 			ImGui::InputText("class:", reactor->cls, IM_ARRAYSIZE(reactor->cls));
 			ImGui::InputText("object id:", reactor->obj_id, IM_ARRAYSIZE(reactor->obj_id));
 			ImGui::InputText("handle:", reactor->handle, IM_ARRAYSIZE(reactor->handle));
-#ifndef NDEBUG
-			if (ImGui::Button("test")) {
-				int rc = test_nti_arx_main(0, 0);
-			}
-#endif // !NDEBUG
 
 			ImGui::EndTabItem();
 		}
-		if (ImGui::BeginTabItem(("工具")))
-		{
+		if (ImGui::BeginTabItem(("工具"))) {
 			ImGui::Text("This is the Cucumber tab!\nblah blah blah blah blah");
 			ImGui::EndTabItem();
 		}
-		if (ImGui::BeginTabItem("导入/导出"))
-		{
+		if (ImGui::BeginTabItem("导入/导出")) {
 			ImGui::Text("This is the Broccoli tab!\nblah blah blah blah blah");
 			ImGui::EndTabItem();
 		}
-		if (ImGui::BeginTabItem(("打印")))
-		{
+		if (ImGui::BeginTabItem(("打印"))) {
 			ImGui::Text("This is the Cucumber tab!\nblah blah blah blah blah");
 			ImGui::EndTabItem();
 		}
-		if (ImGui::BeginTabItem(("设置")))
-		{
+		if (ImGui::BeginTabItem(("设置"))) {
 			ImGui::Text("This is the Cucumber tab!\nblah blah blah blah blah");
 			ImGui::EndTabItem();
 		}
+#ifndef NDEBUG
+		if (ImGui::BeginTabItem(("Test"))) {
+
+			static bool show_demo_window = 0;
+			if (show_demo_window) {
+				ImGui::BeginChild("imgui demo window");
+				ImGui::ShowDemoWindow(&show_demo_window);
+				ImGui::EndChild();
+			}
+			ImGui::Checkbox("imgui demo window", &show_demo_window);
+
+			if (ImGui::Button("test")) {
+				int rc = test_nti_arx_main(0, 0); 
+			}
+			ImGui::EndTabItem();
+		}
+#endif // !NDEBUG
 		ImGui::EndTabBar();
 	}
+	ImGui::End();
 }
 
 //reactor window

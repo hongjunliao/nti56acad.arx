@@ -196,31 +196,47 @@ void CDocReactor::documentActivated(AcApDocument* pDoc)
 #endif
 
 		AcDbBlockTable *pBlockTable = 0;
-
 		acdbHostApplicationServices()->workingDatabase()->getSymbolTable(pBlockTable, AcDb::kForRead);
 
 		AcDbBlockTableIterator * iter = 0;
 		pBlockTable->newIterator(iter);
 
-		AcDbBlockTableRecord *pBlockTableRec = 0;
 		for (; iter && !iter->done(); iter->step()) {
 
+			AcDbBlockTableRecord *pBlockTableRec = 0;
 			ACHAR * name = 0;
 			iter->getRecord(pBlockTableRec);
 			if (pBlockTableRec) {
 				pBlockTableRec->getName(name);
 				AcDbObjectId id = pBlockTableRec->objectId();
+
+				//AcDbBlockTableRecordIterator * riter = 0;
+				//pBlockTableRec->newIterator(riter);
+
+				//for (; riter && !riter->done(); riter->step()) {
+				//	AcDbEntity * ent = 0;
+				//	riter->getEntity(ent);
+
+				//	AcDbAttributeDefinition *pAttDef = NULL;
+				//	pAttDef = AcDbAttributeDefinition::cast(ent);
+				//	if (pAttDef) {
+
+				//	}
+
+				//	ent->close();
+				//	delete ent;
+				//}
+				//delete riter;
+
+				char * bname = nti_newn(128, char);
+				strncpy(bname, U8(WA(name)), 128);
+				listAddNodeTail(g_wnddata->reactor.block_list, bname);
+
+				pBlockTableRec->close();
 			}
-
-
-	
-			char * bname = nti_newn(128, char);
-			strncpy(bname, U8(WA(name)), 128);
-			listAddNodeTail(g_wnddata->reactor.block_list, bname);
-
-			pBlockTableRec->close();
 		}
 		pBlockTable->close();
+		delete iter;
     }
 }
 //

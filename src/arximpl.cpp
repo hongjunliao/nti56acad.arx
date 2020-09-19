@@ -47,6 +47,7 @@ AC_IMPLEMENT_EXTENSION_MODULE(modelessDll);
 
 void initApp()
 {
+	strcpy(g_wnddata->reactor.base.title, "ntiacad");
 	g_wnddata->reactor.block_list = listCreate();
 
 	gpDocReactor = new CDocReactor();
