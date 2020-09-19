@@ -37,13 +37,29 @@ void nti_tabswnd_render(nti_imgui_wnddata * wnddata)
 		if (ImGui::BeginTabItem(("图块")))
 		{
 			ImGui::Text("This is the Avocado tab!\nblah blah blah blah blah");
+
+			listIter * iter = listGetIterator(reactor->block_list, 0);
+			for (listNode * node = listNext(iter); node; ) {
+
+				char * bname = (char *)listNodeValue(node);
+				assert(bname);
+
+				ImGui::Text("%s", bname);
+
+				node = listNext(iter);
+			}
+			listReleaseIterator(iter);
+
 			ImGui::InputText("what:", reactor->what, IM_ARRAYSIZE(reactor->what));
 			ImGui::InputText("class:", reactor->cls, IM_ARRAYSIZE(reactor->cls));
 			ImGui::InputText("object id:", reactor->obj_id, IM_ARRAYSIZE(reactor->obj_id));
 			ImGui::InputText("handle:", reactor->handle, IM_ARRAYSIZE(reactor->handle));
+#ifndef NDEBUG
 			if (ImGui::Button("test")) {
 				int rc = test_nti_arx_main(0, 0);
 			}
+#endif // !NDEBUG
+
 			ImGui::EndTabItem();
 		}
 		if (ImGui::BeginTabItem(("工具")))

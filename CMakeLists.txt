@@ -1,21 +1,48 @@
 # author hongjun.liao <docici@126.com>
 # date 2020/8/21
-# build nti56acad_test.exe and nti56acad.arx
+# build nti56acad_test.exe, nti56acadmfc.exe and nti56acad.arx
 
 cmake_minimum_required(VERSION 3.7)
 find_package(OPENGL REQUIRED)
 
 # for nti56acad.arx
 project(nti56acad)
-file(GLOB_RECURSE SRCS src/* imgui/*.cpp)   
-add_library(nti56acad  SHARED ${SRCS} )
-target_include_directories(nti56acad PUBLIC include deps/arx/inc-x64/ deps/arx/inc/  src/ src/libxhhp/src/ imgui)
+# use MFC dll
+add_definitions(-D_AFXDLL)
+set(CMAKE_MFC_FLAG 2)
+#
+set(CMAKE_SHARED_LINKR_FLAGS "${CMAKE_SHARED_LINKR_FLAGS} /NODEFAULTLIB:libc.lib")
+
+file(GLOB SRCS 
+	deps/imgui/imgui.cpp 
+	deps/imgui/imgui_demo.cpp
+	deps/imgui/imgui_widgets.cpp 
+	deps/imgui/imgui_draw.cpp 
+	deps/imgui/imgui_impl_win32.cpp 
+	deps/imgui/imgui_impl_opengl2.cpp 
+	deps/gbk-utf8/utf8.c
+	deps/sds/win32_sds.c
+	src/glad.c
+	deps/redis/src/adlist.c
+	deps/redis/src/zmalloc.c
+)
+file(GLOB SRCS ${SRCS} 
+	src/config.h src/stdafx.h src/*.h
+
+	src/stdafx.cpp src/arximpl.cpp src/nti_arx.cpp src/nti_imgui.cpp src/nti_reactor.cpp
+	src/nti_dockbar.cpp src/nti_cmd.cpp src/test_nti_imgui.cpp
+	src/nti_render.cpp src/nti_str.cpp
+)   
+add_library(nti56acad  SHARED ${SRCS})
+target_include_directories(nti56acad PUBLIC 
+	include src/ deps/ deps/imgui deps/redis/src/ deps/arx/inc-x64/ deps/arx/inc/  src/ src/libxhhp/src/)
 target_link_directories(nti56acad PRIVATE lib deps/arx/lib-x64/)
 target_link_libraries(nti56acad
-    PRIVATE accore acad acui22 adui22 ac1st22 acdb22 acge22 acgiapi rxapi
-        ${OPENGL_LIBRARIES})
-
-target_compile_options(nti56acad PUBLIC -DUNICODE -D_UNICODE -DNDEBUG -DIMGUI_IMPL_WIN32_DISABLE_GAMEPAD)
+    PRIVATE accore acad acui22 adui22 ac1st22 acdb22 acge22 acgiapi rxapi ${OPENGL_LIBRARIES})
+target_compile_options(nti56acad PUBLIC 
+	-D_WIN32 -DUNICODE -D_UNICODE -DHAVE_CONFIG_H -DIMGUI_IMPL_OPENGL_LOADER_GLAD /MD)
+target_link_options(nti56acad PUBLIC 
+	/DEF:../deps/arx/inc/AcRxDefault.def)
 
 # for nti56acad_test.exe
 project(nti56acad_test)
@@ -23,16 +50,16 @@ project(nti56acad_test)
 add_executable(nti56acad_test
     src/application.cpp
     src/glad.c
-    imgui/imgui.cpp
-    imgui/imgui.h
-    imgui/imgui_demo.cpp
-    imgui/imgui_draw.cpp
-    imgui/imgui_impl_opengl3.cpp
-    imgui/imgui_impl_opengl3.h
-    imgui/imgui_impl_win32.cpp
-    imgui/imgui_impl_win32.h
-    imgui/imgui_internal.h
-    imgui/imgui_widgets.cpp
+    deps/imgui/imgui.cpp
+    deps/imgui/imgui.h
+    deps/imgui/imgui_demo.cpp
+    deps/imgui/imgui_draw.cpp
+    deps/imgui/imgui_impl_opengl3.cpp
+    deps/imgui/imgui_impl_opengl3.h
+    deps/imgui/imgui_impl_win32.cpp
+    deps/imgui/imgui_impl_win32.h
+    deps/imgui/imgui_internal.h
+    deps/imgui/imgui_widgets.cpp
     src/main.cpp
     )
 
@@ -45,9 +72,11 @@ target_compile_features(nti56acad_test
 
 target_compile_options(nti56acad_test
     PUBLIC 
+		-D_WIN32
         -DUNICODE
         -D_UNICODE
-        -DIMGUI_IMPL_WIN32_DISABLE_GAMEPAD)
+		-DHAVE_CONFIG_H
+		-DIMGUI_IMPL_OPENGL_LOADER_GLAD)
 target_link_libraries(nti56acad_test
     PRIVATE ${OPENGL_LIBRARIES})
 if(MINGW)

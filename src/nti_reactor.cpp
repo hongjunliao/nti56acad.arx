@@ -21,7 +21,7 @@
 
 extern nti_wnddata * g_wnddata;
 extern CDbModReactor * gpDbReactor;
-#define wcpy(buff, s) strncpy(buff, WA(s), _countof(buff));
+
 /////////////////////////////////////////////////////////////////////////////////////
 
 class CDocInfo
@@ -189,11 +189,38 @@ void CDocReactor::documentActivated(AcApDocument* pDoc)
     // brought up in Acad.
     //
     if (pDoc) {
-        attachDbReactor(pDoc->database());
+        //attachDbReactor(pDoc->database());
 #ifndef NDEBUG
         acutPrintf(_T("\ndocumentActiveated: %s.\n"), pDoc->fileName());
         acedPostCommandPrompt();
 #endif
+
+		AcDbBlockTable *pBlockTable = 0;
+
+		acdbHostApplicationServices()->workingDatabase()->getSymbolTable(pBlockTable, AcDb::kForRead);
+
+		AcDbBlockTableIterator * iter = 0;
+		pBlockTable->newIterator(iter);
+
+		AcDbBlockTableRecord *pBlockTableRec = 0;
+		for (; iter && !iter->done(); iter->step()) {
+
+			ACHAR * name = 0;
+			iter->getRecord(pBlockTableRec);
+			if (pBlockTableRec) {
+				pBlockTableRec->getName(name);
+				AcDbObjectId id = pBlockTableRec->objectId();
+			}
+
+
+	
+			char * bname = nti_newn(128, char);
+			strncpy(bname, U8(WA(name)), 128);
+			listAddNodeTail(g_wnddata->reactor.block_list, bname);
+
+			pBlockTableRec->close();
+		}
+		pBlockTable->close();
     }
 }
 //
