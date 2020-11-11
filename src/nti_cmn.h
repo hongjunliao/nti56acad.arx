@@ -12,19 +12,12 @@
 #endif /* HAVE_CONFIG_H */
 
 #include "nti_imgui.h" //nti_imgui_wnddata
-extern "C" {
-#include "adlist.h"	//list
-}
 /////////////////////////////////////////////////////////////////////////////////////
 
 #define nti_new(T) ((T *)calloc(1, sizeof(T)))
-#define nti_newn(N,T) ((T *)calloc(N, sizeof(T)))
-#define wcpy(buff, s) strncpy(buff, WA(s), _countof(buff));
 
-/////////////////////////////////////////////////////////////////////////////////////
 struct nti_wnddata_reactor {
 	nti_imgui_wnddata base;
-	list * block_list;
 	char what[128];
 	char cls[128];
 	char obj_id[128];
@@ -34,7 +27,5 @@ struct nti_wnddata_reactor {
 struct nti_wnddata {
 	nti_wnddata_reactor reactor;
 };
-
-/////////////////////////////////////////////////////////////////////////////////////
 
 #endif //NTI_CMN_H

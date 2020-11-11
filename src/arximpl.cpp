@@ -9,7 +9,6 @@
 #endif /* HAVE_CONFIG_H */
 
 #include "StdAfx.h"
-
 #include "rxregsvc.h"
 //#include "AcExtensionModule.h"
 #include "aced.h"
@@ -17,7 +16,6 @@
 #include "adslib.h"
 #include "dbents.h"
 #include "tchar.h"
-#include "sds/win32_sds.h"
 
 #include "nti_imgui.h" /*nti_wnddata*/
 #include "nti_cmd.h"
@@ -47,9 +45,6 @@ AC_IMPLEMENT_EXTENSION_MODULE(modelessDll);
 
 void initApp()
 {
-	strcpy(g_wnddata->reactor.base.title, "ntiacad");
-	g_wnddata->reactor.block_list = listCreate();
-
 	gpDocReactor = new CDocReactor();
 	acDocManager->addReactor(gpDocReactor);
 
@@ -86,8 +81,6 @@ void unloadApp()
 	}
 
 	acedRegCmds->removeGroup(_T("ASDK_NTI56ACAD"));
-
-	listRelease(g_wnddata->reactor.block_list);
 }
 /////////////////////////////////////////////////////////////////////////////
 //

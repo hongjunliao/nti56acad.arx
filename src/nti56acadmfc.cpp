@@ -8,6 +8,7 @@
 #include "nti56acadmfc.h"
 #include "MainFrm.h"
 #include "nti_imgui.h" /*nti_wnddata*/
+#include "nti_render.h" /*nti_wnddata*/
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -18,6 +19,10 @@ nti_wnddata * g_wnddata = &g_wnddataobj;
 
 HWND g_hwnd;
 int is_chld = 0;
+
+extern "C" {
+	int test_libxlsxio_main(int argc, char ** argv);
+}
 
 // Cnti56acadmfcApp
 
@@ -76,13 +81,19 @@ BOOL Cnti56acadmfcApp::InitInstance()
 		WS_OVERLAPPEDWINDOW | FWS_ADDTOTITLE, NULL,
 		NULL);
 
-
-
-
-
 	// 唯一的一个窗口已初始化，因此显示它并对其进行更新
 	pFrame->ShowWindow(SW_SHOW);
 	pFrame->UpdateWindow();
+
+#ifndef NDEBUG
+	test_libxlsxio_main(0, 0);
+#endif
+	int rc;
+	rc = nti_imgui_add_render(nti_tabswnd_render, (nti_imgui_wnddata *)&g_wnddata->reactor);
+	//nti_imgui_add_render(nti_tabswnd_simple, 0);
+	//nti_imgui_add_render(nti_tabswnd_another, 0);
+
+
 	return TRUE;
 }
 

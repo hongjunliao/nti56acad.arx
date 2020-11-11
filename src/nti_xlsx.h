@@ -5,28 +5,27 @@
  * arx
  * */
 
-#ifndef NTI_ARX_H
-#define NTI_ARX_H
+#ifndef NTI_XLSX_H
+#define NTI_XLSX_H
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif /* HAVE_CONFIG_H */
+
+#include "sds/win32_sds.h" //sds
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 /////////////////////////////////////////////////////////////////////////////////////
 
-int nti_read(ACHAR const * file);
-int nti_insert_table();
-
-#define CUR_DB acdbHostApplicationServices()->workingDatabase()
+int nti_import_from_excel(char const * path, sds * errstr);
 /////////////////////////////////////////////////////////////////////////////////////////
 #ifndef NDEBUG
-int test_nti_arx_main(int argc, char ** argv);
+int test_nti_xlsx_main(int argc, char ** argv);
 #endif //NDEBUG
 
 #ifdef __cplusplus
 }
 #endif
-#endif //NTI_ARX_H
+#endif //NTI_XLSX_H

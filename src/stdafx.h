@@ -14,9 +14,8 @@
 #define WIN32_LEAN_AND_MEAN             // 从 Windows 头文件中排除极少使用的内容
 
 #ifdef _MSC_VER
-#ifdef _WIN32
-#include "Win32_Interop/win32_types.h"
-#endif
+
+#include "sds/win32_interop/win32_types.h"
 
 #endif /* _MSC_VER */
 
@@ -29,6 +28,7 @@
 // Read this project readme.txt for more detail
 //#define AC_FULL_DEBUG
 #if defined( _DEBUG) && !defined(AC_FULL_DEBUG)
+#pragma message("Building debug modeless.arx to be used with release AutoCAD")
 #define _DEBUG_THIS_ONLY
 #undef _DEBUG
 #endif
@@ -66,6 +66,7 @@
 
 #if defined(_DEBUG) && !defined(AC_FULL_DEBUG)
 #define _DEBUG_WAS_DEFINED
+#pragma message ("     Compiling MFC / STL / ATL header files in release mode.")
 #undef _DEBUG
 #endif
 #include <aced.h>

@@ -15,9 +15,13 @@
 #include "imgui_impl_win32.h"
 #include <GL/GL.h>
 #include "nti_imgui.h"		//nti_imgui_create
-#include "nti_arx.h"		//
 #include "nti_cmn.h"	//nti_wnddata
 #include "nti_render.h"
+#include "nti_xlsx.h"
+#include "ImGuiFileDialog/ImGuiFileDialog.h"
+#ifndef NTI56_WITHOUT_ARX
+#include "nti_arx.h"		//
+#endif
 
 #ifndef WM_DPICHANGED
 #define WM_DPICHANGED 0x02E0 // From Windows SDK 8.1+ headers
@@ -30,68 +34,72 @@ void nti_tabswnd_render(nti_imgui_wnddata * wnddata)
 {
 	if (!wnddata)
 		return;
-	ImGui::Begin(wnddata->title);
 	nti_wnddata_reactor * reactor = (nti_wnddata_reactor *)wnddata;
 	ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags_None;
-	if (ImGui::BeginTabBar("tab", tab_bar_flags)) {
-		if (ImGui::BeginTabItem(("图块"))) {
+	if (ImGui::BeginTabBar("tab", tab_bar_flags))
+	{
+		if (ImGui::BeginTabItem(("图块")))
+		{
 			ImGui::Text("This is the Avocado tab!\nblah blah blah blah blah");
-
-			listIter * iter = listGetIterator(reactor->block_list, 0);
-			for (listNode * node = listNext(iter); node; ) {
-
-				char * bname = (char *)listNodeValue(node);
-				assert(bname);
-
-				ImGui::Text("%s", bname);
-
-				node = listNext(iter);
-			}
-			listReleaseIterator(iter);
-
 			ImGui::InputText("what:", reactor->what, IM_ARRAYSIZE(reactor->what));
 			ImGui::InputText("class:", reactor->cls, IM_ARRAYSIZE(reactor->cls));
 			ImGui::InputText("object id:", reactor->obj_id, IM_ARRAYSIZE(reactor->obj_id));
 			ImGui::InputText("handle:", reactor->handle, IM_ARRAYSIZE(reactor->handle));
-
-			ImGui::EndTabItem();
-		}
-		if (ImGui::BeginTabItem(("工具"))) {
-			ImGui::Text("This is the Cucumber tab!\nblah blah blah blah blah");
-			ImGui::EndTabItem();
-		}
-		if (ImGui::BeginTabItem("导入/导出")) {
-			ImGui::Text("This is the Broccoli tab!\nblah blah blah blah blah");
-			ImGui::EndTabItem();
-		}
-		if (ImGui::BeginTabItem(("打印"))) {
-			ImGui::Text("This is the Cucumber tab!\nblah blah blah blah blah");
-			ImGui::EndTabItem();
-		}
-		if (ImGui::BeginTabItem(("设置"))) {
-			ImGui::Text("This is the Cucumber tab!\nblah blah blah blah blah");
-			ImGui::EndTabItem();
-		}
-#ifndef NDEBUG
-		if (ImGui::BeginTabItem(("Test"))) {
-
-			static bool show_demo_window = 0;
-			if (show_demo_window) {
-				ImGui::BeginChild("imgui demo window");
-				ImGui::ShowDemoWindow(&show_demo_window);
-				ImGui::EndChild();
-			}
-			ImGui::Checkbox("imgui demo window", &show_demo_window);
-
 			if (ImGui::Button("test")) {
-				int rc = test_nti_arx_main(0, 0); 
+#ifndef NTI56_WITHOUT_ARX
+				int rc = test_nti_arx_main(0, 0);
+#endif
 			}
 			ImGui::EndTabItem();
 		}
-#endif // !NDEBUG
+		if (ImGui::BeginTabItem(("工具")))
+		{
+			ImGui::Text("This is the Cucumber tab!\nblah blah blah blah blah");
+			ImGui::EndTabItem();
+		}
+		if (ImGui::BeginTabItem("导入/导出"))
+		{
+			static std::string filePathName;
+
+			ImGui::Text("%s", filePathName.c_str());
+			if (ImGui::Button("选择文件...")) {
+				igfd::ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose File", ".xlsx", ".");
+
+				nti_import_from_excel("test/device1.xlsx", 0);
+#ifndef NTI56_WITHOUT_ARX
+				int rc = nti_insert_table();
+#endif
+			}
+			// display
+			if (igfd::ImGuiFileDialog::Instance()->FileDialog("ChooseFileDlgKey"))
+			{
+				// action if OK
+				if (igfd::ImGuiFileDialog::Instance()->IsOk == true)
+				{
+					filePathName = igfd::ImGuiFileDialog::Instance()->GetFilePathName();
+					std::string filePath = igfd::ImGuiFileDialog::Instance()->GetCurrentPath();
+					// action
+				}
+				// close
+				igfd::ImGuiFileDialog::Instance()->CloseDialog("ChooseFileDlgKey");
+			}
+
+
+
+			ImGui::EndTabItem();
+		}
+		if (ImGui::BeginTabItem(("打印")))
+		{
+			ImGui::Text("This is the Cucumber tab!\nblah blah blah blah blah");
+			ImGui::EndTabItem();
+		}
+		if (ImGui::BeginTabItem(("设置")))
+		{
+			ImGui::Text("This is the Cucumber tab!\nblah blah blah blah blah");
+			ImGui::EndTabItem();
+		}
 		ImGui::EndTabBar();
 	}
-	ImGui::End();
 }
 
 //reactor window
