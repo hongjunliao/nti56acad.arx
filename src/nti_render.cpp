@@ -63,7 +63,7 @@ void nti_tabswnd_render(nti_imgui_wnddata * wnddata)
 
 			ImGui::Text("%s", filePathName.c_str());
 			if (ImGui::Button("选择文件...")) {
-				igfd::ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose File", ".xlsx", ".");
+				igfd::ImGuiFileDialog::Instance()->OpenModal("ChooseFileDlgKey", "Choose File", ".xlsx", ".");
 
 				nti_import_from_excel("test/device1.xlsx", 0);
 #ifndef NTI56_WITHOUT_ARX
