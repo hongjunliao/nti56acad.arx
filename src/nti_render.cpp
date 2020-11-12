@@ -46,7 +46,7 @@ void nti_tabswnd_render(nti_imgui_wnddata * wnddata)
 			ImGui::InputText("object id:", reactor->obj_id, IM_ARRAYSIZE(reactor->obj_id));
 			ImGui::InputText("handle:", reactor->handle, IM_ARRAYSIZE(reactor->handle));
 			if (ImGui::Button("test")) {
-#ifndef NTI56_WITHOUT_ARX
+#if (NDEBUG && NTI56_WITHOUT_ARX)
 				int rc = test_nti_arx_main(0, 0);
 #endif
 			}
@@ -67,7 +67,7 @@ void nti_tabswnd_render(nti_imgui_wnddata * wnddata)
 
 				nti_import_from_excel("test/device1.xlsx", 0);
 #ifndef NTI56_WITHOUT_ARX
-				int rc = nti_insert_table();
+				//int rc = nti_insert_table();
 #endif
 			}
 			// display

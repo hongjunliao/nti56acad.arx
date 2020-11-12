@@ -15,7 +15,7 @@
 
 #ifdef _MSC_VER
 
-#include "sds/win32_interop/win32_types.h"
+#include "win32_interop/win32_types.h"
 
 #endif /* _MSC_VER */
 

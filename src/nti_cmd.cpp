@@ -31,6 +31,9 @@ extern int is_chld;
 extern nti_wnddata * g_wnddata;
 /////////////////////////////////////////////////////////////////////////////////////
 
+void nti56acad_null()
+{}
+
 void nti56acad()
 {
 	int rc;

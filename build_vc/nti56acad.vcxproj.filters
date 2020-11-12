@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\src\libxhhp\src\libxhhp\hp_log.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\nti_xlsx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\arximpl.cpp" />
+    <ClCompile Include="..\src\stdafx.cpp" />
+    <ClCompile Include="..\src\nti_arx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\nti_cmd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\nti_dockbar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\nti_imgui.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\nti_reactor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\nti_render.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\nti_str.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\test_nti_imgui.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\win32_main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\deps\redis\src\adlist.c">
+      <Filter>deps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\glad.c">
+      <Filter>deps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\deps\imgui\imgui.cpp">
+      <Filter>deps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\deps\imgui\imgui_demo.cpp">
+      <Filter>deps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\deps\imgui\imgui_draw.cpp">
+      <Filter>deps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imgui\imgui_impl_opengl2.cpp">
+      <Filter>deps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\deps\imgui\examples\imgui_impl_win32.cpp">
+      <Filter>deps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\deps\imgui\examples\imgui_impl_opengl3.cpp">
+      <Filter>deps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\deps\imgui\imgui_widgets.cpp">
+      <Filter>deps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\deps\ImGuiFileDialog\ImGuiFileDialog\ImGuiFileDialog.cpp">
+      <Filter>deps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\deps\redis\src\zmalloc.c">
+      <Filter>deps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\deps\sds\win32_sds.c">
+      <Filter>deps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\deps\gbk-utf8\utf8.c">
+      <Filter>deps</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\stdafx.h" />
+    <ClInclude Include="..\src\targetver.h" />
+    <ClInclude Include="..\config.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\nti_arx.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\nti_cmn.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\nti_imgui.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\nti_reactor.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\nti_render.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\nti_str.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\deps\redis\src\adlist.h">
+      <Filter>deps</Filter>
+    </ClInclude>
+    <ClInclude Include="..\imgui\imgui_impl_opengl2.h">
+      <Filter>deps</Filter>
+    </ClInclude>
+    <ClInclude Include="..\deps\redis\src\zmalloc.h">
+      <Filter>deps</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{AE1F7974-897C-3247-B26E-D99CB065E0B1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{949E02FE-982F-31D3-84CD-6351CD4B4346}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="deps">
+      <UniqueIdentifier>{40e870c0-8e29-4048-b7de-330a2bd39b2e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\TODOList" />
+    <None Include="E:\home\nti56acad.arx\CMakeLists.txt" />
+  </ItemGroup>
+</Project>
