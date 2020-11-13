@@ -14,7 +14,6 @@
 
 #include <windows.h>
 #include <string>	//std::string
-#include "sds/win32_sds.h" //sds
 
 /////////////////////////////////////////////////////////////////////////////////////
 typedef std::string SStringA;

@@ -60,25 +60,25 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:\home\nti56acad.arx\build_vc\Debug\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Debug\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">nti56acadmfc.dir\Debug\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">nti56acadmfc</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.exe</TargetExt>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\home\nti56acad.arx\build_vc\Release\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Release\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">nti56acadmfc.dir\Release\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">nti56acadmfc</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.exe</TargetExt>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">E:\home\nti56acad.arx\build_vc\MinSizeRel\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">MinSizeRel\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">nti56acadmfc.dir\MinSizeRel\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">nti56acadmfc</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.exe</TargetExt>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">true</GenerateManifest>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">E:\home\nti56acad.arx\build_vc\RelWithDebInfo\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">RelWithDebInfo\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">nti56acadmfc.dir\RelWithDebInfo\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">nti56acadmfc</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.exe</TargetExt>
@@ -87,7 +87,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>E:\home\nti56acad.arx\include;E:\home\nti56acad.arx\src;E:\home\nti56acad.arx\deps;E:\home\nti56acad.arx\deps\imgui;E:\home\nti56acad.arx\deps\imgui\examples;E:\home\nti56acad.arx\deps\ImGuiFileDialog;E:\home\nti56acad.arx\deps\xlsxio\include;E:\home\nti56acad.arx\deps\dirent\include;E:\home\nti56acad.arx\deps\redis\src;E:\home\nti56acad.arx\src\libxhhp\src;E:\home\nti56acad.arx\.;E:\home\nti56acad.arx\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;..\src;..\deps\arx\inc\;..\deps;..\deps\imgui;..\deps\imgui\exmaples;..\deps\imgui\backends;..\deps\ImGuiFileDialog;..\deps\xlsxio\include;..\deps\dirent\include;..\deps\redis\src;..\src\libxhhp\src;E:\home\nti56acad.arx\.;..\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -104,10 +104,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;NTI56_WITHOUT_ARX;_WIN32;UNICODE;_UNICODE;HAVE_CONFIG_H;IMGUI_IMPL_OPENGL_LOADER_GLAD;_AFXDLL;CMAKE_INTDIR=\"Debug\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>E:\home\nti56acad.arx\include;E:\home\nti56acad.arx\src;E:\home\nti56acad.arx\deps;E:\home\nti56acad.arx\deps\imgui;E:\home\nti56acad.arx\deps\imgui\examples;E:\home\nti56acad.arx\deps\ImGuiFileDialog;E:\home\nti56acad.arx\deps\xlsxio\include;E:\home\nti56acad.arx\deps\dirent\include;E:\home\nti56acad.arx\deps\redis\src;E:\home\nti56acad.arx\src\libxhhp\src;E:\home\nti56acad.arx\.;E:\home\nti56acad.arx\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;..\src;..\deps;..\deps\imgui;..\deps\imgui\backends;..\deps\ImGuiFileDialog;..\deps\xlsxio\include;..\deps\dirent\include;..\deps\redis\src;..\src\libxhhp\src;E:\home\nti56acad.arx\.;..\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>E:\home\nti56acad.arx\include;E:\home\nti56acad.arx\src;E:\home\nti56acad.arx\deps;E:\home\nti56acad.arx\deps\imgui;E:\home\nti56acad.arx\deps\imgui\examples;E:\home\nti56acad.arx\deps\ImGuiFileDialog;E:\home\nti56acad.arx\deps\xlsxio\include;E:\home\nti56acad.arx\deps\dirent\include;E:\home\nti56acad.arx\deps\redis\src;E:\home\nti56acad.arx\src\libxhhp\src;E:\home\nti56acad.arx\.;E:\home\nti56acad.arx\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;..\src;..\deps;..\deps\imgui;..\deps\imgui\backends;..\deps\ImGuiFileDialog;..\deps\xlsxio\include;..\deps\dirent\include;..\deps\redis\src;..\src\libxhhp\src;;..\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -116,12 +116,12 @@
     </Midl>
     <Link>
       <AdditionalDependencies>opengl32.lib;glu32.lib;libxlsxio_read.lib;libxlsxio_write.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>E:/home/nti56acad.arx/lib;E:/home/nti56acad.arx/lib/$(Configuration);E:/home/nti56acad.arx/deps/xlsxio/lib;E:/home/nti56acad.arx/deps/xlsxio/lib/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\lib;..\lib/$(Configuration);..\deps/xlsxio/lib;..\deps/xlsxio/lib/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <ImportLibrary>E:/home/nti56acad.arx/build_vc/Debug/nti56acadmfc.lib</ImportLibrary>
-      <ProgramDataBaseFile>E:/home/nti56acad.arx/build_vc/Debug/nti56acadmfc.pdb</ProgramDataBaseFile>
+      <ImportLibrary>Debug/nti56acadmfc.lib</ImportLibrary>
+      <ProgramDataBaseFile>Debug/nti56acadmfc.pdb</ProgramDataBaseFile>
       <SubSystem>Windows</SubSystem>
     </Link>
     <ProjectReference>
@@ -130,7 +130,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>E:\home\nti56acad.arx\include;E:\home\nti56acad.arx\src;E:\home\nti56acad.arx\deps;E:\home\nti56acad.arx\deps\imgui;E:\home\nti56acad.arx\deps\imgui\examples;E:\home\nti56acad.arx\deps\ImGuiFileDialog;E:\home\nti56acad.arx\deps\xlsxio\include;E:\home\nti56acad.arx\deps\dirent\include;E:\home\nti56acad.arx\deps\redis\src;E:\home\nti56acad.arx\src\libxhhp\src;E:\home\nti56acad.arx\.;E:\home\nti56acad.arx\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;..\src;..\deps\arx\inc\;..\deps;..\deps\imgui;..\deps\imgui\exmaples;..\deps\imgui\backends;..\deps\ImGuiFileDialog;..\deps\xlsxio\include;..\deps\dirent\include;..\deps\redis\src;..\src\libxhhp\src;E:\home\nti56acad.arx\.;..\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ExceptionHandling>Sync</ExceptionHandling>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
@@ -147,10 +147,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;NTI56_WITHOUT_ARX;_WIN32;UNICODE;_UNICODE;HAVE_CONFIG_H;IMGUI_IMPL_OPENGL_LOADER_GLAD;_AFXDLL;CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>E:\home\nti56acad.arx\include;E:\home\nti56acad.arx\src;E:\home\nti56acad.arx\deps;E:\home\nti56acad.arx\deps\imgui;E:\home\nti56acad.arx\deps\imgui\examples;E:\home\nti56acad.arx\deps\ImGuiFileDialog;E:\home\nti56acad.arx\deps\xlsxio\include;E:\home\nti56acad.arx\deps\dirent\include;E:\home\nti56acad.arx\deps\redis\src;E:\home\nti56acad.arx\src\libxhhp\src;E:\home\nti56acad.arx\.;E:\home\nti56acad.arx\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;..\src;..\deps;..\deps\imgui;..\deps\imgui\backends;..\deps\ImGuiFileDialog;..\deps\xlsxio\include;..\deps\dirent\include;..\deps\redis\src;..\src\libxhhp\src;E:\home\nti56acad.arx\.;..\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>E:\home\nti56acad.arx\include;E:\home\nti56acad.arx\src;E:\home\nti56acad.arx\deps;E:\home\nti56acad.arx\deps\imgui;E:\home\nti56acad.arx\deps\imgui\examples;E:\home\nti56acad.arx\deps\ImGuiFileDialog;E:\home\nti56acad.arx\deps\xlsxio\include;E:\home\nti56acad.arx\deps\dirent\include;E:\home\nti56acad.arx\deps\redis\src;E:\home\nti56acad.arx\src\libxhhp\src;E:\home\nti56acad.arx\.;E:\home\nti56acad.arx\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;..\src;..\deps;..\deps\imgui;..\deps\imgui\backends;..\deps\ImGuiFileDialog;..\deps\xlsxio\include;..\deps\dirent\include;..\deps\redis\src;..\src\libxhhp\src;E:\home\nti56acad.arx\.;..\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -159,12 +159,12 @@
     </Midl>
     <Link>
       <AdditionalDependencies>opengl32.lib;glu32.lib;libxlsxio_read.lib;libxlsxio_write.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>E:/home/nti56acad.arx/lib;E:/home/nti56acad.arx/lib/$(Configuration);E:/home/nti56acad.arx/deps/xlsxio/lib;E:/home/nti56acad.arx/deps/xlsxio/lib/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\lib;..\lib/$(Configuration);..\deps/xlsxio/lib;..\deps/xlsxio/lib/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <ImportLibrary>E:/home/nti56acad.arx/build_vc/Release/nti56acadmfc.lib</ImportLibrary>
-      <ProgramDataBaseFile>E:/home/nti56acad.arx/build_vc/Release/nti56acadmfc.pdb</ProgramDataBaseFile>
+      <ImportLibrary>Release/nti56acadmfc.lib</ImportLibrary>
+      <ProgramDataBaseFile>Release/nti56acadmfc.pdb</ProgramDataBaseFile>
       <SubSystem>Windows</SubSystem>
     </Link>
     <ProjectReference>
@@ -173,7 +173,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>E:\home\nti56acad.arx\include;E:\home\nti56acad.arx\src;E:\home\nti56acad.arx\deps;E:\home\nti56acad.arx\deps\imgui;E:\home\nti56acad.arx\deps\imgui\examples;E:\home\nti56acad.arx\deps\ImGuiFileDialog;E:\home\nti56acad.arx\deps\xlsxio\include;E:\home\nti56acad.arx\deps\dirent\include;E:\home\nti56acad.arx\deps\redis\src;E:\home\nti56acad.arx\src\libxhhp\src;E:\home\nti56acad.arx\.;E:\home\nti56acad.arx\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;..\src;..\deps\arx\inc\;..\deps;..\deps\imgui;..\deps\imgui\exmaples;..\deps\imgui\backends;..\deps\ImGuiFileDialog;..\deps\xlsxio\include;..\deps\dirent\include;..\deps\redis\src;..\src\libxhhp\src;E:\home\nti56acad.arx\.;..\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ExceptionHandling>Sync</ExceptionHandling>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
@@ -190,10 +190,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;NTI56_WITHOUT_ARX;_WIN32;UNICODE;_UNICODE;HAVE_CONFIG_H;IMGUI_IMPL_OPENGL_LOADER_GLAD;_AFXDLL;CMAKE_INTDIR=\"MinSizeRel\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>E:\home\nti56acad.arx\include;E:\home\nti56acad.arx\src;E:\home\nti56acad.arx\deps;E:\home\nti56acad.arx\deps\imgui;E:\home\nti56acad.arx\deps\imgui\examples;E:\home\nti56acad.arx\deps\ImGuiFileDialog;E:\home\nti56acad.arx\deps\xlsxio\include;E:\home\nti56acad.arx\deps\dirent\include;E:\home\nti56acad.arx\deps\redis\src;E:\home\nti56acad.arx\src\libxhhp\src;E:\home\nti56acad.arx\.;E:\home\nti56acad.arx\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;..\src;..\deps;..\deps\imgui;..\deps\imgui\backends;..\deps\ImGuiFileDialog;..\deps\xlsxio\include;..\deps\dirent\include;..\deps\redis\src;..\src\libxhhp\src;E:\home\nti56acad.arx\.;..\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>E:\home\nti56acad.arx\include;E:\home\nti56acad.arx\src;E:\home\nti56acad.arx\deps;E:\home\nti56acad.arx\deps\imgui;E:\home\nti56acad.arx\deps\imgui\examples;E:\home\nti56acad.arx\deps\ImGuiFileDialog;E:\home\nti56acad.arx\deps\xlsxio\include;E:\home\nti56acad.arx\deps\dirent\include;E:\home\nti56acad.arx\deps\redis\src;E:\home\nti56acad.arx\src\libxhhp\src;E:\home\nti56acad.arx\.;E:\home\nti56acad.arx\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;..\src;..\deps;..\deps\imgui;..\deps\imgui\backends;..\deps\ImGuiFileDialog;..\deps\xlsxio\include;..\deps\dirent\include;..\deps\redis\src;..\src\libxhhp\src;E:\home\nti56acad.arx\.;..\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -202,12 +202,12 @@
     </Midl>
     <Link>
       <AdditionalDependencies>opengl32.lib;glu32.lib;libxlsxio_read.lib;libxlsxio_write.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>E:/home/nti56acad.arx/lib;E:/home/nti56acad.arx/lib/$(Configuration);E:/home/nti56acad.arx/deps/xlsxio/lib;E:/home/nti56acad.arx/deps/xlsxio/lib/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\lib;..\lib/$(Configuration);..\deps/xlsxio/lib;..\deps/xlsxio/lib/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <ImportLibrary>E:/home/nti56acad.arx/build_vc/MinSizeRel/nti56acadmfc.lib</ImportLibrary>
-      <ProgramDataBaseFile>E:/home/nti56acad.arx/build_vc/MinSizeRel/nti56acadmfc.pdb</ProgramDataBaseFile>
+      <ImportLibrary>MinSizeRel/nti56acadmfc.lib</ImportLibrary>
+      <ProgramDataBaseFile>MinSizeRel/nti56acadmfc.pdb</ProgramDataBaseFile>
       <SubSystem>Windows</SubSystem>
     </Link>
     <ProjectReference>
@@ -216,7 +216,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>E:\home\nti56acad.arx\include;E:\home\nti56acad.arx\src;E:\home\nti56acad.arx\deps;E:\home\nti56acad.arx\deps\imgui;E:\home\nti56acad.arx\deps\imgui\examples;E:\home\nti56acad.arx\deps\ImGuiFileDialog;E:\home\nti56acad.arx\deps\xlsxio\include;E:\home\nti56acad.arx\deps\dirent\include;E:\home\nti56acad.arx\deps\redis\src;E:\home\nti56acad.arx\src\libxhhp\src;E:\home\nti56acad.arx\.;E:\home\nti56acad.arx\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;..\src;..\deps\arx\inc\;..\deps;..\deps\imgui;..\deps\imgui\exmaples;..\deps\imgui\backends;..\deps\ImGuiFileDialog;..\deps\xlsxio\include;..\deps\dirent\include;..\deps\redis\src;..\src\libxhhp\src;E:\home\nti56acad.arx\.;..\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -232,10 +232,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;NTI56_WITHOUT_ARX;_WIN32;UNICODE;_UNICODE;HAVE_CONFIG_H;IMGUI_IMPL_OPENGL_LOADER_GLAD;_AFXDLL;CMAKE_INTDIR=\"RelWithDebInfo\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>E:\home\nti56acad.arx\include;E:\home\nti56acad.arx\src;E:\home\nti56acad.arx\deps;E:\home\nti56acad.arx\deps\imgui;E:\home\nti56acad.arx\deps\imgui\examples;E:\home\nti56acad.arx\deps\ImGuiFileDialog;E:\home\nti56acad.arx\deps\xlsxio\include;E:\home\nti56acad.arx\deps\dirent\include;E:\home\nti56acad.arx\deps\redis\src;E:\home\nti56acad.arx\src\libxhhp\src;E:\home\nti56acad.arx\.;E:\home\nti56acad.arx\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;..\src;..\deps;..\deps\imgui;..\deps\imgui\backends;..\deps\ImGuiFileDialog;..\deps\xlsxio\include;..\deps\dirent\include;..\deps\redis\src;..\src\libxhhp\src;E:\home\nti56acad.arx\.;..\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>E:\home\nti56acad.arx\include;E:\home\nti56acad.arx\src;E:\home\nti56acad.arx\deps;E:\home\nti56acad.arx\deps\imgui;E:\home\nti56acad.arx\deps\imgui\examples;E:\home\nti56acad.arx\deps\ImGuiFileDialog;E:\home\nti56acad.arx\deps\xlsxio\include;E:\home\nti56acad.arx\deps\dirent\include;E:\home\nti56acad.arx\deps\redis\src;E:\home\nti56acad.arx\src\libxhhp\src;E:\home\nti56acad.arx\.;E:\home\nti56acad.arx\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;..\src;..\deps;..\deps\imgui;..\deps\imgui\backends;..\deps\ImGuiFileDialog;..\deps\xlsxio\include;..\deps\dirent\include;..\deps\redis\src;..\src\libxhhp\src;E:\home\nti56acad.arx\.;..\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -244,12 +244,12 @@
     </Midl>
     <Link>
       <AdditionalDependencies>opengl32.lib;glu32.lib;libxlsxio_read.lib;libxlsxio_write.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>E:/home/nti56acad.arx/lib;E:/home/nti56acad.arx/lib/$(Configuration);E:/home/nti56acad.arx/deps/xlsxio/lib;E:/home/nti56acad.arx/deps/xlsxio/lib/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\lib;..\lib/$(Configuration);..\deps/xlsxio/lib;..\deps/xlsxio/lib/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <ImportLibrary>E:/home/nti56acad.arx/build_vc/RelWithDebInfo/nti56acadmfc.lib</ImportLibrary>
-      <ProgramDataBaseFile>E:/home/nti56acad.arx/build_vc/RelWithDebInfo/nti56acadmfc.pdb</ProgramDataBaseFile>
+      <ImportLibrary>RelWithDebInfo/nti56acadmfc.lib</ImportLibrary>
+      <ProgramDataBaseFile>RelWithDebInfo/nti56acadmfc.pdb</ProgramDataBaseFile>
       <SubSystem>Windows</SubSystem>
     </Link>
     <ProjectReference>
@@ -258,9 +258,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="E:\home\nti56acad.arx\CMakeLists.txt">
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule E:/home/nti56acad.arx/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -SE:/home/nti56acad.arx -BE:/home/nti56acad.arx/build_vc --check-stamp-file E:/home/nti56acad.arx/build_vc/CMakeFiles/generate.stamp
+"C:\Program Files\CMake\bin\cmake.exe" -SE:/home/nti56acad.arx -BE:/home/nti56acad.arx/build_vc --check-stamp-file CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -268,12 +268,12 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindOpenGL.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\WindowsPaths.cmake;E:\home\nti56acad.arx\build_vc\CMakeFiles\3.18.0\CMakeCCompiler.cmake;E:\home\nti56acad.arx\build_vc\CMakeFiles\3.18.0\CMakeCXXCompiler.cmake;E:\home\nti56acad.arx\build_vc\CMakeFiles\3.18.0\CMakeRCCompiler.cmake;E:\home\nti56acad.arx\build_vc\CMakeFiles\3.18.0\CMakeSystem.cmake;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:\home\nti56acad.arx\build_vc\CMakeFiles\generate.stamp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindOpenGL.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\WindowsPaths.cmake;CMakeFiles\3.18.0\CMakeCCompiler.cmake;CMakeFiles\3.18.0\CMakeCXXCompiler.cmake;CMakeFiles\3.18.0\CMakeRCCompiler.cmake;CMakeFiles\3.18.0\CMakeSystem.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule E:/home/nti56acad.arx/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -SE:/home/nti56acad.arx -BE:/home/nti56acad.arx/build_vc --check-stamp-file E:/home/nti56acad.arx/build_vc/CMakeFiles/generate.stamp
+"C:\Program Files\CMake\bin\cmake.exe" -SE:/home/nti56acad.arx -BE:/home/nti56acad.arx/build_vc --check-stamp-file CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -281,12 +281,12 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindOpenGL.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\WindowsPaths.cmake;E:\home\nti56acad.arx\build_vc\CMakeFiles\3.18.0\CMakeCCompiler.cmake;E:\home\nti56acad.arx\build_vc\CMakeFiles\3.18.0\CMakeCXXCompiler.cmake;E:\home\nti56acad.arx\build_vc\CMakeFiles\3.18.0\CMakeRCCompiler.cmake;E:\home\nti56acad.arx\build_vc\CMakeFiles\3.18.0\CMakeSystem.cmake;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\home\nti56acad.arx\build_vc\CMakeFiles\generate.stamp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindOpenGL.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\WindowsPaths.cmake;CMakeFiles\3.18.0\CMakeCCompiler.cmake;CMakeFiles\3.18.0\CMakeCXXCompiler.cmake;CMakeFiles\3.18.0\CMakeRCCompiler.cmake;CMakeFiles\3.18.0\CMakeSystem.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule E:/home/nti56acad.arx/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -SE:/home/nti56acad.arx -BE:/home/nti56acad.arx/build_vc --check-stamp-file E:/home/nti56acad.arx/build_vc/CMakeFiles/generate.stamp
+"C:\Program Files\CMake\bin\cmake.exe" -SE:/home/nti56acad.arx -BE:/home/nti56acad.arx/build_vc --check-stamp-file CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -294,12 +294,12 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindOpenGL.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\WindowsPaths.cmake;E:\home\nti56acad.arx\build_vc\CMakeFiles\3.18.0\CMakeCCompiler.cmake;E:\home\nti56acad.arx\build_vc\CMakeFiles\3.18.0\CMakeCXXCompiler.cmake;E:\home\nti56acad.arx\build_vc\CMakeFiles\3.18.0\CMakeRCCompiler.cmake;E:\home\nti56acad.arx\build_vc\CMakeFiles\3.18.0\CMakeSystem.cmake;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">E:\home\nti56acad.arx\build_vc\CMakeFiles\generate.stamp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindOpenGL.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\WindowsPaths.cmake;CMakeFiles\3.18.0\CMakeCCompiler.cmake;CMakeFiles\3.18.0\CMakeCXXCompiler.cmake;CMakeFiles\3.18.0\CMakeRCCompiler.cmake;CMakeFiles\3.18.0\CMakeSystem.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule E:/home/nti56acad.arx/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -SE:/home/nti56acad.arx -BE:/home/nti56acad.arx/build_vc --check-stamp-file E:/home/nti56acad.arx/build_vc/CMakeFiles/generate.stamp
+"C:\Program Files\CMake\bin\cmake.exe" -SE:/home/nti56acad.arx -BE:/home/nti56acad.arx/build_vc --check-stamp-file CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -307,58 +307,58 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindOpenGL.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\WindowsPaths.cmake;E:\home\nti56acad.arx\build_vc\CMakeFiles\3.18.0\CMakeCCompiler.cmake;E:\home\nti56acad.arx\build_vc\CMakeFiles\3.18.0\CMakeCXXCompiler.cmake;E:\home\nti56acad.arx\build_vc\CMakeFiles\3.18.0\CMakeRCCompiler.cmake;E:\home\nti56acad.arx\build_vc\CMakeFiles\3.18.0\CMakeSystem.cmake;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">E:\home\nti56acad.arx\build_vc\CMakeFiles\generate.stamp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindOpenGL.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\WindowsPaths.cmake;CMakeFiles\3.18.0\CMakeCCompiler.cmake;CMakeFiles\3.18.0\CMakeCXXCompiler.cmake;CMakeFiles\3.18.0\CMakeRCCompiler.cmake;CMakeFiles\3.18.0\CMakeSystem.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
     </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\deps\ImGuiFileDialog\ImGuiFileDialog\ImGuiFileDialog.cpp" />
     <ClCompile Include="..\src\nti_render.cpp" />
-    <ClCompile Include="E:\home\nti56acad.arx\deps\gbk-utf8\utf8.c" />
-    <ClCompile Include="E:\home\nti56acad.arx\deps\imgui\examples\imgui_impl_opengl2.cpp" />
-    <ClCompile Include="E:\home\nti56acad.arx\deps\imgui\examples\imgui_impl_win32.cpp" />
-    <ClCompile Include="E:\home\nti56acad.arx\deps\imgui\imgui.cpp" />
-    <ClCompile Include="E:\home\nti56acad.arx\deps\imgui\imgui_demo.cpp" />
-    <ClCompile Include="E:\home\nti56acad.arx\deps\imgui\imgui_draw.cpp" />
-    <ClCompile Include="E:\home\nti56acad.arx\deps\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="E:\home\nti56acad.arx\deps\redis\src\adlist.c" />
-    <ClCompile Include="E:\home\nti56acad.arx\deps\redis\src\zmalloc.c" />
-    <ClCompile Include="E:\home\nti56acad.arx\deps\sds\win32_sds.c" />
+    <ClCompile Include="..\deps\gbk-utf8\utf8.c" />
+    <ClCompile Include="..\deps\imgui\backends\imgui_impl_opengl2.cpp" />
+    <ClCompile Include="..\deps\imgui\backends\imgui_impl_win32.cpp" />
+    <ClCompile Include="..\deps\imgui\imgui.cpp" />
+    <ClCompile Include="..\deps\imgui\imgui_demo.cpp" />
+    <ClCompile Include="..\deps\imgui\imgui_draw.cpp" />
+    <ClCompile Include="..\deps\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="..\deps\redis\src\adlist.c" />
+    <ClCompile Include="..\deps\redis\src\zmalloc.c" />
+    <ClCompile Include="..\deps\sds\win32_sds.c" />
     <ClInclude Include="..\deps\ImGuiFileDialog\ImGuiFileDialog\ImGuiFileDialog.h" />
     <ClInclude Include="..\deps\ImGuiFileDialog\ImGuiFileDialog\ImGuiFileDialogConfig.h" />
-    <ClInclude Include="E:\home\nti56acad.arx\src\AdskDMgr.h" />
-    <ClCompile Include="E:\home\nti56acad.arx\src\ChildView.cpp" />
-    <ClInclude Include="E:\home\nti56acad.arx\src\ChildView.h" />
-    <ClCompile Include="E:\home\nti56acad.arx\src\MainFrm.cpp" />
-    <ClInclude Include="E:\home\nti56acad.arx\src\MainFrm.h" />
-    <ClInclude Include="E:\home\nti56acad.arx\src\config.h" />
-    <ClCompile Include="E:\home\nti56acad.arx\src\glad.c" />
-    <ClCompile Include="E:\home\nti56acad.arx\src\libxhhp\src\libxhhp\hp_log.c" />
-    <ClCompile Include="E:\home\nti56acad.arx\src\nti56acadmfc.cpp" />
-    <ClInclude Include="E:\home\nti56acad.arx\src\nti56acadmfc.h" />
-    <ClInclude Include="E:\home\nti56acad.arx\src\nti_arx.h" />
-    <ClInclude Include="E:\home\nti56acad.arx\src\nti_cmd.h" />
-    <ClInclude Include="E:\home\nti56acad.arx\src\nti_cmn.h" />
-    <ClCompile Include="E:\home\nti56acad.arx\src\nti_dockbar.cpp" />
-    <ClInclude Include="E:\home\nti56acad.arx\src\nti_dockbar.h" />
-    <ClCompile Include="E:\home\nti56acad.arx\src\nti_imgui.cpp" />
-    <ClInclude Include="E:\home\nti56acad.arx\src\nti_imgui.h" />
-    <ClInclude Include="E:\home\nti56acad.arx\src\nti_reactor.h" />
-    <ClInclude Include="E:\home\nti56acad.arx\src\nti_render.h" />
-    <ClCompile Include="E:\home\nti56acad.arx\src\nti_str.cpp" />
-    <ClInclude Include="E:\home\nti56acad.arx\src\nti_str.h" />
-    <ClCompile Include="E:\home\nti56acad.arx\src\nti_xlsx.cpp" />
-    <ClInclude Include="E:\home\nti56acad.arx\src\nti_xlsx.h" />
-    <ClCompile Include="E:\home\nti56acad.arx\src\stdafx.cpp" />
-    <ClInclude Include="E:\home\nti56acad.arx\src\stdafx.h" />
-    <ClInclude Include="E:\home\nti56acad.arx\src\strcpcvt.h" />
-    <ClInclude Include="E:\home\nti56acad.arx\src\targetver.h" />
-    <ClCompile Include="E:\home\nti56acad.arx\src\test_libxlsxio.c" />
-    <ClCompile Include="E:\home\nti56acad.arx\src\test_nti_imgui.cpp" />
+    <ClInclude Include="..\src\AdskDMgr.h" />
+    <ClCompile Include="..\src\ChildView.cpp" />
+    <ClInclude Include="..\src\ChildView.h" />
+    <ClCompile Include="..\src\MainFrm.cpp" />
+    <ClInclude Include="..\src\MainFrm.h" />
+    <ClInclude Include="..\src\config.h" />
+    <ClCompile Include="..\src\glad.c" />
+    <ClCompile Include="..\src\libxhhp\src\libxhhp\hp_log.c" />
+    <ClCompile Include="..\src\nti56acadmfc.cpp" />
+    <ClInclude Include="..\src\nti56acadmfc.h" />
+    <ClInclude Include="..\src\nti_arx.h" />
+    <ClInclude Include="..\src\nti_cmd.h" />
+    <ClInclude Include="..\src\nti_cmn.h" />
+    <ClCompile Include="..\src\nti_dockbar.cpp" />
+    <ClInclude Include="..\src\nti_dockbar.h" />
+    <ClCompile Include="..\src\nti_imgui.cpp" />
+    <ClInclude Include="..\src\nti_imgui.h" />
+    <ClInclude Include="..\src\nti_reactor.h" />
+    <ClInclude Include="..\src\nti_render.h" />
+    <ClCompile Include="..\src\nti_str.cpp" />
+    <ClInclude Include="..\src\nti_str.h" />
+    <ClCompile Include="..\src\nti_xlsx.cpp" />
+    <ClInclude Include="..\src\nti_xlsx.h" />
+    <ClCompile Include="..\src\stdafx.cpp" />
+    <ClInclude Include="..\src\stdafx.h" />
+    <ClInclude Include="..\src\strcpcvt.h" />
+    <ClInclude Include="..\src\targetver.h" />
+    <ClCompile Include="..\src\test_libxlsxio.c" />
+    <ClCompile Include="..\src\test_nti_imgui.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="E:\home\nti56acad.arx\build_vc\ZERO_CHECK.vcxproj">
+    <ProjectReference Include="ZERO_CHECK.vcxproj">
       <Project>{20F368E3-595B-34E0-8189-8FA592384968}</Project>
       <Name>ZERO_CHECK</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>

@@ -178,10 +178,12 @@ int nti_imgui_create(HWND hwnd)
 																//io.ConfigViewportsNoAutoMerge = true;
 																//io.ConfigViewportsNoTaskBarIcon = true;
 
-																// Setup Dear ImGui style
-	ImGui::StyleColorsDark();
-	//ImGui::StyleColorsClassic();
-
+																
+	#ifndef NTI56_WITHOUT_ARX																
+		ImGui::StyleColorsDark();								// Setup Dear ImGui style
+	#else
+		ImGui::StyleColorsLight();
+	#endif
 	// When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
 	ImGuiStyle& style = ImGui::GetStyle();
 	if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)

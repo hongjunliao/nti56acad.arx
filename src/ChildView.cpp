@@ -1,5 +1,5 @@
 
-// ChildView.cpp : CChildView ���ʵ��
+// ChildView.cpp : CChildView ??????
 //
 
 #include "stdafx.h"
@@ -28,7 +28,7 @@ END_MESSAGE_MAP()
 
 
 
-// CChildView ��Ϣ��������
+// CChildView ???????????
 
 BOOL CChildView::PreCreateWindow(CREATESTRUCT& cs) 
 {
@@ -45,11 +45,11 @@ BOOL CChildView::PreCreateWindow(CREATESTRUCT& cs)
 
 void CChildView::OnPaint() 
 {
-	CPaintDC dc(this); // ���ڻ��Ƶ��豸������
+	CPaintDC dc(this); // ?????????��??????
 	
-	// TODO: �ڴ˴�������Ϣ�����������
+	// TODO: ??????????????????????
 	
-	// ��ҪΪ������Ϣ������ CWnd::OnPaint()
+	// ????????????????? CWnd::OnPaint()
 	CRect rect;
 	GetClientRect(&rect);
 	dc.DrawText(_T("hello"), rect, DT_CENTER);
