@@ -3,6 +3,7 @@
 //
 
 #include "stdafx.h"
+#include <assert.h>
 #include "afxwinappex.h"
 #include "afxdialogex.h"
 #include "nti56acadmfc.h"
@@ -18,7 +19,7 @@
 static nti_wnddata g_wnddataobj = { 0 };
 nti_wnddata * g_wnddata = &g_wnddataobj;
 
-HWND g_hwnd;
+HWND g_hwnd = 0;
 int is_chld = 0;
 
 extern "C" {
@@ -48,6 +49,15 @@ Cnti56acadmfcApp::Cnti56acadmfcApp()
 
 Cnti56acadmfcApp theApp;
 
+
+static VOID CALLBACK MyTimerProc(
+	HWND hwnd,        // handle to window for timer messages 
+	UINT message,     // WM_TIMER message 
+	UINT idTimer,     // timer identifier 
+	DWORD dwTime)     // current system time 
+{
+	nti_imgui_paint();
+}
 
 // Cnti56acadmfcApp ?????
 
@@ -98,7 +108,14 @@ BOOL Cnti56acadmfcApp::InitInstance()
 	pFrame->ShowWindow(SW_SHOW);
 	pFrame->UpdateWindow();
 
+	g_hwnd = pFrame->GetMessageBar()->GetSafeHwnd();
+	rc = nti_imgui_create(g_hwnd);
+
 	rc = nti_imgui_add_render(nti_tabswnd_render, (nti_imgui_wnddata *)&g_wnddata->reactor);
+	assert(rc == 0);
+
+	SetTimer(g_hwnd, 12323, 16, (TIMERPROC)MyTimerProc);
+
 	//nti_imgui_add_render(nti_tabswnd_simple, 0);
 	//nti_imgui_add_render(nti_tabswnd_another, 0);
 

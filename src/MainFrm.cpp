@@ -58,12 +58,12 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;      // ¦Ä?????
 	}
 
-	if (!m_dockbar.CreateEx(this, TBSTYLE_FLAT, WS_CHILD | WS_VISIBLE | CBRS_TOP | CBRS_GRIPPER | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC) ||
-		!m_dockbar.LoadToolBar(IDR_MAINFRAME))
-	{
-		TRACE0("¦Ä???????????\n");
-		return -1;      // ¦Ä?????
-	}
+	//if (!m_dockbar.CreateEx(this, TBSTYLE_FLAT, WS_CHILD | WS_VISIBLE | CBRS_TOP | CBRS_GRIPPER | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC) ||
+	//	!m_dockbar.LoadToolBar(IDR_MAINFRAME))
+	//{
+	//	TRACE0("¦Ä???????????\n");
+	//	return -1;      // ¦Ä?????
+	//}
 
 	if (!m_wndStatusBar.Create(this))
 	{
@@ -74,10 +74,10 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	// TODO: ????????????????????????????????
 	m_wndToolBar.EnableDocking(CBRS_ALIGN_ANY);
-	m_dockbar.EnableDocking(CBRS_ALIGN_ANY);
+	//m_dockbar.EnableDocking(CBRS_ALIGN_ANY);
 	EnableDocking(CBRS_ALIGN_ANY);
 	DockControlBar(&m_wndToolBar);
-	DockControlBar(&m_dockbar);
+	//DockControlBar(&m_dockbar);
 
 
 	return 0;
