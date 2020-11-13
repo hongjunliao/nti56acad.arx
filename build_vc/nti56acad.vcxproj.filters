@@ -79,6 +79,9 @@
     <ClCompile Include="..\deps\imgui\backends\imgui_impl_win32.cpp">
       <Filter>deps</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\nti_cmn.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\config.h">

@@ -8,6 +8,7 @@
 #include "nti56acadmfc.h"
 #include "MainFrm.h"
 #include "nti_imgui.h" /*nti_wnddata*/
+#include "nti_cmn.h" /*nti_wnddata*/
 #include "nti_render.h" /*nti_wnddata*/
 
 #ifdef _DEBUG
@@ -52,12 +53,18 @@ Cnti56acadmfcApp theApp;
 
 BOOL Cnti56acadmfcApp::InitInstance()
 {
-	int rc;
+	int i, rc;
 #ifndef NDEBUG
 	test_libxlsxio_main(0, 0);
 #endif
-	strcpy(g_wnddata->reactor.base.title, "ntiacad");
-	g_wnddata->reactor.block_list = listCreate();
+
+	rc = nti_wnddata_init(g_wnddata);
+
+	for(i = 0; i < 50; ++i){
+		char * bname = nti_newn(128, char);
+		sprintf(bname, u8"block£­%d", i);
+		listAddNodeTail(g_wnddata->reactor.block_list, bname);
+	}
 
 	CWinApp::InitInstance();
 
@@ -103,7 +110,7 @@ int Cnti56acadmfcApp::ExitInstance()
 	//TODO: ?????????????????????
 	return CWinApp::ExitInstance();
 
-	listRelease(g_wnddata->reactor.block_list);
+	nti_wnddata_uninit(g_wnddata);
 }
 
 // Cnti56acadmfcApp ???????????

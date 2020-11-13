@@ -10,11 +10,11 @@
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif /* HAVE_CONFIG_H */
-
 #include "nti_imgui.h" //nti_imgui_wnddata
 extern "C" {
 #include "adlist.h"	//list
 }
+
 /////////////////////////////////////////////////////////////////////////////////////
 
 #define nti_new(T) ((T *)calloc(1, sizeof(T)))
@@ -25,6 +25,7 @@ extern "C" {
 struct nti_wnddata_reactor {
 	nti_imgui_wnddata base;
 	list * block_list;
+	listNode * curr_block;
 	char what[128];
 	char cls[128];
 	char obj_id[128];
@@ -35,6 +36,8 @@ struct nti_wnddata {
 	nti_wnddata_reactor reactor;
 };
 
+int nti_wnddata_init(nti_wnddata * wnddata);
+int nti_wnddata_uninit(nti_wnddata * wnddata);
 /////////////////////////////////////////////////////////////////////////////////////
 
 #endif //NTI_CMN_H

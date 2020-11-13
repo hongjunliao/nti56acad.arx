@@ -195,6 +195,10 @@ void CDocReactor::documentActivated(AcApDocument* pDoc)
         acedPostCommandPrompt();
 #endif
 
+        g_wnddata->reactor.curr_block = 0;
+		while(listFirst(g_wnddata->reactor.block_list))
+			listDelNode(g_wnddata->reactor.block_list, listFirst(g_wnddata->reactor.block_list));
+
 		AcDbBlockTable *pBlockTable = 0;
 		acdbHostApplicationServices()->workingDatabase()->getSymbolTable(pBlockTable, AcDb::kForRead);
 

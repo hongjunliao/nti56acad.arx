@@ -12,7 +12,7 @@
 #include "config.h"
 #endif /* HAVE_CONFIG_H */
 
-#include <windef.h>
+#include "stdafx.h"
 
 #ifdef __cplusplus
 extern "C" {

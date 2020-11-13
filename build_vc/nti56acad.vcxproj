@@ -326,6 +326,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="..\src\libxhhp\src\libxhhp\hp_log.c" />
     <ClCompile Include="..\src\nti_arx.cpp" />
     <ClCompile Include="..\src\nti_cmd.cpp" />
+    <ClCompile Include="..\src\nti_cmn.cpp" />
     <ClCompile Include="..\src\nti_dockbar.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Use</PrecompiledHeader>

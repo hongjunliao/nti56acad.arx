@@ -314,6 +314,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\deps\ImGuiFileDialog\ImGuiFileDialog\ImGuiFileDialog.cpp" />
+    <ClCompile Include="..\src\nti_cmn.cpp" />
     <ClCompile Include="..\src\nti_render.cpp" />
     <ClCompile Include="..\deps\gbk-utf8\utf8.c" />
     <ClCompile Include="..\deps\imgui\backends\imgui_impl_opengl2.cpp" />

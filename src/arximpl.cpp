@@ -47,8 +47,8 @@ AC_IMPLEMENT_EXTENSION_MODULE(modelessDll);
 
 void initApp()
 {
-	strcpy(g_wnddata->reactor.base.title, "ntiacad");
-	g_wnddata->reactor.block_list = listCreate();
+	int rc;
+	rc = nti_wnddata_init(g_wnddata);
 
 	gpDocReactor = new CDocReactor();
 	acDocManager->addReactor(gpDocReactor);
@@ -87,7 +87,7 @@ void unloadApp()
 
 	acedRegCmds->removeGroup(_T("ASDK_NTI56ACAD"));
 
-	listRelease(g_wnddata->reactor.block_list);
+	nti_wnddata_uninit(g_wnddata);
 }
 /////////////////////////////////////////////////////////////////////////////
 //

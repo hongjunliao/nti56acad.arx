@@ -317,6 +317,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="H:\nti56acad.arx\src\application.cpp" />
     <ClCompile Include="H:\nti56acad.arx\src\glad.c">
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CompileAsC</CompileAs>
@@ -334,7 +335,6 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="H:\nti56acad.arx\deps\imgui\imgui_impl_win32.h" />
     <ClInclude Include="H:\nti56acad.arx\deps\imgui\imgui_internal.h" />
     <ClCompile Include="H:\nti56acad.arx\deps\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="H:\nti56acad.arx\src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="H:\nti56acad.arx\build_vc\ZERO_CHECK.vcxproj">

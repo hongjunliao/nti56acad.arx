@@ -40,19 +40,32 @@ void nti_tabswnd_render(nti_imgui_wnddata * wnddata)
 	ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags_None;
 	if (ImGui::BeginTabBar("tab", tab_bar_flags)) {
 		if (ImGui::BeginTabItem(("图块"))) {
-			ImGui::Text("This is the Avocado tab!\nblah blah blah blah blah");
+			
+			// ImGuiComboFlags_PopupAlignLeft
+			if(!reactor->curr_block && listFirst(reactor->block_list))
+				reactor->curr_block = listFirst(reactor->block_list);
+			const char* combo_label = (reactor->curr_block ? (char const *)listNodeValue(reactor->curr_block) : "");
 
-			listIter * iter = listGetIterator(reactor->block_list, 0);
-			for (listNode * node = listNext(iter); node; ) {
+			if (ImGui::BeginCombo("blocks", combo_label, 0)){
+				listIter * iter = listGetIterator(reactor->block_list, 0);
+				listNode * node;
+				for (node = listNext(iter); node; ) {
 
-				char * bname = (char *)listNodeValue(node);
-				assert(bname);
+					char * bname = (char *)listNodeValue(node);
+					assert(bname);
 
-				ImGui::Text("%s", bname);
+					const bool is_selected = (reactor->curr_block == node);
+					if(ImGui::Selectable(bname, is_selected))
+						reactor->curr_block = node;
+					if (is_selected)
+						ImGui::SetItemDefaultFocus();
 
-				node = listNext(iter);
+					node = listNext(iter);
+				}
+				listReleaseIterator(iter);
+
+				ImGui::EndCombo();
 			}
-			listReleaseIterator(iter);
 
 			ImGui::InputText("what:", reactor->what, IM_ARRAYSIZE(reactor->what));
 			ImGui::InputText("class:", reactor->cls, IM_ARRAYSIZE(reactor->cls));

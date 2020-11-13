@@ -73,6 +73,9 @@
     <ClCompile Include="..\deps\gbk-utf8\utf8.c">
       <Filter>deps</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\nti_cmn.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\deps\ImGuiFileDialog\ImGuiFileDialog\ImGuiFileDialog.h">
