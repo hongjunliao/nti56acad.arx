@@ -76,6 +76,9 @@
     <ClCompile Include="..\src\nti_cmn.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\deps\imgui\misc\cpp\imgui_sds.cpp">
+      <Filter>deps</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\deps\ImGuiFileDialog\ImGuiFileDialog\ImGuiFileDialog.h">
@@ -134,6 +137,9 @@
     </ClInclude>
     <ClInclude Include="..\src\targetver.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\deps\imgui\misc\cpp\imgui_sds.h">
+      <Filter>deps</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

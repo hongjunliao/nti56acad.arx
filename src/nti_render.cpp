@@ -39,7 +39,7 @@ void nti_tabswnd_render(nti_imgui_wnddata * wnddata)
 	nti_wnddata_reactor * reactor = (nti_wnddata_reactor *)wnddata;
 	ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags_None;
 	if (ImGui::BeginTabBar("tab", tab_bar_flags)) {
-		if (ImGui::BeginTabItem(("图块"))) {
+		if (ImGui::BeginTabItem(("Block"))) {
 			
 			// ImGuiComboFlags_PopupAlignLeft
 			if(!reactor->curr_block && listFirst(reactor->block_list))
@@ -74,20 +74,52 @@ void nti_tabswnd_render(nti_imgui_wnddata * wnddata)
 
 			ImGui::EndTabItem();
 		}
-		if (ImGui::BeginTabItem(("工具"))) {
+		if (ImGui::BeginTabItem(("Tools"))) {
 			ImGui::Text("This is the Cucumber tab!\nblah blah blah blah blah");
 			ImGui::EndTabItem();
 		}
-		if (ImGui::BeginTabItem("导入/导出")) {
+		if (ImGui::BeginTabItem("DataLink")) {
+#ifndef NTI56_WITHOUT_ARX
+#endif
+			ImGui::Text("DataLinks:");
+			ImGui::Columns(4, "mycolumns"); // 4-ways, with border
+			ImGui::Separator();
+			ImGui::Text("ID"); ImGui::NextColumn();
+			ImGui::Text("Name"); ImGui::NextColumn();
+			ImGui::Text("Path"); ImGui::NextColumn();
+			ImGui::Text("Hovered"); ImGui::NextColumn();
+			ImGui::Separator();
+			const char* names[3] = { "One", "Two", "Three" };
+			const char* paths[3] = { "/path/one", "/path/two", "/path/three" };
+			static int selected = -1;
+			for (int i = 0; i < 3; i++)
+			{
+				char label[32];
+				sprintf(label, "%04d", i);
+				if (ImGui::Selectable(label, selected == i, ImGuiSelectableFlags_SpanAllColumns))
+					selected = i;
+				bool hovered = ImGui::IsItemHovered();
+				ImGui::NextColumn();
+				ImGui::Text(names[i]); ImGui::NextColumn();
+				ImGui::Text(paths[i]); ImGui::NextColumn();
+				ImGui::Text("%d", hovered); ImGui::NextColumn();
+			}
+			ImGui::Columns(1);
+			ImGui::Separator();
+			
+			if (ImGui::Button("Add")) {
+				createAndSetDataLink();
+			}
+
 			static std::string filePathName;
 
 			ImGui::Text("%s", filePathName.c_str());
-			if (ImGui::Button("选择文件...")) {
+			if (ImGui::Button("File...")) {
 				igfd::ImGuiFileDialog::Instance()->OpenModal("ChooseFileDlgKey", "Choose File", ".xlsx", ".");
 
 				nti_import_from_excel("test/device1.xlsx", 0);
-#ifndef NTI56_WITHOUT_ARX
-				//int rc = nti_insert_table();
+#if (!NDEBUG && !NTI56_WITHOUT_ARX)
+				int rc = nti_insert_table();
 #endif
 			}
 			// display
@@ -105,11 +137,11 @@ void nti_tabswnd_render(nti_imgui_wnddata * wnddata)
 			}
 			ImGui::EndTabItem();
 		}
-		if (ImGui::BeginTabItem(("打印"))) {
+		if (ImGui::BeginTabItem(("Print"))) {
 			ImGui::Text("This is the Cucumber tab!\nblah blah blah blah blah");
 			ImGui::EndTabItem();
 		}
-		if (ImGui::BeginTabItem(("设置"))) {
+		if (ImGui::BeginTabItem(("Setting"))) {
 			ImGui::Text("This is the Cucumber tab!\nblah blah blah blah blah");
 			ImGui::EndTabItem();
 		}

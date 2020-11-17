@@ -24,11 +24,6 @@ struct nti_imgui_wnddata {
 	int is_hide;
 };
 
-struct nti_imgui_render {
-	nti_imgui_wnddata * wnddata;
-	void(* render)(nti_imgui_wnddata * wnddata);
-};
-
 int nti_imgui_create(HWND hwnd);
 int nti_imgui_add_render(void(*render)(nti_imgui_wnddata * wnddata), nti_imgui_wnddata * wnddata);
 int nti_imgui_paint();

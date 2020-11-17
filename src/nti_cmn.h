@@ -11,6 +11,7 @@
 #include "config.h"
 #endif /* HAVE_CONFIG_H */
 #include "nti_imgui.h" //nti_imgui_wnddata
+#include "nti_arx.h"
 extern "C" {
 #include "adlist.h"	//list
 }
@@ -30,6 +31,10 @@ struct nti_wnddata_reactor {
 	char cls[128];
 	char obj_id[128];
 	char handle[128];
+#ifndef NTI56_WITHOUT_ARX
+	nti_datalink datalinks[128];
+#endif
+
 };
 
 struct nti_wnddata {

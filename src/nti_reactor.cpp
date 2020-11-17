@@ -179,6 +179,63 @@ void CEdReactor::commandEnded(const TCHAR *cmd)
 //
 // document manager reactor
 //
+
+int update_blocks()
+{
+	int rc = 0;
+
+	g_wnddata->reactor.curr_block = 0;
+	while (listFirst(g_wnddata->reactor.block_list))
+		listDelNode(g_wnddata->reactor.block_list, listFirst(g_wnddata->reactor.block_list));
+
+	AcDbBlockTable *pBlockTable = 0;
+	acdbHostApplicationServices()->workingDatabase()->getSymbolTable(pBlockTable, AcDb::kForRead);
+
+	AcDbBlockTableIterator * iter = 0;
+	pBlockTable->newIterator(iter);
+
+	for (; iter && !iter->done(); iter->step()) {
+
+		AcDbBlockTableRecord *pBlockTableRec = 0;
+		ACHAR * name = 0;
+		iter->getRecord(pBlockTableRec);
+		if (pBlockTableRec) {
+			pBlockTableRec->getName(name);
+			AcDbObjectId id = pBlockTableRec->objectId();
+
+
+
+			//AcDbBlockTableRecordIterator * riter = 0;
+			//pBlockTableRec->newIterator(riter);
+
+			//for (; riter && !riter->done(); riter->step()) {
+			//	AcDbEntity * ent = 0;
+			//	riter->getEntity(ent);
+
+			//	AcDbAttributeDefinition *pAttDef = NULL;
+			//	pAttDef = AcDbAttributeDefinition::cast(ent);
+			//	if (pAttDef) {
+
+			//	}
+
+			//	ent->close();
+			//	delete ent;
+			//}
+			//delete riter;
+
+			char * bname = nti_newn(128, char);
+			strncpy(bname, U8(WA(name)), 128);
+			listAddNodeTail(g_wnddata->reactor.block_list, bname);
+
+			pBlockTableRec->close();
+		}
+	}
+	pBlockTable->close();
+	delete iter;
+
+	return rc;
+}
+
 /////////////////////////////////////////////////////////////////////////////////////
 //
 //
@@ -194,54 +251,9 @@ void CDocReactor::documentActivated(AcApDocument* pDoc)
         acutPrintf(_T("\ndocumentActiveated: %s.\n"), pDoc->fileName());
         acedPostCommandPrompt();
 #endif
-
-        g_wnddata->reactor.curr_block = 0;
-		while(listFirst(g_wnddata->reactor.block_list))
-			listDelNode(g_wnddata->reactor.block_list, listFirst(g_wnddata->reactor.block_list));
-
-		AcDbBlockTable *pBlockTable = 0;
-		acdbHostApplicationServices()->workingDatabase()->getSymbolTable(pBlockTable, AcDb::kForRead);
-
-		AcDbBlockTableIterator * iter = 0;
-		pBlockTable->newIterator(iter);
-
-		for (; iter && !iter->done(); iter->step()) {
-
-			AcDbBlockTableRecord *pBlockTableRec = 0;
-			ACHAR * name = 0;
-			iter->getRecord(pBlockTableRec);
-			if (pBlockTableRec) {
-				pBlockTableRec->getName(name);
-				AcDbObjectId id = pBlockTableRec->objectId();
-
-				//AcDbBlockTableRecordIterator * riter = 0;
-				//pBlockTableRec->newIterator(riter);
-
-				//for (; riter && !riter->done(); riter->step()) {
-				//	AcDbEntity * ent = 0;
-				//	riter->getEntity(ent);
-
-				//	AcDbAttributeDefinition *pAttDef = NULL;
-				//	pAttDef = AcDbAttributeDefinition::cast(ent);
-				//	if (pAttDef) {
-
-				//	}
-
-				//	ent->close();
-				//	delete ent;
-				//}
-				//delete riter;
-
-				char * bname = nti_newn(128, char);
-				strncpy(bname, U8(WA(name)), 128);
-				listAddNodeTail(g_wnddata->reactor.block_list, bname);
-
-				pBlockTableRec->close();
-			}
-		}
-		pBlockTable->close();
-		delete iter;
-    }
+		update_blocks();
+		nti_arx_update_datalinks(g_wnddata->reactor.datalinks);
+	}
 }
 //
 // We need to attach the database reactor to the newly created

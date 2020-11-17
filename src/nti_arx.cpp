@@ -9,6 +9,8 @@
 #endif /* HAVE_CONFIG_H */
 #include "stdafx.h"
 #include "nti_arx.h" /*nti_read*/
+#include "DbTableTemplate.h"
+#include "ArxDbgUtils.h" /*selectEntity*/
 /////////////////////////////////////////////////////////////////////////////////////
 
 int nti_read(ACHAR const * file)
@@ -535,22 +537,173 @@ createPolyline()
 }
 // END CODE APPEARING IN SDK DOCUMENT.
 
-Acad::ErrorStatus
-
-addToModelSpace(AcDbObjectId &objId, AcDbEntity* pEntity)
+Acad::ErrorStatus addToModelSpace(AcDbObjectId &objId, AcDbEntity* pEntity)
 {
     Acad::ErrorStatus     es = Acad::eOk;
     AcDbBlockTable        *pBlockTable;
     AcDbBlockTableRecord  *pSpaceRecord;
     acdbHostApplicationServices()->workingDatabase()
         ->getSymbolTable(pBlockTable, AcDb::kForRead);
-    pBlockTable->getAt(ACDB_MODEL_SPACE, pSpaceRecord,
+    es = pBlockTable->getAt(ACDB_MODEL_SPACE, pSpaceRecord,
         AcDb::kForWrite);
+	if (!pSpaceRecord) {
+		pBlockTable->close();
+		return es;
+	}
     pSpaceRecord->appendAcDbEntity(objId, pEntity);
     pBlockTable->close();
     pEntity->close();
     pSpaceRecord->close();
     return es;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+// Create a table template from a table, and create a table style to hold the template.
+void createTemplate()
+{
+	// Select a table
+	ErrorStatus es;
+	AcDbTable *pTbl = NULL;
+	if (NULL == (pTbl = AcDbTable::cast(ArxDbgUtils::selectEntity(_T("\nSelect a table: ")))))
+		acutPrintf(ACRX_T("\nSelected entity was not a table!"));
+	static ACHAR sNameOfMyTableTemplate[MAX_PATH] = ACRX_T("MyTableTemplate");
+	static ACHAR sNameOfMyTableStyle[MAX_PATH] = ACRX_T("MyTableStyle");
+	AcDbTableTemplate* pTblTpl = new AcDbTableTemplate();
+	// We skip its content here.
+	es = pTblTpl->capture(pTbl, AcDb::kTableCopySkipContent);
+	es = pTblTpl->setName(sNameOfMyTableTemplate);
+	AcDbTableStyle* pTblSty = new AcDbTableStyle();
+	AcDbDatabase *pDb = acdbHostApplicationServices()->workingDatabase();
+	assert(pDb);
+	// If a style with the name is already in the TableStyleDictionary, remove it.
+	AcDbDictionary *pDict = NULL;
+	es = acdbHostApplicationServices()->workingDatabase()->getTableStyleDictionary(pDict, AcDb::kForRead);
+	// Check if the Table Style is already there.
+	if (pDict->has(sNameOfMyTableStyle))
+	{
+		es = pDict->upgradeOpen();
+		es = pDict->remove(sNameOfMyTableStyle);
+	}
+	// Post the table style to DB and then set the table template to it.
+	AcDbObjectId idTS;
+	es = pDict->upgradeOpen();
+	if (Acad::eOk != (es = pDict->setAt(sNameOfMyTableStyle, pTblSty, idTS)))
+	{
+		pDict->close();
+		delete pTblSty;
+		delete pTblTpl;
+		es = pTbl->close();
+		acutPrintf(ACRX_T("\nUnable to add new Table Style"));
+		return;
+	}
+	es = pDict->close();
+	assert(es == Acad::eOk);
+	// Set the new template to the table.
+	AcDbObjectId id;
+	es = pTblSty->setTemplate(pTblTpl, AcDb::kMergeCellStyleNone, id);
+	if (es != Acad::eOk)
+	{
+		delete pTblTpl;
+		pTblSty->close();
+		pTbl->close();
+		acutPrintf(ACRX_T("\nError in setting data table template!"));
+		return;
+	}
+	// Clean up.
+	es = pTblSty->close();
+	es = pTblTpl->close();
+	es = pTbl->close();
+}
+
+// Create a data link and set it to the cell(2,2) of a selected table.
+void createAndSetDataLink()
+{
+	// Select a table
+	AcDbTable *pTbl = NULL;
+	if (NULL == (pTbl =
+		AcDbTable::cast(ArxDbgUtils::selectEntity(_T("\nSelect a table: ")))))
+	{
+		acutPrintf(ACRX_T("\nSelected entity was not a table!"));
+		return;
+	}
+	// Get an Excel file
+	//
+	struct resbuf *result;
+	int rc;
+	if ((result = acutNewRb(RTSTR)) == NULL)
+	{
+		pTbl->close();
+		acutPrintf(ACRX_T("\nUnable to allocate buffer!"));
+		return;
+	}
+	result->resval.rstring = NULL;
+	rc = acedGetFileD(ACRX_T("Excel File"),	// Title
+		ACRX_T("c:/temp"),	// Default pathname  
+		ACRX_T("xls"),	//Default extension
+		16,					// Control flags
+		result);	// The path selected by the user.
+	if (rc != RTNORM)
+	{
+		pTbl->close();
+		acutPrintf(ACRX_T("\nError in selecting an EXCEL file!"));
+		return;
+	}
+	// Retrieve the file name from the ResBuf.
+	ACHAR fileName[MAX_PATH];
+	_tcscpy(fileName, result->resval.rstring);
+	rc = acutRelRb(result);
+	static ACHAR sMyDataLink[MAX_PATH] = ACRX_T("MyDataLinkTest");
+	// Get the Data Link Manager.
+	Acad::ErrorStatus es;
+	AcDbDataLinkManager* pDlMan = acdbHostApplicationServices()->workingDatabase()->getDataLinkManager();
+	assert(pDlMan);
+	AcDbObjectId idDL;
+	AcDbDataLink *pDL = NULL;
+	// Check if a Data Link with the name already exists. If so, remove it.
+	if (pDlMan->getDataLink(sMyDataLink, pDL, AcDb::kForRead) == Acad::eOk && pDL)
+	{
+		pDL->close();
+		es = pDlMan->removeDataLink(sMyDataLink, idDL);
+		if (es != Acad::eOk)
+		{
+			pTbl->close();
+			acutPrintf(ACRX_T("\nError in removing the Data Link!"));
+			return;
+		}
+	}
+	// Create the Data Link with the name.
+	es = pDlMan->createDataLink(ACRX_T("AcExcel"), sMyDataLink, ACRX_T("This is a test for Excel type data link."), fileName, idDL);
+	if (es != Acad::eOk)
+	{
+		pTbl->close();
+		acutPrintf(ACRX_T("\nError in creating Data Link!\nPlease check if there is a sheet named 'Sheet1' in the XLS file."));
+		return;
+	}
+	// Open the Data Link.
+	es = acdbOpenObject<AcDbDataLink>(pDL, idDL, AcDb::kForWrite);
+	if (es != Acad::eOk || !pDL)
+	{
+		pTbl->close();
+		acutPrintf(ACRX_T("\nError in opening the Data Link object!"));
+		return;
+	}
+	//  Set options of the Data Link
+	es = pDL->setOption(AcDb::kDataLinkOptionPersistCache);
+	es = pDL->setUpdateOption(pDL->updateOption() | AcDb::kUpdateOptionAllowSourceUpdate);
+
+	// Close the Data Link.
+	pDL->close();
+	// Set data link to the table object at cell(2,2).
+	es = pTbl->setDataLink(2, 2, idDL, true);
+	if (es != Acad::eOk)
+	{
+		pTbl->close();
+		acutPrintf(ACRX_T("\nError in setting Data Link to the selected table!\nPlease check if there is a sheet named 'Sheet1' in the XLS file."));
+		return;
+	}
+	// Don't forget to close the table object.
+	es = pTbl->close();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -584,67 +737,42 @@ int nti_arx_blocks()
 
 int nti_insert_table()
 {
-	AcDbBlockTable *pBlkTbl;
-	acdbHostApplicationServices()->workingDatabase()->getBlockTable(pBlkTbl, AcDb::kForWrite);
-	// 获得模型空间的块表记录
-	AcDbBlockTableRecord *pBlkTblRcd;
-	pBlkTbl->getAt(ACDB_MODEL_SPACE, pBlkTblRcd, AcDb::kForWrite);
-
 	AcDbTable* pTable = new AcDbTable;
+	pTable->setSize(5, 6);
+	pTable->setValue(0, 0, _T("hello"));
 
-	AcDbDictionary *pDict = NULL;
-	AcDbObjectId idTblStyle;
-	acdbHostApplicationServices()->workingDatabase()->getTableStyleDictionary(pDict, AcDb::kForRead);
-	pDict->getAt(_T("Standard"), idTblStyle);
-	pDict->close();
-
-	pTable->setTableStyle(idTblStyle);
-
-	AcDbTextStyleTable* pTextStyle = NULL;
-	acdbHostApplicationServices()->workingDatabase()->getTextStyleTable(pTextStyle, AcDb::kForRead);
-	AcDbObjectId textID;
-	pTextStyle->getAt(_T("Standard"), textID);
-	pTextStyle->close();
-
-	if (!textID.isNull())
-	{
-		pTable->setTextStyle(textID);
-	}
-
-	pTable->setNumColumns(2);
-	pTable->setNumRows(4);
-
-	pTable->generateLayout();
-	pTable->suppressHeaderRow(false);//禁用标题
-									 //定义插入点
-	pTable->setPosition(AcGePoint3d(100, 100, 0));
-
-	//定义行高
-	pTable->setRowHeight(0, 30);
-	pTable->setRowHeight(1, 5);
-	pTable->setRowHeight(2, 5);
-	pTable->setRowHeight(3, 5);
-
-	//定义列宽
-	pTable->setColumnWidth(0, 45);
-	pTable->setColumnWidth(1, 40);
-
-	pTable->setTextString(1, 1, _T("sfsfsdfsd"));
-	pTable->setAutoScale(1, 1, true);
-
-	pBlkTblRcd->appendAcDbEntity(pTable);
-
-	pTable->setRegen();
-
-	pTable->close();
-	pBlkTblRcd->close();
-	pBlkTbl->close();
-
-	//刷新屏幕
-	actrTransactionManager->flushGraphics(); /*refresh screen*/
-	acedUpdateDisplay();
+	AcDbObjectId id;
+	Acad::ErrorStatus rc = addToModelSpace(id, pTable);
 
 	return 0;
+}
+
+int nti_arx_update_datalinks(nti_datalink * links)
+{
+	if(!links)
+		return -1;
+
+	int i, rc;
+	Acad::ErrorStatus es;
+
+	AcDbDataLinkManager* pDlMan = acdbHostApplicationServices()->workingDatabase()->getDataLinkManager();
+	assert(pDlMan);
+	AcDbObjectIdArray datalinks;
+	rc = pDlMan->getDataLink(datalinks);
+
+	for (i = 0; i < datalinks.length(); ++i) {
+		AcDbDataLink *pDL = NULL;
+		es = acdbOpenObject<AcDbDataLink>(pDL, datalinks[i], AcDb::kForRead);
+		if (!pDL)
+			continue;
+		
+		links[i].name = pDL->name();
+
+		pDL->close();
+	}
+	links[i].name = _T("");
+
+	return rc;
 }
 
 #ifndef NDEBUG

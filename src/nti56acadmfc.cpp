@@ -11,6 +11,7 @@
 #include "nti_imgui.h" /*nti_wnddata*/
 #include "nti_cmn.h" /*nti_wnddata*/
 #include "nti_render.h" /*nti_wnddata*/
+#include "imgui/misc/cpp/imgui_sds.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -25,6 +26,7 @@ int is_chld = 0;
 extern "C" {
 	int test_libxlsxio_main(int argc, char ** argv);
 }
+int test_nti_imgui_main(int, char**);
 
 // Cnti56acadmfcApp
 
@@ -65,6 +67,8 @@ BOOL Cnti56acadmfcApp::InitInstance()
 {
 	int i, rc;
 #ifndef NDEBUG
+	//test_nti_imgui_main(0, 0);
+	test_imgui_sds_main(0, 0);
 	test_libxlsxio_main(0, 0);
 #endif
 

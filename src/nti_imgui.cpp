@@ -26,9 +26,13 @@ extern "C" {
 #define WM_DPICHANGED 0x02E0 // From Windows SDK 8.1+ headers
 #endif
 
-extern nti_wnddata * g_wnddata;
 static list * g_renderlist = 0;
 /////////////////////////////////////////////////////////////////////////////////////
+
+struct nti_imgui_render {
+	nti_imgui_wnddata * wnddata;
+	void(*render)(nti_imgui_wnddata * wnddata);
+};
 
 // Forward declare message handler from imgui_impl_win32.cpp
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
@@ -311,6 +315,9 @@ int nti_imgui_destroy(HWND hwnd)
 
 	CleanupDeviceOpenGL2(hwnd, &g_MainWindow);
 	wglDeleteContext(g_hRC);
+
+	listRelease(g_renderlist);
+	g_renderlist = 0;
 
 	return 0;
 }

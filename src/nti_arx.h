@@ -12,6 +12,7 @@
 #include "config.h"
 #endif /* HAVE_CONFIG_H */
 #include "AdAChar.h"
+#include "AcString.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -21,7 +22,18 @@ extern "C" {
 int nti_read(ACHAR const * file);
 int nti_insert_table();
 
-#define CUR_DB acdbHostApplicationServices()->workingDatabase()
+#define CUR_DB() acdbHostApplicationServices()->workingDatabase()
+
+/////////////////////////////////////////////////////////////////////////////////////////
+struct nti_datalink {
+	AcString name;
+	AcString desc;
+	AcString conn;
+};
+
+void createAndSetDataLink();
+int nti_arx_update_datalinks(nti_datalink * datalinks);
+
 /////////////////////////////////////////////////////////////////////////////////////////
 #ifndef NDEBUG
 int test_nti_arx_main(int argc, char ** argv);

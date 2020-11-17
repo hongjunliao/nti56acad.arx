@@ -8,7 +8,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LocalDebuggerCommand>C:\Program Files\Autodesk\AutoCAD 2018\acad.exe</LocalDebuggerCommand>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-    <LocalDebuggerCommandArguments>/ld $(TargetPath)</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>/ld ArxDbg.arx /ld $(TargetPath)</LocalDebuggerCommandArguments>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
     <LocalDebuggerCommand>C:\Program Files\Autodesk\AutoCAD 2018\acad.exe</LocalDebuggerCommand>
