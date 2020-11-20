@@ -8,6 +8,7 @@
 #include "config.h"
 #endif /* HAVE_CONFIG_H */
 
+#include <windows.h>
 #include <stdlib.h>
 
 #include "nti_cmn.h" //nti_imgui_wnddata

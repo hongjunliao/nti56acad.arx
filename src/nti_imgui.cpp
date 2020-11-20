@@ -49,6 +49,8 @@ static int g_Width;
 static int g_Height;
 
 /////////////////////////////////////////////////////////////////////////////////////
+#ifdef NTI_USE_OPENGL
+
 
 // Forward declarations of helper functions
 static bool CreateDeviceOpenGL2(HWND hWnd, RendererData* data);
@@ -177,7 +179,7 @@ int nti_imgui_create(HWND hwnd)
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
 																//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
+	//io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
 	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
 																//io.ConfigViewportsNoAutoMerge = true;
 																//io.ConfigViewportsNoTaskBarIcon = true;
@@ -264,6 +266,21 @@ int nti_imgui_paint()
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
 
+	//设置窗口位置
+	//ImGui::SetNextWindowPos(ImVec2(0, 0), 0, ImVec2(0, 0));
+	//设置窗口的大小
+	ImGui::SetNextWindowSize(ImVec2(0.01, 0.01));
+	//设置窗口为透明
+	ImGui::SetNextWindowBgAlpha(0.0f);
+	//纹理ID
+	//设置窗口的padding为0是图片控件充满窗口
+	//ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
+	//设置窗口为无边框
+	//ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0);
+	//创建窗口使其固定在一个位置
+	ImGui::Begin("背景", NULL, 0);
+	//ImGui::PopStyleVar(2);
+
 	/* render window */
 	if (g_renderlist) {
 		listIter * iter = listGetIterator(g_renderlist, 0);
@@ -272,18 +289,18 @@ int nti_imgui_paint()
 			nti_imgui_render * ir = (nti_imgui_render *)listNodeValue(node);
 			assert(ir && ir->render);
 
-			if(!ir->wnddata || !ir->wnddata->is_hide)
-				ir->render(ir->wnddata);
+			ir->render(ir->wnddata);
 
 			node = listNext(iter);
 		}
 		listReleaseIterator(iter);
 	}
+	ImGui::End();
 
 	// Rendering
 	ImGui::Render();
 	glViewport(0, 0, g_Width, g_Height);
-	glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
+	//glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	// If you are using this code with non-legacy OpenGL header/contexts (which you should not, prefer using imgui_impl_opengl3.cpp!!),
@@ -321,6 +338,8 @@ int nti_imgui_destroy(HWND hwnd)
 
 	return 0;
 }
+
+#endif //NTI_USE_OPENGL
 
 // Win32 message handler
 LRESULT WINAPI nti_imgui_WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)

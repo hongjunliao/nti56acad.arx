@@ -45,6 +45,10 @@ protected:
 	afx_msg void OnSetFocus(CWnd *pOldWnd);
 	DECLARE_MESSAGE_MAP()
 
+public:
+	afx_msg void On32771();
+	afx_msg void On32775();
+	afx_msg void On32776();
 };
 
 

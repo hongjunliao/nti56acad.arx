@@ -19,6 +19,7 @@
 #include "nti_reactor.h"		//
 #include "nti_render.h"		//
 #include "nti_cmn.h"	//nti_wnddata
+#include "nti_test.h"
 
 // per app
 extern CDocReactor* gpDocReactor;
@@ -31,10 +32,24 @@ extern int is_chld;
 extern nti_wnddata * g_wnddata;
 /////////////////////////////////////////////////////////////////////////////////////
 
-void nti56acad_null()
-{}
+void nti_cmd_null()
+{
+	//empty
+	acutPrintf(_T("\nnti_cmd_null\n"));
+}
 
-void nti56acad()
+void nti_cmd_imgui_dx9()
+{
+	nti_imgui_modal(0, 0, 0, acedGetAcadFrame()->GetSafeHwnd());
+}
+
+void nti_cmd_dx9_main()
+{
+	win32_dx9_main(0, 0);
+}
+
+
+void nti_cmd_imgui_opengl()
 {
 	int rc;
 	// Redirect the resource override   

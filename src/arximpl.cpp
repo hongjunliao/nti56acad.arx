@@ -23,6 +23,7 @@
 #include "nti_cmd.h"
 #include "nti_reactor.h" /**/
 #include "nti_cmn.h"	//nti_wnddata
+#include "nti_EdUiContext.h"
 
 /////////////////////////////////////////////////////////////////////////////////////
 static nti_wnddata g_wnddataobj = { 0 };
@@ -37,7 +38,7 @@ CEdReactor* gpEdReactor = NULL;
 CDbModReactor *gpDbReactor = NULL;
 /////////////////////////////////////////////////////////////////////////////
 // Define the sole extension module object.
-AC_IMPLEMENT_EXTENSION_MODULE(modelessDll);
+AC_IMPLEMENT_EXTENSION_MODULE(ntiacadDll);
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -48,6 +49,7 @@ AC_IMPLEMENT_EXTENSION_MODULE(modelessDll);
 void initApp()
 {
 	int rc;
+	g_hwnd = acedGetAcadFrame()->GetMessageBar()->GetSafeHwnd();
 	rc = nti_wnddata_init(g_wnddata);
 
 	gpDocReactor = new CDocReactor();
@@ -56,8 +58,9 @@ void initApp()
 	gpEdReactor = new CEdReactor();
 	acedEditor->addReactor(gpEdReactor);
 
-	acedRegCmds->addCommand(_T("ASDK_NTI56ACAD"),
-		_T("NTI56ACAD"), _T("NTI56ACAD"), ACRX_CMD_MODAL, nti56acad);
+	acedRegCmds->addCommand(_T("ASDK_NTI56ACAD"), _T("nti_imgui_dx9"), _T("nti_imgui_dx9"), ACRX_CMD_MODAL, nti_cmd_imgui_dx9);
+	acedRegCmds->addCommand(_T("ASDK_NTI56ACAD"), _T("nti_null"), _T("nti_null"), ACRX_CMD_MODAL, nti_cmd_null);
+	acedRegCmds->addCommand(_T("ASDK_NTI56ACAD"), _T("nti_dx9_main"), _T("nti_dx9_main"), ACRX_CMD_MODAL, nti_cmd_dx9_main);
 
 	//acedRegCmds->addCommand(_T("ASDK_DWG_COMMANDS"),
 	//	_T("nti56acad_win32"), _T("nti56acad_win32"), ACRX_CMD_MODAL, nti56acad_win32);
@@ -69,6 +72,18 @@ void initApp()
 	//	_T("nti56acad_dockctrlbar"), _T("nti56acad_dockctrlbar"), ACRX_CMD_MODAL, nti56acad_dockctrlbar);
 	//acedRegCmds->addCommand(_T("ASDK_DWG_COMMANDS"),
 	//	_T("nti56acad_dockctrlbar2"), _T("nti56acad_dockctrlbar2"), ACRX_CMD_MODAL, nti56acad_dockctrlbar2);
+
+	static nti_EdUiContextApp * m_uiContext = new nti_EdUiContextApp;
+	rc = acedAddDefaultContextMenu(m_uiContext, m_uiContext, _T("ntiacad"));
+
+	if ((m_uiContext->isValid() == false) ||
+		(rc == false)) {
+		ASSERT(0);
+
+		delete m_uiContext;
+		m_uiContext = NULL;
+	}
+
 }
 
 void unloadApp()
@@ -102,9 +117,9 @@ DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
 	UNREFERENCED_PARAMETER(lpReserved);
 
 	if (dwReason == DLL_PROCESS_ATTACH)
-		modelessDll.AttachInstance(hInstance);
+		ntiacadDll.AttachInstance(hInstance);
 	else if (dwReason == DLL_PROCESS_DETACH)
-		modelessDll.DetachInstance();
+		ntiacadDll.DetachInstance();
 
 	return 1;   // ok
 }

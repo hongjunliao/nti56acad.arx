@@ -35,8 +35,10 @@ void nti_tabswnd_render(nti_imgui_wnddata * wnddata)
 {
 	if (!wnddata)
 		return;
-	ImGui::Begin(wnddata->title);
+	ImGui::OpenPopup(wnddata->title);
 	nti_wnddata_reactor * reactor = (nti_wnddata_reactor *)wnddata;
+
+	if (ImGui::BeginPopupModal(wnddata->title, &wnddata->is_open, 0)) {
 	ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags_None;
 	if (ImGui::BeginTabBar("tab", tab_bar_flags)) {
 		if (ImGui::BeginTabItem(("Block"))) {
@@ -108,7 +110,9 @@ void nti_tabswnd_render(nti_imgui_wnddata * wnddata)
 			ImGui::Separator();
 			
 			if (ImGui::Button("Add")) {
+#ifndef NTI56_WITHOUT_ARX
 				createAndSetDataLink();
+#endif
 			}
 
 			static std::string filePathName;
@@ -147,6 +151,17 @@ void nti_tabswnd_render(nti_imgui_wnddata * wnddata)
 		}
 #ifndef NDEBUG
 		if (ImGui::BeginTabItem(("Test"))) {
+			if (ImGui::Button("MFC Choose File Dialog...")) {
+				CString gReadFilePathName;
+				CFileDialog fileDlg(true, _T("mp3"), _T("*.mp3"), OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT
+				, _T("mp3 Files (*.mp3)|*.mp3|wav File(*.wav)|*.wav|All File (*.*)|*.*||"), NULL);
+				if (fileDlg.DoModal() == IDOK)    //弹出对话框  
+				{
+					gReadFilePathName = fileDlg.GetPathName();//得到完整的文件名和目录名拓展名  
+					CString filename = fileDlg.GetFileName();
+				}
+			}
+
 
 			static bool show_demo_window = 0;
 			if (show_demo_window) {
@@ -165,7 +180,8 @@ void nti_tabswnd_render(nti_imgui_wnddata * wnddata)
 #endif // !NDEBUG
 		ImGui::EndTabBar();
 	}
-	ImGui::End();
+		ImGui::EndPopup();
+	}
 }
 
 //reactor window

@@ -4,17 +4,16 @@
  *
  * acad command entrypoint
  * */
-#ifndef NTI_CMD_H
-#define NTI_CMD_H
+#ifndef NTI_TEST_H
+#define NTI_TEST_H
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif /* HAVE_CONFIG_H */
 
 /////////////////////////////////////////////////////////////////////////////////////
+int win32_dx9_main(int, char**);
+int nti_imgui_modal(int, char**, HWND hwnd, HWND phwnd);
+/////////////////////////////////////////////////////////////////////////////////////
 
-void nti_cmd_imgui_opengl();
-void nti_cmd_null();
-void nti_cmd_imgui_dx9();
-void nti_cmd_dx9_main();
-#endif //NTI_CMD_H
+#endif //NTI_TEST_H

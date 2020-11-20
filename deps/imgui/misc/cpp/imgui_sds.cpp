@@ -8,6 +8,7 @@
 // Changelog:
 // - v0.10: Initial version. Added InputText() / InputTextMultiline() calls with sds
 
+#include <time.h>
 #include "imgui.h"
 #include "imgui_sds.h"
 
@@ -78,6 +79,8 @@ bool ImGui::InputTextWithHint(const char* label, const char* hint, sds* str, ImG
 /////////////////////////////////////////////////////////////////////////////////////
 
 #ifndef NDEBUG
+#include <windows.h>
+#include <tchar.h>
 #include <assert.h>
 #include "nti_imgui.h"
 #include "nti_render.h"

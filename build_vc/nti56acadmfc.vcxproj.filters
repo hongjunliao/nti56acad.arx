@@ -79,6 +79,15 @@
     <ClCompile Include="..\deps\imgui\misc\cpp\imgui_sds.cpp">
       <Filter>deps</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\win32_dx9_main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\deps\imgui\backends\imgui_impl_dx9.cpp">
+      <Filter>deps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\nti_imgui_dx9.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\deps\ImGuiFileDialog\ImGuiFileDialog\ImGuiFileDialog.h">
@@ -141,6 +150,16 @@
     <ClInclude Include="..\deps\imgui\misc\cpp\imgui_sds.h">
       <Filter>deps</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="..\deps\imgui\imconfig.h">
+      <Filter>deps</Filter>
+    </ClInclude>
+    <ClInclude Include="..\deps\imgui\backends\imgui_impl_dx9.h">
+      <Filter>deps</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\nti_test.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="deps">
@@ -155,5 +174,9 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="nti56acadmfc.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\nti56acadmfc.ico" />
+    <Image Include="res\Toolbar.bmp" />
   </ItemGroup>
 </Project>

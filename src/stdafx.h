@@ -41,6 +41,9 @@
 #include <afxext.h>         // MFC extensions
 #include <afxcmn.h>
 
+// For compilers that support precompilation, includes "wx/wx.h".
+//#include "wx/wxprec.h"
+
 // Turn on the _DEBUG symbol if it was defined, before including
 // non-MFC header files.
 //

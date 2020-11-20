@@ -16,4 +16,7 @@
     <LocalDebuggerWorkingDirectory>$(OutDir)</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
+  <PropertyGroup>
+    <RESOURCE_FILE>nti56acadmfc.rc</RESOURCE_FILE>
+  </PropertyGroup>
 </Project>

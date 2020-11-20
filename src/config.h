@@ -33,6 +33,8 @@
 #define IMGUI_IMPL_OPENGL_LOADER_GLAD
 #endif
 
+//#define  NTI_USE_OPENGL
+
 #endif /* HAVE_CONFIG_H */
 
 #endif /* CONFIG_H */

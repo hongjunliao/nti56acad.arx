@@ -82,6 +82,18 @@
     <ClCompile Include="..\src\nti_cmn.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\nti_EdUiContext.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\deps\imgui\backends\imgui_impl_dx9.cpp">
+      <Filter>deps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\nti_imgui_dx9.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\win32_dx9_main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\config.h">
@@ -120,6 +132,14 @@
     <ClInclude Include="..\deps\imgui\backends\imgui_impl_opengl2.h">
       <Filter>deps</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\nti_EdUiContext.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="resource1.h" />
+    <ClInclude Include="..\deps\imgui\backends\imgui_impl_dx9.h">
+      <Filter>deps</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="deps">
@@ -132,5 +152,8 @@
   <ItemGroup>
     <None Include="..\TODOList" />
     <None Include="E:\home\nti56acad.arx\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="nti56acad.rc" />
   </ItemGroup>
 </Project>

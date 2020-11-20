@@ -6,11 +6,14 @@
 #include "nti56acadmfc.h"
 
 #include "MainFrm.h"
+#include "resource.h"
+#include "nti_test.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
+extern nti_wnddata * g_wnddata;
 // CMainFrame
 
 IMPLEMENT_DYNAMIC(CMainFrame, CFrameWnd)
@@ -18,6 +21,9 @@ IMPLEMENT_DYNAMIC(CMainFrame, CFrameWnd)
 BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 	ON_WM_CREATE()
 	ON_WM_SETFOCUS()
+	ON_COMMAND(ID_32771, &CMainFrame::On32771)
+	ON_COMMAND(ID_32775, &CMainFrame::On32775)
+	ON_COMMAND(ID_32776, &CMainFrame::On32776)
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -128,3 +134,21 @@ BOOL CMainFrame::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO*
 	return CFrameWnd::OnCmdMsg(nID, nCode, pExtra, pHandlerInfo);
 }
 
+
+
+void CMainFrame::On32771()
+{
+	g_wnddata->reactor.base.is_open = 1;
+}
+
+
+void CMainFrame::On32775()
+{
+	win32_dx9_main(0, 0);
+}
+
+
+void CMainFrame::On32776()
+{
+	nti_imgui_modal(0, 0, 0, GetSafeHwnd());
+}

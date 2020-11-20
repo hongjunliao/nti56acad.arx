@@ -12,8 +12,6 @@
 #include "config.h"
 #endif /* HAVE_CONFIG_H */
 
-#include "stdafx.h"
-
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -21,7 +19,7 @@ extern "C" {
 
 struct nti_imgui_wnddata {
 	char title[128];
-	int is_hide;
+	bool is_open;
 };
 
 int nti_imgui_create(HWND hwnd);

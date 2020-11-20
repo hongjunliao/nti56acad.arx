@@ -87,7 +87,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\include;..\src;..\deps\arx\inc\;..\deps;..\deps\imgui;..\deps\imgui\exmaples;..\deps\imgui\backends;..\deps\ImGuiFileDialog;..\deps\xlsxio\include;..\deps\dirent\include;..\deps\redis\src;..\src\libxhhp\src;E:\home\nti56acad.arx\.;..\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;..\src;..\deps\arx\inc\;..\deps;..\deps\imgui;..\deps\imgui\exmaples;..\deps\imgui\backends;..\deps\ImGuiFileDialog;..\deps\xlsxio\include;..\deps\dirent\include;..\deps\redis\src;..\src\libxhhp\src;E:\home\nti56acad.arx\.;..\res;%(AdditionalIncludeDirectories);.;</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -115,7 +115,7 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;libxlsxio_read.lib;libxlsxio_write.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;libxlsxio_read.lib;libxlsxio_write.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;d3d9.lib;;;</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\lib;..\lib/$(Configuration);..\deps/xlsxio/lib;..\deps/xlsxio/lib/$(Configuration);%(AdditionalLibraryDirectories);..\deps\arx\lib-x64\;</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -130,7 +130,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\include;..\src;..\deps\arx\inc\;..\deps;..\deps\imgui;..\deps\imgui\exmaples;..\deps\imgui\backends;..\deps\ImGuiFileDialog;..\deps\xlsxio\include;..\deps\dirent\include;..\deps\redis\src;..\src\libxhhp\src;E:\home\nti56acad.arx\.;..\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;..\src;..\deps\arx\inc\;..\deps;..\deps\imgui;..\deps\imgui\exmaples;..\deps\imgui\backends;..\deps\ImGuiFileDialog;..\deps\xlsxio\include;..\deps\dirent\include;..\deps\redis\src;..\src\libxhhp\src;E:\home\nti56acad.arx\.;..\res;%(AdditionalIncludeDirectories);.;</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ExceptionHandling>Sync</ExceptionHandling>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
@@ -158,7 +158,7 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;libxlsxio_read.lib;libxlsxio_write.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;libxlsxio_read.lib;libxlsxio_write.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;d3d9.lib;;;</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\lib;..\lib/$(Configuration);..\deps/xlsxio/lib;..\deps/xlsxio/lib/$(Configuration);%(AdditionalLibraryDirectories);..\deps\arx\lib-x64\;</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -173,7 +173,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\include;..\src;..\deps\arx\inc\;..\deps;..\deps\imgui;..\deps\imgui\exmaples;..\deps\imgui\backends;..\deps\ImGuiFileDialog;..\deps\xlsxio\include;..\deps\dirent\include;..\deps\redis\src;..\src\libxhhp\src;E:\home\nti56acad.arx\.;..\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;..\src;..\deps\arx\inc\;..\deps;..\deps\imgui;..\deps\imgui\exmaples;..\deps\imgui\backends;..\deps\ImGuiFileDialog;..\deps\xlsxio\include;..\deps\dirent\include;..\deps\redis\src;..\src\libxhhp\src;E:\home\nti56acad.arx\.;..\res;%(AdditionalIncludeDirectories);.;</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ExceptionHandling>Sync</ExceptionHandling>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
@@ -201,7 +201,7 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;libxlsxio_read.lib;libxlsxio_write.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;libxlsxio_read.lib;libxlsxio_write.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;d3d9.lib;;;</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\lib;..\lib/$(Configuration);..\deps/xlsxio/lib;..\deps/xlsxio/lib/$(Configuration);%(AdditionalLibraryDirectories);..\deps\arx\lib-x64\;</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -216,7 +216,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\include;..\src;..\deps\arx\inc\;..\deps;..\deps\imgui;..\deps\imgui\exmaples;..\deps\imgui\backends;..\deps\ImGuiFileDialog;..\deps\xlsxio\include;..\deps\dirent\include;..\deps\redis\src;..\src\libxhhp\src;E:\home\nti56acad.arx\.;..\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;..\src;..\deps\arx\inc\;..\deps;..\deps\imgui;..\deps\imgui\exmaples;..\deps\imgui\backends;..\deps\ImGuiFileDialog;..\deps\xlsxio\include;..\deps\dirent\include;..\deps\redis\src;..\src\libxhhp\src;E:\home\nti56acad.arx\.;..\res;%(AdditionalIncludeDirectories);.;</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -243,7 +243,7 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;libxlsxio_read.lib;libxlsxio_write.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;libxlsxio_read.lib;libxlsxio_write.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;d3d9.lib;;;</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\lib;..\lib/$(Configuration);..\deps/xlsxio/lib;..\deps/xlsxio/lib/$(Configuration);%(AdditionalLibraryDirectories);..\deps\arx\lib-x64\;</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -314,8 +314,10 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\deps\ImGuiFileDialog\ImGuiFileDialog\ImGuiFileDialog.cpp" />
+    <ClCompile Include="..\deps\imgui\backends\imgui_impl_dx9.cpp" />
     <ClCompile Include="..\deps\imgui\misc\cpp\imgui_sds.cpp" />
     <ClCompile Include="..\src\nti_cmn.cpp" />
+    <ClCompile Include="..\src\nti_imgui_dx9.cpp" />
     <ClCompile Include="..\src\nti_render.cpp" />
     <ClCompile Include="..\deps\gbk-utf8\utf8.c" />
     <ClCompile Include="..\deps\imgui\backends\imgui_impl_opengl2.cpp" />
@@ -327,8 +329,11 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="..\deps\redis\src\adlist.c" />
     <ClCompile Include="..\deps\redis\src\zmalloc.c" />
     <ClCompile Include="..\deps\sds\win32_sds.c" />
+    <ClCompile Include="..\src\win32_dx9_main.cpp" />
     <ClInclude Include="..\deps\ImGuiFileDialog\ImGuiFileDialog\ImGuiFileDialog.h" />
     <ClInclude Include="..\deps\ImGuiFileDialog\ImGuiFileDialog\ImGuiFileDialogConfig.h" />
+    <ClInclude Include="..\deps\imgui\backends\imgui_impl_dx9.h" />
+    <ClInclude Include="..\deps\imgui\imconfig.h" />
     <ClInclude Include="..\deps\imgui\misc\cpp\imgui_sds.h" />
     <ClInclude Include="..\src\AdskDMgr.h" />
     <ClCompile Include="..\src\ChildView.cpp" />
@@ -352,13 +357,20 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="..\src\nti_str.cpp" />
     <ClInclude Include="..\src\nti_str.h" />
     <ClCompile Include="..\src\nti_xlsx.cpp" />
+    <ClInclude Include="..\src\nti_test.h" />
     <ClInclude Include="..\src\nti_xlsx.h" />
-    <ClCompile Include="..\src\stdafx.cpp" />
+    <ClCompile Include="..\src\stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
     <ClInclude Include="..\src\stdafx.h" />
     <ClInclude Include="..\src\strcpcvt.h" />
     <ClInclude Include="..\src\targetver.h" />
     <ClCompile Include="..\src\test_libxlsxio.c" />
     <ClCompile Include="..\src\test_nti_imgui.cpp" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="ZERO_CHECK.vcxproj">
@@ -370,6 +382,10 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="nti56acadmfc.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\nti56acadmfc.ico" />
+    <Image Include="res\Toolbar.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

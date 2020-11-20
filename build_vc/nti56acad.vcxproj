@@ -87,7 +87,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\deps\SDL\include\;;..\include;..\deps\arx\inc-x64;..\deps\imgui\backends\;..\deps\imgui\;..\deps\arx\inc;..\src;..\src\libxhhp\src;;%(AdditionalIncludeDirectories);..\deps;;..\deps\redis\src;;..\deps\ImGuiFileDialog\;;..\deps\xlsxio\include;;..\deps\dirent\include\;..\deps\ARXDBG\Inc\;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\deps\SDL\include\;;..\include;..\deps\arx\inc-x64;..\deps\imgui\backends\;..\deps\imgui\;..\deps\arx\inc;..\src;..\src\libxhhp\src;;%(AdditionalIncludeDirectories);..\deps;;..\deps\redis\src;;..\deps\ImGuiFileDialog\;;..\deps\xlsxio\include;;..\deps\dirent\include\;..\deps\ARXDBG\Inc\;.\;</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -115,7 +115,7 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>accore.lib;acad.lib;acui22.lib;adui22.lib;ac1st22.lib;acdb22.lib;acge22.lib;acgiapi.lib;rxapi.lib;opengl32.lib;glu32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;;libxlsxio_read.lib;libxlsxio_write.lib;ArxDbg.lib;</AdditionalDependencies>
+      <AdditionalDependencies>accore.lib;acad.lib;acui22.lib;adui22.lib;ac1st22.lib;acdb22.lib;acge22.lib;acgiapi.lib;rxapi.lib;opengl32.lib;glu32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;;libxlsxio_read.lib;libxlsxio_write.lib;ArxDbg.lib;;d3d9.lib;</AdditionalDependencies>
       <AdditionalIncludeDirectories>..\deps\SDL\include\;;..\include;..\deps\arx\inc-x64;..\deps\imgui\backends\;..\deps\imgui\;..\deps\arx\inc;..\src;..\src\libxhhp\src;;%(AdditionalIncludeDirectories);..\deps;;..\deps\redis\src;;..\deps\ImGuiFileDialog\;;..\deps\xlsxio\include;;..\deps\dirent\include\;</AdditionalIncludeDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64 /NODEFAULTLIB:libc.lib /NODEFAULTLIB:libcmt.lib /NODEFAULTLIB:libcd.lib /NODEFAULTLIB:libcmtd.lib /NODEFAULTLIB:msvcrtd.lib</AdditionalOptions>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -132,7 +132,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\deps\SDL\include\;;..\include;..\deps\arx\inc-x64;..\deps\imgui\backends\;..\deps\imgui\;..\deps\arx\inc;..\src;..\src\libxhhp\src;;%(AdditionalIncludeDirectories);..\deps;;..\deps\redis\src;;..\deps\ImGuiFileDialog\;;..\deps\xlsxio\include;;..\deps\dirent\include\;..\deps\ARXDBG\Inc\;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\deps\SDL\include\;;..\include;..\deps\arx\inc-x64;..\deps\imgui\backends\;..\deps\imgui\;..\deps\arx\inc;..\src;..\src\libxhhp\src;;%(AdditionalIncludeDirectories);..\deps;;..\deps\redis\src;;..\deps\ImGuiFileDialog\;;..\deps\xlsxio\include;;..\deps\dirent\include\;..\deps\ARXDBG\Inc\;.\;</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ExceptionHandling>Sync</ExceptionHandling>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
@@ -159,7 +159,7 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>accore.lib;acad.lib;acui22.lib;adui22.lib;ac1st22.lib;acdb22.lib;acge22.lib;acgiapi.lib;rxapi.lib;opengl32.lib;glu32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;;libxlsxio_read.lib;libxlsxio_write.lib;ArxDbg.lib;</AdditionalDependencies>
+      <AdditionalDependencies>accore.lib;acad.lib;acui22.lib;adui22.lib;ac1st22.lib;acdb22.lib;acge22.lib;acgiapi.lib;rxapi.lib;opengl32.lib;glu32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;;libxlsxio_read.lib;libxlsxio_write.lib;ArxDbg.lib;;d3d9.lib;</AdditionalDependencies>
       <AdditionalIncludeDirectories>..\deps\SDL\include\;;..\include;..\deps\arx\inc-x64;..\deps\imgui\backends\;..\deps\imgui\;..\deps\arx\inc;..\src;..\src\libxhhp\src;;%(AdditionalIncludeDirectories);..\deps;;..\deps\redis\src;;..\deps\ImGuiFileDialog\;;..\deps\xlsxio\include;;..\deps\dirent\include\;</AdditionalIncludeDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -176,7 +176,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\deps\SDL\include\;;..\include;..\deps\arx\inc-x64;..\deps\imgui\backends\;..\deps\imgui\;..\deps\arx\inc;..\src;..\src\libxhhp\src;;%(AdditionalIncludeDirectories);..\deps;;..\deps\redis\src;;..\deps\ImGuiFileDialog\;;..\deps\xlsxio\include;;..\deps\dirent\include\;..\deps\ARXDBG\Inc\;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\deps\SDL\include\;;..\include;..\deps\arx\inc-x64;..\deps\imgui\backends\;..\deps\imgui\;..\deps\arx\inc;..\src;..\src\libxhhp\src;;%(AdditionalIncludeDirectories);..\deps;;..\deps\redis\src;;..\deps\ImGuiFileDialog\;;..\deps\xlsxio\include;;..\deps\dirent\include\;..\deps\ARXDBG\Inc\;.\;</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ExceptionHandling>Sync</ExceptionHandling>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
@@ -203,7 +203,7 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>accore.lib;acad.lib;acui22.lib;adui22.lib;ac1st22.lib;acdb22.lib;acge22.lib;acgiapi.lib;rxapi.lib;opengl32.lib;glu32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;;libxlsxio_read.lib;libxlsxio_write.lib;ArxDbg.lib;</AdditionalDependencies>
+      <AdditionalDependencies>accore.lib;acad.lib;acui22.lib;adui22.lib;ac1st22.lib;acdb22.lib;acge22.lib;acgiapi.lib;rxapi.lib;opengl32.lib;glu32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;;libxlsxio_read.lib;libxlsxio_write.lib;ArxDbg.lib;;d3d9.lib;</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\lib;../deps/arx/lib-x64;../deps/arx/lib-x64/$(Configuration);%(AdditionalLibraryDirectories);..\deps\ARXDBG\$(Platform)\$(Configuration)\;..\deps\xlsxio\lib</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -219,7 +219,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\deps\SDL\include\;;..\include;..\deps\arx\inc-x64;..\deps\imgui\backends\;..\deps\imgui\;..\deps\arx\inc;..\src;..\src\libxhhp\src;;%(AdditionalIncludeDirectories);..\deps;;..\deps\redis\src;;..\deps\ImGuiFileDialog\;;..\deps\xlsxio\include;;..\deps\dirent\include\;..\deps\ARXDBG\Inc\;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\deps\SDL\include\;;..\include;..\deps\arx\inc-x64;..\deps\imgui\backends\;..\deps\imgui\;..\deps\arx\inc;..\src;..\src\libxhhp\src;;%(AdditionalIncludeDirectories);..\deps;;..\deps\redis\src;;..\deps\ImGuiFileDialog\;;..\deps\xlsxio\include;;..\deps\dirent\include\;..\deps\ARXDBG\Inc\;.\;</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -246,7 +246,7 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>accore.lib;acad.lib;acui22.lib;adui22.lib;ac1st22.lib;acdb22.lib;acge22.lib;acgiapi.lib;rxapi.lib;opengl32.lib;glu32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;;libxlsxio_read.lib;libxlsxio_write.lib;ArxDbg.lib;</AdditionalDependencies>
+      <AdditionalDependencies>accore.lib;acad.lib;acui22.lib;adui22.lib;ac1st22.lib;acdb22.lib;acge22.lib;acgiapi.lib;rxapi.lib;opengl32.lib;glu32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;;libxlsxio_read.lib;libxlsxio_write.lib;ArxDbg.lib;;d3d9.lib;</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\lib;../deps/arx/lib-x64;../deps/arx/lib-x64/$(Configuration);%(AdditionalLibraryDirectories);..\deps\ARXDBG\$(Platform)\$(Configuration)\;..\deps\xlsxio\lib</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -319,6 +319,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   <ItemGroup>
     <ClCompile Include="..\deps\gbk-utf8\utf8.c" />
     <ClCompile Include="..\deps\ImGuiFileDialog\ImGuiFileDialog\ImGuiFileDialog.cpp" />
+    <ClCompile Include="..\deps\imgui\backends\imgui_impl_dx9.cpp" />
     <ClCompile Include="..\deps\redis\src\adlist.c" />
     <ClCompile Include="..\deps\redis\src\zmalloc.c" />
     <ClCompile Include="..\deps\sds\win32_sds.c" />
@@ -333,12 +334,14 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\src\nti_EdUiContext.cpp" />
     <ClCompile Include="..\src\nti_imgui.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\src\nti_imgui_dx9.cpp" />
     <ClCompile Include="..\src\nti_reactor.cpp" />
     <ClCompile Include="..\src\nti_render.cpp" />
     <ClCompile Include="..\src\nti_str.cpp" />
@@ -349,6 +352,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\src\win32_dx9_main.cpp" />
     <ClCompile Include="..\src\win32_main.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Use</PrecompiledHeader>
@@ -361,6 +365,9 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="..\deps\imgui\backends\imgui_impl_opengl3.cpp" />
     <ClCompile Include="..\deps\imgui\backends\imgui_impl_win32.cpp" />
     <ClCompile Include="..\deps\imgui\imgui_widgets.cpp" />
+    <ClInclude Include="..\deps\imgui\backends\imgui_impl_dx9.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="resource1.h" />
     <None Include="..\TODOList" />
     <ClCompile Include="..\src\arximpl.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
@@ -381,6 +388,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="..\deps\imgui\backends\imgui_impl_opengl2.h" />
     <ClInclude Include="..\src\nti_arx.h" />
     <ClInclude Include="..\src\nti_cmn.h" />
+    <ClInclude Include="..\src\nti_EdUiContext.h" />
     <ClInclude Include="..\src\nti_imgui.h" />
     <ClInclude Include="..\src\nti_reactor.h" />
     <ClInclude Include="..\src\nti_render.h" />
@@ -395,6 +403,9 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="nti56acad.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

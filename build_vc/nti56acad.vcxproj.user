@@ -8,7 +8,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LocalDebuggerCommand>C:\Program Files\Autodesk\AutoCAD 2018\acad.exe</LocalDebuggerCommand>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-    <LocalDebuggerCommandArguments>/ld ArxDbg.arx /ld $(TargetPath)</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>
+    </LocalDebuggerCommandArguments>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
     <LocalDebuggerCommand>C:\Program Files\Autodesk\AutoCAD 2018\acad.exe</LocalDebuggerCommand>
@@ -17,5 +18,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
     <LocalDebuggerCommand>C:\Program Files\Autodesk\AutoCAD 2018\acad.exe</LocalDebuggerCommand>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RESOURCE_FILE>nti56acad.rc</RESOURCE_FILE>
   </PropertyGroup>
 </Project>
