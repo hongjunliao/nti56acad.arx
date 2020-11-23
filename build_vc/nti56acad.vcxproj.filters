@@ -154,6 +154,9 @@
     <Filter Include="src">
       <UniqueIdentifier>{949E02FE-982F-31D3-84CD-6351CD4B4346}</UniqueIdentifier>
     </Filter>
+    <Filter Include="deps\dockwnd">
+      <UniqueIdentifier>{f2096b61-bd00-45a1-893e-694bc3799c13}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\TODOList" />

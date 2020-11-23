@@ -35,12 +35,13 @@ struct nti_imgui_wnddata {
 	nti_imgui * imgui;
 };
 
-int nti_imgui_create(HWND hwnd, HWND phwnd);
+int nti_imgui_create(HWND hwnd, HWND phwnd, int flags = 0);
 int nti_imgui_add(void(*render)(nti_imgui_wnddata * wnddata), nti_imgui_wnddata * wnddata);
 int nti_imgui_render();
+RECT nti_imgui_size();
 int nti_imgui_modal(void(*render)(nti_imgui_wnddata * wnddata), nti_imgui_wnddata * wnddata);
 int nti_imgui_destroy(HWND hwnd);
-
+LRESULT nti_imgui_msghdl(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 LRESULT WINAPI nti_imgui_WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 nti_imgui * nti_imgui_();
 /////////////////////////////////////////////////////////////////////////////////////////

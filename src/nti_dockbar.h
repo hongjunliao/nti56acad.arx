@@ -22,7 +22,7 @@
 #ifndef NTI56_WITHOUT_ARX
 #define nti_dockbase CAcUiDockControlBar
 #else
-#define nti_dockbase CToolBar
+#define nti_dockbase CDockablePane
 #endif //NTI56_WITHOUT_ARX	
 
 class nti_dockbar : public nti_dockbase{
@@ -33,11 +33,13 @@ public:
 	nti_wnddata * wnddata;
 public:
 	//virtual BOOL Create(CWnd* pParent, LPCTSTR lpszTitle); 
+	//virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam);
 protected: 
 	//{{AFX_MSG(CDockControlBar) 
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	//afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	//afx_msg void OnPaint();
-	afx_msg void OnTimer(UINT_PTR nIDEvent);
+	//afx_msg void OnTimer(UINT_PTR nIDEvent);
+	//afx_msg void OnSize(UINT nType, int cx, int cy);
 	//}}AFX_MSG 
 	DECLARE_MESSAGE_MAP() 
 

@@ -7,13 +7,7 @@
     <ClCompile Include="..\deps\ImGuiFileDialog\ImGuiFileDialog\ImGuiFileDialog.cpp">
       <Filter>deps</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\ChildView.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\libxhhp\src\libxhhp\hp_log.c">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\MainFrm.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\src\nti_dockbar.cpp">
@@ -26,9 +20,6 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\src\nti_xlsx.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\nti56acadmfc.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\src\stdafx.cpp">
@@ -88,6 +79,39 @@
     <ClCompile Include="..\src\nti_imgui_dx9.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\mfc\ClassView.cpp">
+      <Filter>src\mfc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\mfc\FileView.cpp">
+      <Filter>src\mfc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\mfc\MainFrm.cpp">
+      <Filter>src\mfc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\mfc\nti56acadmfc.cpp">
+      <Filter>src\mfc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\mfc\nti56acadmfcDoc.cpp">
+      <Filter>src\mfc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\mfc\nti56acadmfcView.cpp">
+      <Filter>src\mfc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\mfc\OutputWnd.cpp">
+      <Filter>src\mfc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\mfc\PropertiesWnd.cpp">
+      <Filter>src\mfc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\mfc\ViewTree.cpp">
+      <Filter>src\mfc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\mfc\ChildFrm.cpp">
+      <Filter>src\mfc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\deps\dockwnd\DockWnd.c">
+      <Filter>deps\dockwnd</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\deps\ImGuiFileDialog\ImGuiFileDialog\ImGuiFileDialog.h">
@@ -99,13 +123,7 @@
     <ClInclude Include="..\src\AdskDMgr.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\ChildView.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\config.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\MainFrm.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\src\nti_arx.h">
@@ -135,9 +153,6 @@
     <ClInclude Include="..\src\nti_xlsx.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\nti56acadmfc.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\stdafx.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -150,7 +165,6 @@
     <ClInclude Include="..\deps\imgui\misc\cpp\imgui_sds.h">
       <Filter>deps</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h" />
     <ClInclude Include="..\deps\imgui\imconfig.h">
       <Filter>deps</Filter>
     </ClInclude>
@@ -160,6 +174,48 @@
     <ClInclude Include="..\src\nti_test.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\mfc\ChildFrm.h">
+      <Filter>src\mfc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\mfc\ClassView.h">
+      <Filter>src\mfc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\mfc\FileView.h">
+      <Filter>src\mfc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\mfc\MainFrm.h">
+      <Filter>src\mfc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\mfc\nti56acadmfc.h">
+      <Filter>src\mfc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\mfc\nti56acadmfcDoc.h">
+      <Filter>src\mfc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\mfc\nti56acadmfcView.h">
+      <Filter>src\mfc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\mfc\OutputWnd.h">
+      <Filter>src\mfc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\mfc\PropertiesWnd.h">
+      <Filter>src\mfc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\mfc\stdafx.h">
+      <Filter>src\mfc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\mfc\targetver.h">
+      <Filter>src\mfc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\mfc\ViewTree.h">
+      <Filter>src\mfc</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>res</Filter>
+    </ClInclude>
+    <ClInclude Include="..\deps\dockwnd\DockWnd.h">
+      <Filter>deps\dockwnd</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="deps">
@@ -168,15 +224,101 @@
     <Filter Include="src">
       <UniqueIdentifier>{949E02FE-982F-31D3-84CD-6351CD4B4346}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\mfc">
+      <UniqueIdentifier>{6f6f184f-00a8-496c-9a4d-1265843fadd4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res">
+      <UniqueIdentifier>{ea2fbf21-fd92-4581-9ae4-e8380b3e4554}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="deps\dockwnd">
+      <UniqueIdentifier>{e44f41ec-7955-4cf5-95fa-076ade486de4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="E:\home\nti56acad.arx\CMakeLists.txt" />
+    <Image Include="res\class_view.ico">
+      <Filter>res</Filter>
+    </Image>
+    <Image Include="res\class_view_hc.ico">
+      <Filter>res</Filter>
+    </Image>
+    <Image Include="res\classview.bmp">
+      <Filter>res</Filter>
+    </Image>
+    <Image Include="res\classview_hc.bmp">
+      <Filter>res</Filter>
+    </Image>
+    <Image Include="res\explorer.bmp">
+      <Filter>res</Filter>
+    </Image>
+    <Image Include="res\explorer_hc.bmp">
+      <Filter>res</Filter>
+    </Image>
+    <Image Include="res\file_view.ico">
+      <Filter>res</Filter>
+    </Image>
+    <Image Include="res\file_view_hc.ico">
+      <Filter>res</Filter>
+    </Image>
+    <Image Include="res\fileview.bmp">
+      <Filter>res</Filter>
+    </Image>
+    <Image Include="res\fileview_hc.bmp">
+      <Filter>res</Filter>
+    </Image>
+    <Image Include="res\menuimages.bmp">
+      <Filter>res</Filter>
+    </Image>
+    <Image Include="res\menuimages_hc.bmp">
+      <Filter>res</Filter>
+    </Image>
+    <Image Include="res\nti56acadmfc.ico">
+      <Filter>res</Filter>
+    </Image>
+    <Image Include="res\nti56acadmfcDoc.ico">
+      <Filter>res</Filter>
+    </Image>
+    <Image Include="res\output_wnd.ico">
+      <Filter>res</Filter>
+    </Image>
+    <Image Include="res\output_wnd_hc.ico">
+      <Filter>res</Filter>
+    </Image>
+    <Image Include="res\properties.bmp">
+      <Filter>res</Filter>
+    </Image>
+    <Image Include="res\properties_hc.bmp">
+      <Filter>res</Filter>
+    </Image>
+    <Image Include="res\properties_wnd.ico">
+      <Filter>res</Filter>
+    </Image>
+    <Image Include="res\properties_wnd_hc.ico">
+      <Filter>res</Filter>
+    </Image>
+    <Image Include="res\sort.bmp">
+      <Filter>res</Filter>
+    </Image>
+    <Image Include="res\sort_hc.bmp">
+      <Filter>res</Filter>
+    </Image>
+    <Image Include="res\Toolbar.bmp">
+      <Filter>res</Filter>
+    </Image>
+    <Image Include="res\Toolbar256.bmp">
+      <Filter>res</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="nti56acadmfc.rc" />
+    <None Include="E:\home\nti56acad.arx\CMakeLists.txt">
+      <Filter>res</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\nti56acadmfc.ico" />
-    <Image Include="res\Toolbar.bmp" />
+    <ResourceCompile Include="nti56acadmfc.rc">
+      <Filter>res</Filter>
+    </ResourceCompile>
+    <ResourceCompile Include="..\deps\dockwnd\DockWnd.rc">
+      <Filter>res</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

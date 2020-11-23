@@ -11,6 +11,7 @@
 #include "config.h"
 #endif /* HAVE_CONFIG_H */
 
+#include "nti_imgui.h"
 /////////////////////////////////////////////////////////////////////////////////////
 void nti_tabswnd_render(nti_imgui_wnddata * wnddata);
 void nti_tabswnd_reactor(nti_imgui_wnddata * wnddata);

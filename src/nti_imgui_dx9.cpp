@@ -26,7 +26,7 @@
 #include "nti_str.h"
 #include "nti_test.h"
 #include "nti_imgui.h"
-
+#include "dockwnd/DockWnd.h"
 /////////////////////////////////////////////////////////////////////////////////////
 // Data
 static LPDIRECT3D9              g_pD3D = NULL;
@@ -67,21 +67,44 @@ static VOID CALLBACK MyTimerProc(
 	nti_imgui_render();
 }
 
-int nti_imgui_create(HWND hwnd, HWND phwnd)
+int nti_imgui_create(HWND hwnd, HWND phwnd, int flags)
 {
+	int rc;
+
+	myimgui->phwnd = phwnd;
+	myimgui->hwnd = hwnd;
+	myimgui->renderlist = listCreate();
+	listSetFreeMethod(myimgui->renderlist, renderlist_free);
+
 	ImGui_ImplWin32_EnableDpiAwareness();
 
 	// Create application window
 	//ImGui_ImplWin32_EnableDpiAwareness();
 
 	if (!hwnd) {
-		WNDCLASSEX wc = { sizeof(WNDCLASSEX), CS_CLASSDC, nti_imgui_WndProc, 0L, 0L
-			, GetModuleHandle(NULL), NULL, NULL, NULL, NULL, _T("ImGui Example"), NULL };
-		::RegisterClassEx(&wc);
-		imgui_wc = wc;
-		myimgui->hwnd = hwnd = ::CreateWindow(wc.lpszClassName, _T("nti")
-			, WS_OVERLAPPEDWINDOW
-			, 100, 100, 120, 30, myimgui->phwnd, NULL, wc.hInstance, NULL);
+		if (flags == 0) {
+			WNDCLASSEX wc = { sizeof(WNDCLASSEX), CS_CLASSDC, nti_imgui_WndProc, 0L, 0L
+				, GetModuleHandle(NULL), NULL, NULL, NULL, NULL, _T("ImGui Example"), NULL };
+			::RegisterClassEx(&wc);
+			imgui_wc = wc;
+			myimgui->hwnd = hwnd = ::CreateWindowEx(WS_EX_TOPMOST, wc.lpszClassName, _T("nti")
+				, WS_OVERLAPPEDWINDOW
+				, 100, 100, 120, 30, myimgui->phwnd, NULL, wc.hInstance, NULL);
+		}
+		else {
+			// Initialize use of DockWnd.dll
+			rc = DockingInitialize(nti_imgui_msghdl);
+			assert(rc == 0);
+			DOCKINFO *dw = DockingAlloc(DWS_DOCKED_LEFT);
+			assert(dw);
+			// Create a Docking Frame window. Note that the docking library fills
+			// in DOCKINFO's hwnd field with the HWND of the tool window
+			myimgui->hwnd = hwnd = DockingCreateFrame(dw, phwnd, _T("nti"));
+			if (hwnd) {
+				DockingShowFrame(dw);
+				DockingUpdateLayout(hwnd);
+			}
+		}
 	}
 	// Initialize Direct3D
 	if (!CreateDeviceD3D(hwnd)) {
@@ -101,8 +124,8 @@ int nti_imgui_create(HWND hwnd, HWND phwnd)
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
 																//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
-	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
+	//io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
+	//io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
 																//io.ConfigViewportsNoAutoMerge = true;
 																//io.ConfigViewportsNoTaskBarIcon = true;
 	// Setup Dear ImGui style
@@ -139,11 +162,6 @@ int nti_imgui_create(HWND hwnd, HWND phwnd)
 	//ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f, NULL, io.Fonts->GetGlyphRangesJapanese());
 	//IM_ASSERT(font != NULL);
 
-	myimgui->phwnd = phwnd;
-	myimgui->hwnd = hwnd;
-	myimgui->renderlist = listCreate();
-	listSetFreeMethod(myimgui->renderlist, renderlist_free);
-
 	SetTimer(hwnd, 12323, 16, (TIMERPROC)MyTimerProc);
 
 	return 0;
@@ -179,6 +197,9 @@ int nti_imgui_render()
 			nti_imgui_render_t * ir = (nti_imgui_render_t *)listNodeValue(node);
 			assert(ir && ir->render);
 
+			RECT rec = nti_imgui_size();
+			ImVec2 size(rec.left, rec.top);
+			ImGui::SetNextWindowSize(size);
 			ir->render(ir->wnddata);
 
 			node = listNext(iter);
@@ -385,5 +406,48 @@ LRESULT WINAPI nti_imgui_WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lPar
 	return ::DefWindowProc(hWnd, msg, wParam, lParam);
 }
 
+RECT nti_imgui_size()
+{
+	RECT rec = { g_d3dpp.BackBufferWidth, g_d3dpp.BackBufferHeight, 0, 0};
+	return rec;
+}
+
+LRESULT nti_imgui_msghdl(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+	if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam))
+		return true;
+
+	switch (msg)
+	{
+	case WM_MOVE: {
+		break;
+		}
+	case WM_SIZE:
+		if (g_pd3dDevice != NULL && wParam != SIZE_MINIMIZED)
+		{
+			g_d3dpp.BackBufferWidth = LOWORD(lParam);
+			g_d3dpp.BackBufferHeight = HIWORD(lParam);
+			ResetDevice();
+		}
+		return 0;
+	case WM_SYSCOMMAND:
+		if ((wParam & 0xfff0) == SC_KEYMENU) // Disable ALT application menu
+			return 0;
+		break;
+	case WM_DESTROY:
+		::PostQuitMessage(0);
+		return 0;
+	case WM_DPICHANGED:
+		if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_DpiEnableScaleViewports)
+		{
+			//const int dpi = HIWORD(wParam);
+			//printf("WM_DPICHANGED to %d (%.0f%%)\n", dpi, (float)dpi / 96.0f * 100.0f);
+			const RECT* suggested_rect = (RECT*)lParam;
+			::SetWindowPos(hWnd, NULL, suggested_rect->left, suggested_rect->top, suggested_rect->right - suggested_rect->left, suggested_rect->bottom - suggested_rect->top, SWP_NOZORDER | SWP_NOACTIVATE);
+		}
+		break;
+	}
+	return false;
+}
 
 #endif

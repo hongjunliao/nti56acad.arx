@@ -35,6 +35,18 @@
 
 //#define  NTI_USE_OPENGL
 
+#ifndef _CRT_SECURE_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS
+#endif
+
+#ifndef _ATL_CSTRING_EXPLICIT_CONSTRUCTORS
+#define  _ATL_CSTRING_EXPLICIT_CONSTRUCTORS
+#endif
+
+#ifndef _AFX_ALL_WARNINGS
+#define _AFX_ALL_WARNINGS
+#endif
+
 #endif /* HAVE_CONFIG_H */
 
 #endif /* CONFIG_H */

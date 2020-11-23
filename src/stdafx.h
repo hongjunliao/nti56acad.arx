@@ -40,6 +40,8 @@
 #include <afxwin.h>         // MFC core and standard components
 #include <afxext.h>         // MFC extensions
 #include <afxcmn.h>
+#include <afxframewndex.h>
+#include <afxcontrolbars.h>
 
 // For compilers that support precompilation, includes "wx/wx.h".
 //#include "wx/wxprec.h"
@@ -85,6 +87,28 @@
 #include <arxHeaders.h>
 
 #endif //NTI56_WITHOUT_ARX
+
+#include <afxdisp.h>        // MFC 自动化类
+
+#ifndef _AFX_NO_OLE_SUPPORT
+#include <afxdtctl.h>           // MFC 对 Internet Explorer 4 公共控件的支持
+#endif
+#ifndef _AFX_NO_AFXCMN_SUPPORT
+#include <afxcmn.h>             // MFC 对 Windows 公共控件的支持
+#endif // _AFX_NO_AFXCMN_SUPPORT
+
+#include <afxcontrolbars.h>     // 功能区和控件条的 MFC 支持
+
+#ifdef _UNICODE
+#if defined _M_IX86
+#pragma comment(linker,"/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='x86' publicKeyToken='6595b64144ccf1df' language='*'\"")
+#elif defined _M_X64
+#pragma comment(linker,"/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='amd64' publicKeyToken='6595b64144ccf1df' language='*'\"")
+#else
+#pragma comment(linker,"/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
+#endif
+#endif
+
 
 #ifdef _DEBUG_WAS_DEFINED
 #define _DEBUG

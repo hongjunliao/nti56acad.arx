@@ -14,7 +14,7 @@
 // 有关此类的实现，请参阅 nti56acadmfc.cpp
 //
 
-class Cnti56acadmfcApp : public CWinApp
+class Cnti56acadmfcApp : public CWinAppEx
 {
 public:
 	Cnti56acadmfcApp();
@@ -26,8 +26,13 @@ public:
 	virtual int ExitInstance();
 
 // 实现
+	UINT  m_nAppLook;
+	BOOL  m_bHiColorIcons;
 
-public:
+	virtual void PreLoadState();
+	virtual void LoadCustomState();
+	virtual void SaveCustomState();
+
 	afx_msg void OnAppAbout();
 	DECLARE_MESSAGE_MAP()
 };
