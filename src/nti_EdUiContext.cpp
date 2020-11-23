@@ -86,12 +86,14 @@ nti_EdUiContextApp::onCommand(Adesk::UInt32 cmdId)
 	CString str;
 
 	extern nti_wnddata * g_wnddata;
-	if (cmdId == ID_ARXDBGAPPMENU_NTI) {
-		cmdStr = _T("nti_imgui_dx9");
+	if (cmdId == ID_NTI_BLOCKS) {
+		cmdStr = _T("nti_cmd_blocks");
 		g_wnddata->reactor.base.is_open = 1;
 	}
-	else if (cmdId == ID_ARXDBGAPPMENU_NTI32778) { cmdStr = _T("nti_null"); }
-	else if (cmdId == ID_ARXDBGAPPMENU_NTI32779) { cmdStr = _T("nti_dx9_main"); }
+	else if (cmdId == ID_NTI_ABOUT) { cmdStr = _T("nti_cmd_about"); }
+	else if (cmdId == ID_NULL_ARX_CMD) { cmdStr = _T("nti_cmd_null"); }
+	else if (cmdId == ID_NTI_TEST_DX9_MAIN) { cmdStr = _T("nti_cmd_dx9_main"); }
+	else if (cmdId == ID_NTIMENU_DOCKBAR) { cmdStr = _T("nti_cmd_dockbar"); }
 	if (cmdStr != NULL) {
 		str.Format(_T("%s\n"), cmdStr);
 	    acDocManager->sendStringToExecute(acDocManager->curDocument(), str, false, false);

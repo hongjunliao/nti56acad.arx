@@ -94,6 +94,9 @@
     <ClCompile Include="..\src\win32_dx9_main.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\deps\imgui\misc\cpp\imgui_sds.cpp">
+      <Filter>deps</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\config.h">
@@ -140,6 +143,9 @@
       <Filter>deps</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
+    <ClInclude Include="..\src\nti_cmd.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="deps">

@@ -50,16 +50,6 @@ Cnti56acadmfcApp::Cnti56acadmfcApp()
 
 Cnti56acadmfcApp theApp;
 
-
-static VOID CALLBACK MyTimerProc(
-	HWND hwnd,        // handle to window for timer messages 
-	UINT message,     // WM_TIMER message 
-	UINT idTimer,     // timer identifier 
-	DWORD dwTime)     // current system time 
-{
-	nti_imgui_paint();
-}
-
 // Cnti56acadmfcApp ?????
 
 BOOL Cnti56acadmfcApp::InitInstance()
@@ -103,12 +93,10 @@ BOOL Cnti56acadmfcApp::InitInstance()
 	pFrame->UpdateWindow();
 
 	g_hwnd = pFrame->GetSafeHwnd();
-	//rc = nti_imgui_create(g_hwnd);
+	rc = nti_imgui_create(0, pFrame->GetSafeHwnd());
 
-	//rc = nti_imgui_add_render(nti_tabswnd_render, (nti_imgui_wnddata *)&g_wnddata->reactor);
-	//assert(rc == 0);
-
-	//SetTimer(g_hwnd, 12323, 16, (TIMERPROC)MyTimerProc);
+	rc = nti_imgui_add(nti_tabswnd_render, (nti_imgui_wnddata *)&g_wnddata->reactor);
+	assert(rc == 0);
 
 	//nti_imgui_add_render(nti_tabswnd_simple, 0);
 	//nti_imgui_add_render(nti_tabswnd_another, 0);
@@ -122,6 +110,7 @@ int Cnti56acadmfcApp::ExitInstance()
 	return CWinApp::ExitInstance();
 
 	nti_wnddata_uninit(g_wnddata);
+	nti_imgui_destroy(g_hwnd);
 }
 
 // Cnti56acadmfcApp ???????????

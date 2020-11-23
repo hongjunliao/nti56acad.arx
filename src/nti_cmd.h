@@ -13,8 +13,11 @@
 
 /////////////////////////////////////////////////////////////////////////////////////
 
-void nti_cmd_imgui_opengl();
+void nti_cmd_dockbar();
 void nti_cmd_null();
-void nti_cmd_imgui_dx9();
 void nti_cmd_dx9_main();
+
+void nti_cmd_about();
+void nti_cmd_blocks();
+
 #endif //NTI_CMD_H

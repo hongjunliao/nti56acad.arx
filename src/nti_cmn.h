@@ -39,6 +39,7 @@ struct nti_wnddata_reactor {
 
 struct nti_wnddata {
 	nti_wnddata_reactor reactor;
+	nti_imgui_wnddata blocks;
 };
 
 int nti_wnddata_init(nti_wnddata * wnddata);

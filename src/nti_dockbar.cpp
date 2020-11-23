@@ -34,18 +34,47 @@ nti_dockbar::~nti_dockbar()
 
 }
 
+
+//BOOL nti_dockbar::Create(CWnd* pParent, LPCTSTR lpszTitle)
+//{
+//	WNDCLASSEX wc = { sizeof(WNDCLASSEX), CS_CLASSDC, nti_imgui_WndProc, 0L, 0L
+//		, GetModuleHandle(NULL), NULL, NULL, NULL, NULL, _T("ImGui Example"), NULL };
+//	::RegisterClassEx(&wc);
+//
+//	RECT rect = { 0 };
+//
+//#ifndef NTI56_WITHOUT_ARX																
+//	if (!nti_dockbase::Create(wc.lpszClassName, lpszTitle, WS_VISIBLE | WS_CHILD | WS_CLIPCHILDREN, rect, pParent, 2342)) {
+//	//if (!nti_dockbase::Create(pParent, lpszTitle, 2342)){
+//#else
+//	if (CToolBar::Create(pParent)) {
+//#endif
+//		return (FALSE);
+//	}
+//	return (TRUE);
+//}
+
 int nti_dockbar::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	int rc = nti_dockbase::OnCreate(lpCreateStruct);
 
 	HWND hwnd = GetSafeHwnd();
-	nti_imgui_create(hwnd);
 
-	SetTimer(1, 16, NULL);
+	nti_imgui_create(hwnd, GetParent()->GetSafeHwnd());
+	rc = nti_imgui_add(nti_tabswnd_render, (nti_imgui_wnddata *)&wnddata->reactor);
+	assert(rc == 0);
+
+	//nti_imgui_add_render(nti_tabswnd_render, 0);
+
+	//nti_imgui_add_render(nti_tabswnd_simple, 0);
+	//nti_imgui_add_render(nti_tabswnd_another, 0);
+
+
+//SetTimer(1, 16, NULL);
 	return rc;
 }
 
 void nti_dockbar::OnTimer(UINT_PTR nIDEvent)
 {
-	nti_imgui_paint();
+	//nti_imgui_render();
 }

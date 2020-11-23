@@ -134,13 +134,13 @@ int test_imgui_sds_main(int argc, char ** argv)
     ::RegisterClassEx(&wc);
     g_hwnd = ::CreateWindowEx(WS_EX_TOPMOST, wc.lpszClassName, _T("nti56acad"), wstyle, 100, 100, 400, 200, 0, NULL, wc.hInstance, NULL);
 
-    rc = nti_imgui_create(g_hwnd);
+    rc = nti_imgui_create(g_hwnd, 0);
     assert(rc == 0);
 
     test_wnddata wnddataobj = { {"hello"} }, *wnddata = &wnddataobj;
     wnddata->name = sdsempty();
 
-    nti_imgui_add_render(test_render, (nti_imgui_wnddata *)wnddata);
+    nti_imgui_add(test_render, (nti_imgui_wnddata *)wnddata);
     // Show the window
     ::ShowWindow(g_hwnd, SW_SHOWDEFAULT);
     ::UpdateWindow(g_hwnd);
@@ -167,7 +167,7 @@ int test_imgui_sds_main(int argc, char ** argv)
                 continue;
             }
 
-            nti_imgui_paint();
+            nti_imgui_render();
         }
     }
 

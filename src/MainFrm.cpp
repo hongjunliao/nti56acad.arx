@@ -8,6 +8,7 @@
 #include "MainFrm.h"
 #include "resource.h"
 #include "nti_test.h"
+#include "nti_render.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -21,9 +22,9 @@ IMPLEMENT_DYNAMIC(CMainFrame, CFrameWnd)
 BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 	ON_WM_CREATE()
 	ON_WM_SETFOCUS()
-	ON_COMMAND(ID_32771, &CMainFrame::On32771)
+	ON_COMMAND(ID_NTI_BLOCKS, &CMainFrame::on_ID_NTI_BLOCKS)
 	ON_COMMAND(ID_32775, &CMainFrame::On32775)
-	ON_COMMAND(ID_32776, &CMainFrame::On32776)
+	ON_COMMAND(ID_NTI_ABOUT, &CMainFrame::On32776)
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -136,7 +137,7 @@ BOOL CMainFrame::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO*
 
 
 
-void CMainFrame::On32771()
+void CMainFrame::on_ID_NTI_BLOCKS()
 {
 	g_wnddata->reactor.base.is_open = 1;
 }
@@ -150,5 +151,6 @@ void CMainFrame::On32775()
 
 void CMainFrame::On32776()
 {
-	nti_imgui_modal(0, 0, 0, GetSafeHwnd());
+	nti_imgui_wnddata obj = { ("NTI About"), true }, *wnddata = &obj;
+	nti_imgui_modal(sample_render, wnddata);
 }

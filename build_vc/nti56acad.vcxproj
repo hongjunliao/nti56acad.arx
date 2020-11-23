@@ -20,7 +20,6 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{483123B5-F0EF-33F7-9425-5CF36B7228F6}</ProjectGuid>
-    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
     <Keyword>Win32Proj</Keyword>
     <Platform>x64</Platform>
     <ProjectName>nti56acad</ProjectName>
@@ -87,7 +86,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\deps\SDL\include\;;..\include;..\deps\arx\inc-x64;..\deps\imgui\backends\;..\deps\imgui\;..\deps\arx\inc;..\src;..\src\libxhhp\src;;%(AdditionalIncludeDirectories);..\deps;;..\deps\redis\src;;..\deps\ImGuiFileDialog\;;..\deps\xlsxio\include;;..\deps\dirent\include\;..\deps\ARXDBG\Inc\;.\;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\deps\SDL\include\;;..\include;..\deps\arx\inc-x64;..\deps\imgui\backends\;..\deps\imgui\;..\deps\arx\inc;..\src;..\src\libxhhp\src;;%(AdditionalIncludeDirectories);..\deps;;..\deps\redis\src;;..\deps\ImGuiFileDialog\;;..\deps\xlsxio\include;;..\deps\dirent\include\;..\deps\ARXDBG\Inc\;.\;..\deps\imgui\misc\cpp;</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -132,7 +131,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\deps\SDL\include\;;..\include;..\deps\arx\inc-x64;..\deps\imgui\backends\;..\deps\imgui\;..\deps\arx\inc;..\src;..\src\libxhhp\src;;%(AdditionalIncludeDirectories);..\deps;;..\deps\redis\src;;..\deps\ImGuiFileDialog\;;..\deps\xlsxio\include;;..\deps\dirent\include\;..\deps\ARXDBG\Inc\;.\;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\deps\SDL\include\;;..\include;..\deps\arx\inc-x64;..\deps\imgui\backends\;..\deps\imgui\;..\deps\arx\inc;..\src;..\src\libxhhp\src;;%(AdditionalIncludeDirectories);..\deps;;..\deps\redis\src;;..\deps\ImGuiFileDialog\;;..\deps\xlsxio\include;;..\deps\dirent\include\;..\deps\ARXDBG\Inc\;.\;..\deps\imgui\misc\cpp;</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ExceptionHandling>Sync</ExceptionHandling>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
@@ -176,7 +175,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\deps\SDL\include\;;..\include;..\deps\arx\inc-x64;..\deps\imgui\backends\;..\deps\imgui\;..\deps\arx\inc;..\src;..\src\libxhhp\src;;%(AdditionalIncludeDirectories);..\deps;;..\deps\redis\src;;..\deps\ImGuiFileDialog\;;..\deps\xlsxio\include;;..\deps\dirent\include\;..\deps\ARXDBG\Inc\;.\;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\deps\SDL\include\;;..\include;..\deps\arx\inc-x64;..\deps\imgui\backends\;..\deps\imgui\;..\deps\arx\inc;..\src;..\src\libxhhp\src;;%(AdditionalIncludeDirectories);..\deps;;..\deps\redis\src;;..\deps\ImGuiFileDialog\;;..\deps\xlsxio\include;;..\deps\dirent\include\;..\deps\ARXDBG\Inc\;.\;..\deps\imgui\misc\cpp;</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ExceptionHandling>Sync</ExceptionHandling>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
@@ -219,7 +218,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\deps\SDL\include\;;..\include;..\deps\arx\inc-x64;..\deps\imgui\backends\;..\deps\imgui\;..\deps\arx\inc;..\src;..\src\libxhhp\src;;%(AdditionalIncludeDirectories);..\deps;;..\deps\redis\src;;..\deps\ImGuiFileDialog\;;..\deps\xlsxio\include;;..\deps\dirent\include\;..\deps\ARXDBG\Inc\;.\;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\deps\SDL\include\;;..\include;..\deps\arx\inc-x64;..\deps\imgui\backends\;..\deps\imgui\;..\deps\arx\inc;..\src;..\src\libxhhp\src;;%(AdditionalIncludeDirectories);..\deps;;..\deps\redis\src;;..\deps\ImGuiFileDialog\;;..\deps\xlsxio\include;;..\deps\dirent\include\;..\deps\ARXDBG\Inc\;.\;..\deps\imgui\misc\cpp;</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -320,6 +319,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="..\deps\gbk-utf8\utf8.c" />
     <ClCompile Include="..\deps\ImGuiFileDialog\ImGuiFileDialog\ImGuiFileDialog.cpp" />
     <ClCompile Include="..\deps\imgui\backends\imgui_impl_dx9.cpp" />
+    <ClCompile Include="..\deps\imgui\misc\cpp\imgui_sds.cpp" />
     <ClCompile Include="..\deps\redis\src\adlist.c" />
     <ClCompile Include="..\deps\redis\src\zmalloc.c" />
     <ClCompile Include="..\deps\sds\win32_sds.c" />
@@ -366,6 +366,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="..\deps\imgui\backends\imgui_impl_win32.cpp" />
     <ClCompile Include="..\deps\imgui\imgui_widgets.cpp" />
     <ClInclude Include="..\deps\imgui\backends\imgui_impl_dx9.h" />
+    <ClInclude Include="..\src\nti_cmd.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="resource1.h" />
     <None Include="..\TODOList" />

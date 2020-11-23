@@ -24,6 +24,7 @@
 #include "nti_reactor.h" /**/
 #include "nti_cmn.h"	//nti_wnddata
 #include "nti_EdUiContext.h"
+#include "nti_render.h"
 
 /////////////////////////////////////////////////////////////////////////////////////
 static nti_wnddata g_wnddataobj = { 0 };
@@ -49,8 +50,14 @@ AC_IMPLEMENT_EXTENSION_MODULE(ntiacadDll);
 void initApp()
 {
 	int rc;
-	g_hwnd = acedGetAcadFrame()->GetMessageBar()->GetSafeHwnd();
+	//g_hwnd = acedGetAcadFrame()->GetMessageBar()->GetSafeHwnd();
 	rc = nti_wnddata_init(g_wnddata);
+
+	//nti_imgui_create(0, acedGetAcadFrame()->GetSafeHwnd());
+	//rc = nti_imgui_add(nti_tabswnd_render, (nti_imgui_wnddata *)&g_wnddata->reactor);
+	//assert(rc == 0);
+	//nti_imgui_add_render(nti_tabswnd_simple, 0);
+	//nti_imgui_add_render(nti_tabswnd_another, 0);
 
 	gpDocReactor = new CDocReactor();
 	acDocManager->addReactor(gpDocReactor);
@@ -58,9 +65,11 @@ void initApp()
 	gpEdReactor = new CEdReactor();
 	acedEditor->addReactor(gpEdReactor);
 
-	acedRegCmds->addCommand(_T("ASDK_NTI56ACAD"), _T("nti_imgui_dx9"), _T("nti_imgui_dx9"), ACRX_CMD_MODAL, nti_cmd_imgui_dx9);
-	acedRegCmds->addCommand(_T("ASDK_NTI56ACAD"), _T("nti_null"), _T("nti_null"), ACRX_CMD_MODAL, nti_cmd_null);
-	acedRegCmds->addCommand(_T("ASDK_NTI56ACAD"), _T("nti_dx9_main"), _T("nti_dx9_main"), ACRX_CMD_MODAL, nti_cmd_dx9_main);
+	acedRegCmds->addCommand(_T("ASDK_NTI56ACAD"), _T("nti_cmd_null"), _T("nti_cmd_null"), ACRX_CMD_MODAL, nti_cmd_null);
+	acedRegCmds->addCommand(_T("ASDK_NTI56ACAD"), _T("nti_cmd_about"), _T("nti_cmd_about"), ACRX_CMD_MODAL, nti_cmd_about);
+	acedRegCmds->addCommand(_T("ASDK_NTI56ACAD"), _T("nti_cmd_dx9_main"), _T("nti_cmd_dx9_main"), ACRX_CMD_MODAL, nti_cmd_dx9_main);
+	acedRegCmds->addCommand(_T("ASDK_NTI56ACAD"), _T("nti_cmd_blocks"), _T("nti_cmd_blocks"), ACRX_CMD_MODAL, nti_cmd_blocks);
+	acedRegCmds->addCommand(_T("ASDK_NTI56ACAD"), _T("nti_cmd_dockbar"), _T("nti_cmd_dockbar"), ACRX_CMD_MODAL, nti_cmd_dockbar);
 
 	//acedRegCmds->addCommand(_T("ASDK_DWG_COMMANDS"),
 	//	_T("nti56acad_win32"), _T("nti56acad_win32"), ACRX_CMD_MODAL, nti56acad_win32);
@@ -83,7 +92,6 @@ void initApp()
 		delete m_uiContext;
 		m_uiContext = NULL;
 	}
-
 }
 
 void unloadApp()

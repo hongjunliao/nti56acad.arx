@@ -26,13 +26,16 @@ extern "C" {
 #define WM_DPICHANGED 0x02E0 // From Windows SDK 8.1+ headers
 #endif
 
-static list * g_renderlist = 0;
+static nti_imgui myimguiobj = { 0, 0, ImVec4(0.45f, 0.55f, 0.60f, 1.00f) }, *myimgui = &myimguiobj;
+
 /////////////////////////////////////////////////////////////////////////////////////
 
-struct nti_imgui_render {
+struct nti_imgui_render_t {
 	nti_imgui_wnddata * wnddata;
 	void(*render)(nti_imgui_wnddata * wnddata);
 };
+
+/////////////////////////////////////////////////////////////////////////////////////
 
 // Forward declare message handler from imgui_impl_win32.cpp
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
@@ -147,21 +150,17 @@ static void CleanupDeviceOpenGL2(HWND hWnd, RendererData* data)
 	ReleaseDC(hWnd, data->hDC);
 }
 
+/////////////////////////////////////////////////////////////////////////////////////
+
 static void renderlist_free(void *ptr)
 {
-	nti_imgui_render * msg = (nti_imgui_render *)ptr;
+	nti_imgui_render_t * msg = (nti_imgui_render_t *)ptr;
 	assert(ptr);
 	free(ptr);
 }
 
-
-int nti_imgui_create(HWND hwnd)
+int nti_imgui_create(HWND hwnd, HWND phwnd)
 {
-	if (!g_renderlist) {
-		g_renderlist = listCreate();
-		listSetFreeMethod(g_renderlist, renderlist_free);
-	}
-
 	ImGui_ImplWin32_EnableDpiAwareness();
 
 	// Initialize Direct3D
@@ -237,24 +236,29 @@ int nti_imgui_create(HWND hwnd)
 	// ::ShowWindow(hwnd, SW_SHOWDEFAULT);
 	// ::UpdateWindow(hwnd);
 
+	myimgui->phwnd = phwnd;
+	myimgui->hwnd = hwnd;
+	myimgui->renderlist = listCreate();
+	listSetFreeMethod(myimgui->renderlist, renderlist_free);
+
 	return 0;
 }
 
-int nti_imgui_add_render(void(* render)(nti_imgui_wnddata * wnddata), nti_imgui_wnddata * wnddata)
+int nti_imgui_add(void(* render)(nti_imgui_wnddata * wnddata), nti_imgui_wnddata * wnddata)
 {
 	if(!(render))
 		return -1;
 
-	nti_imgui_render * ir = nti_new(nti_imgui_render);
+	nti_imgui_render_t * ir = nti_new(nti_imgui_render_t);
 	ir->render = render;
 	ir->wnddata = wnddata;
 
-	listAddNodeTail(g_renderlist, ir);
+	listAddNodeTail(myimgui->renderlist, ir);
 
 	return 0;
 }
 
-int nti_imgui_paint()
+int nti_imgui_render()
 {
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 
@@ -282,11 +286,11 @@ int nti_imgui_paint()
 	//ImGui::PopStyleVar(2);
 
 	/* render window */
-	if (g_renderlist) {
-		listIter * iter = listGetIterator(g_renderlist, 0);
+	if (myimgui->renderlist) {
+		listIter * iter = listGetIterator(myimgui->renderlist, 0);
 		for (listNode * node = listNext(iter); node; ) {
 			
-			nti_imgui_render * ir = (nti_imgui_render *)listNodeValue(node);
+			nti_imgui_render_t * ir = (nti_imgui_render_t *)listNodeValue(node);
 			assert(ir && ir->render);
 
 			ir->render(ir->wnddata);
@@ -333,13 +337,24 @@ int nti_imgui_destroy(HWND hwnd)
 	CleanupDeviceOpenGL2(hwnd, &g_MainWindow);
 	wglDeleteContext(g_hRC);
 
-	listRelease(g_renderlist);
-	g_renderlist = 0;
+	listRelease(myimgui->renderlist);
+	myimgui->renderlist = 0;
 
 	return 0;
 }
 
-#endif //NTI_USE_OPENGL
+/////////////////////////////////////////////////////////////////////////////////////
+
+int nti_imgui_modal(void(*render)(nti_imgui_wnddata * wnddata), nti_imgui_wnddata * wnddata)
+{
+	if (!render)
+		return -1;
+
+	if (wnddata) {
+		wnddata->imgui = myimgui;
+	}
+	return -1;
+}
 
 // Win32 message handler
 LRESULT WINAPI nti_imgui_WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -371,3 +386,4 @@ LRESULT WINAPI nti_imgui_WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lPar
 	}
 	return 0;
 }
+#endif //NTI_USE_OPENGL

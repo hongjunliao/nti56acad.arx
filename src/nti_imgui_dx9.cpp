@@ -22,6 +22,7 @@
 #define DIRECTINPUT_VERSION 0x0800
 #include <dinput.h>
 #include <tchar.h>
+#include "nti_cmn.h"		//nti_new
 #include "nti_str.h"
 #include "nti_test.h"
 #include "nti_imgui.h"
@@ -32,61 +33,64 @@ static LPDIRECT3D9              g_pD3D = NULL;
 static LPDIRECT3DDEVICE9        g_pd3dDevice = NULL;
 static D3DPRESENT_PARAMETERS    g_d3dpp = {};
 
+// for imgui
+static WNDCLASSEX imgui_wc;
+static nti_imgui myimguiobj = { 0, 0, ImVec4(0.45f, 0.55f, 0.60f, 1.00f) }, *myimgui = &myimguiobj;
+
 // Forward declarations of helper functions
 static bool CreateDeviceD3D(HWND hWnd);
 static void CleanupDeviceD3D();
 static void ResetDevice();
-static LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 /////////////////////////////////////////////////////////////////////////////////////
 
-int nti_imgui_create(HWND hwnd)
-{
-	return -1;
-}
+struct nti_imgui_render_t {
+	nti_imgui_wnddata * wnddata;
+	void(*render)(nti_imgui_wnddata * wnddata);
+};
 
-int nti_imgui_add_render(void(*render)(nti_imgui_wnddata * wnddata), nti_imgui_wnddata * wnddata)
+static void renderlist_free(void *ptr)
 {
-	return -1;
-}
-
-int nti_imgui_paint()
-{
-	return -1;
-}
-
-int nti_imgui_destroy(HWND hwnd)
-{
-	return -1;
+	nti_imgui_render_t * msg = (nti_imgui_render_t *)ptr;
+	assert(ptr);
+	free(ptr);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////
-// Main code
-int nti_imgui_modal(int, char**, HWND hwnd, HWND phwnd)
+
+static VOID CALLBACK MyTimerProc(
+	HWND hwnd,        // handle to window for timer messages 
+	UINT message,     // WM_TIMER message 
+	UINT idTimer,     // timer identifier 
+	DWORD dwTime)     // current system time 
+{
+	nti_imgui_render();
+}
+
+int nti_imgui_create(HWND hwnd, HWND phwnd)
 {
 	ImGui_ImplWin32_EnableDpiAwareness();
 
 	// Create application window
 	//ImGui_ImplWin32_EnableDpiAwareness();
-	WNDCLASSEX wc = { sizeof(WNDCLASSEX), CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(NULL), NULL, NULL, NULL, NULL, _T("ImGui Example"), NULL };
-	::RegisterClassEx(&wc);
 
-	HWND nhwnd = 0;
 	if (!hwnd) {
-		nhwnd = hwnd = ::CreateWindow(wc.lpszClassName, _T("Dear ImGui DirectX9 Example"), WS_OVERLAPPEDWINDOW, 100, 100, 120, 30, phwnd, NULL, wc.hInstance, NULL);
+		WNDCLASSEX wc = { sizeof(WNDCLASSEX), CS_CLASSDC, nti_imgui_WndProc, 0L, 0L
+			, GetModuleHandle(NULL), NULL, NULL, NULL, NULL, _T("ImGui Example"), NULL };
+		::RegisterClassEx(&wc);
+		imgui_wc = wc;
+		myimgui->hwnd = hwnd = ::CreateWindow(wc.lpszClassName, _T("nti")
+			, WS_OVERLAPPEDWINDOW
+			, 100, 100, 120, 30, myimgui->phwnd, NULL, wc.hInstance, NULL);
 	}
-		
-
 	// Initialize Direct3D
-	if (!CreateDeviceD3D(hwnd))
-	{
+	if (!CreateDeviceD3D(hwnd)) {
 		CleanupDeviceD3D();
-		::UnregisterClass(wc.lpszClassName, wc.hInstance);
-		return 1;
+		::UnregisterClass(imgui_wc.lpszClassName, imgui_wc.hInstance);
+		return -1;
 	}
-
 	// Show the window
-	if (nhwnd) {
+	if (myimgui->hwnd) {
 		::ShowWindow(hwnd, SW_SHOWDEFAULT);
 		::UpdateWindow(hwnd);
 	}
@@ -101,8 +105,7 @@ int nti_imgui_modal(int, char**, HWND hwnd, HWND phwnd)
 	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
 																//io.ConfigViewportsNoAutoMerge = true;
 																//io.ConfigViewportsNoTaskBarIcon = true;
-
-																// Setup Dear ImGui style
+	// Setup Dear ImGui style
 #ifndef NTI56_WITHOUT_ARX																
 	ImGui::StyleColorsDark();								// Setup Dear ImGui style
 #else
@@ -112,8 +115,7 @@ int nti_imgui_modal(int, char**, HWND hwnd, HWND phwnd)
 
 	// When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
 	ImGuiStyle& style = ImGui::GetStyle();
-	if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-	{
+	if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
 		style.WindowRounding = 0.0f;
 		style.Colors[ImGuiCol_WindowBg].w = 1.0f;
 	}
@@ -137,11 +139,111 @@ int nti_imgui_modal(int, char**, HWND hwnd, HWND phwnd)
 	//ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f, NULL, io.Fonts->GetGlyphRangesJapanese());
 	//IM_ASSERT(font != NULL);
 
-	// Our state
-	bool show_demo_window = false;
-	bool show_another_window = false;
-	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+	myimgui->phwnd = phwnd;
+	myimgui->hwnd = hwnd;
+	myimgui->renderlist = listCreate();
+	listSetFreeMethod(myimgui->renderlist, renderlist_free);
 
+	SetTimer(hwnd, 12323, 16, (TIMERPROC)MyTimerProc);
+
+	return 0;
+}
+
+int nti_imgui_add(void(*render)(nti_imgui_wnddata * wnddata), nti_imgui_wnddata * wnddata)
+{
+	if (!(render))
+		return -1;
+
+	nti_imgui_render_t * ir = nti_new(nti_imgui_render_t);
+	ir->render = render;
+	ir->wnddata = wnddata;
+
+	listAddNodeTail(myimgui->renderlist, ir);
+
+	return 0;
+}
+
+int nti_imgui_render()
+{
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	// Start the Dear ImGui frame
+	ImGui_ImplDX9_NewFrame();
+	ImGui_ImplWin32_NewFrame();
+	ImGui::NewFrame();
+
+	/* render window */
+	if (myimgui->renderlist) {
+		listIter * iter = listGetIterator(myimgui->renderlist, 0);
+		for (listNode * node = listNext(iter); node; ) {
+
+			nti_imgui_render_t * ir = (nti_imgui_render_t *)listNodeValue(node);
+			assert(ir && ir->render);
+
+			ir->render(ir->wnddata);
+
+			node = listNext(iter);
+		}
+		listReleaseIterator(iter);
+	}
+	// Rendering
+	ImGui::EndFrame();
+	g_pd3dDevice->SetRenderState(D3DRS_ZENABLE, FALSE);
+	g_pd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+	g_pd3dDevice->SetRenderState(D3DRS_SCISSORTESTENABLE, FALSE);
+	D3DCOLOR clear_col_dx = D3DCOLOR_RGBA((int)(myimgui->clear_color.x*255.0f), (int)(myimgui->clear_color.y*255.0f), (int)(myimgui->clear_color.z*255.0f), (int)(myimgui->clear_color.w*255.0f));
+	g_pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, clear_col_dx, 1.0f, 0);
+	if (g_pd3dDevice->BeginScene() >= 0)
+	{
+		ImGui::Render();
+		ImGui_ImplDX9_RenderDrawData(ImGui::GetDrawData());
+		g_pd3dDevice->EndScene();
+	}
+
+	// Update and Render additional Platform Windows
+	if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+	{
+		ImGui::UpdatePlatformWindows();
+		ImGui::RenderPlatformWindowsDefault();
+	}
+
+	HRESULT result = g_pd3dDevice->Present(NULL, NULL, NULL, NULL);
+
+	// Handle loss of D3D9 device
+	if (result == D3DERR_DEVICELOST && g_pd3dDevice->TestCooperativeLevel() == D3DERR_DEVICENOTRESET)
+		ResetDevice();
+
+	return 0;
+}
+
+int nti_imgui_destroy(HWND hwnd)
+{
+	ImGui_ImplDX9_Shutdown();
+	ImGui_ImplWin32_Shutdown();
+	ImGui::DestroyContext();
+
+	CleanupDeviceD3D();
+	if (myimgui->hwnd) {
+		::DestroyWindow(myimgui->hwnd);
+		::UnregisterClass(imgui_wc.lpszClassName, imgui_wc.hInstance);
+	}
+
+	return 0;
+}
+
+nti_imgui * nti_imgui_() { return myimgui; }
+/////////////////////////////////////////////////////////////////////////////////////
+
+int nti_imgui_modal(void(*render)(nti_imgui_wnddata * wnddata) , nti_imgui_wnddata * wnddata)
+{
+	if(!render)
+		return -1;
+
+	if(wnddata){
+		wnddata->imgui = myimgui;
+	}
+	
+	int f = 0;
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	// Main loop
 	MSG msg;
 	ZeroMemory(&msg, sizeof(msg));
@@ -164,83 +266,14 @@ int nti_imgui_modal(int, char**, HWND hwnd, HWND phwnd)
 		ImGui_ImplWin32_NewFrame();
 		ImGui::NewFrame();
 
-		// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
-		if (show_demo_window)
-			ImGui::ShowDemoWindow(&show_demo_window);
-
-		// 2. Show a simple window that we create ourselves. We use a Begin/End pair to created a named window.
-		static bool p_open = true;
-		if(p_open)                          // Create a window called "Hello, world!" and append into it.
-		{
-			ImGui::Begin("Hello, world!", &p_open);
-			static float f = 0.0f;
-			static int counter = 0;
-
-			if (ImGui::Button("MessageBox")) {
-				::MessageBox(0, _T("hello"), _T(""), 0);
-			}
-			static TCHAR strFilename[MAX_PATH] = { 0 };//用于接收文件名
-			ImGui::Text("file:%s", U8(WA(strFilename)));
-			if (ImGui::Button("Select File...")) {
-
-			loop:
-				OPENFILENAME ofn = { 0 };
-				ofn.lStructSize = sizeof(OPENFILENAME);//结构体大小
-				ofn.hwndOwner = phwnd;//拥有着窗口句柄，为NULL表示对话框是非模态的，实际应用中一般都要有这个句柄
-				ofn.lpstrFilter = TEXT("所有文件\0*.*\0C/C++ Flie\0*.cpp;*.c;*.h\0\0");//设置过滤
-				ofn.nFilterIndex = 1;//过滤器索引
-				ofn.lpstrFile = strFilename;//接收返回的文件名，注意第一个字符需要为NULL
-				ofn.nMaxFile = sizeof(strFilename);//缓冲区长度
-				ofn.lpstrInitialDir = NULL;//初始目录为默认
-				ofn.lpstrTitle = TEXT("请选择一个文件");//使用系统默认标题留空即可
-				ofn.Flags = OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST | OFN_HIDEREADONLY;//文件、目录必须存在，隐藏只读选项
-				if (GetOpenFileName(&ofn))
-				{
-					MessageBox(NULL, strFilename, TEXT("选择的文件"), 0);
-				}
-				else {
-					MessageBox(NULL, TEXT("请选择一个文件"), NULL, MB_ICONERROR);
-					goto loop;
-				}
-
-			}
-
-			ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
-			ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
-			ImGui::Checkbox("Another Window", &show_another_window);
-
-			ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-			ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
-
-			if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
-				counter++;
-			ImGui::SameLine();
-			ImGui::Text("counter = %d", counter);
-
-			ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-			ImGui::End();
-		}
-		else if (nhwnd) {
-			::DestroyWindow(nhwnd);
-			p_open = true;
-		}
-
-		// 3. Show another simple window.
-		if (show_another_window)
-		{
-			ImGui::Begin("Another Window", &show_another_window);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
-			ImGui::Text("Hello from another window!");
-			if (ImGui::Button("Close Me"))
-				show_another_window = false;
-			ImGui::End();
-		}
+		render(wnddata);
 
 		// Rendering
 		ImGui::EndFrame();
 		g_pd3dDevice->SetRenderState(D3DRS_ZENABLE, FALSE);
 		g_pd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 		g_pd3dDevice->SetRenderState(D3DRS_SCISSORTESTENABLE, FALSE);
-		D3DCOLOR clear_col_dx = D3DCOLOR_RGBA((int)(clear_color.x*255.0f), (int)(clear_color.y*255.0f), (int)(clear_color.z*255.0f), (int)(clear_color.w*255.0f));
+		D3DCOLOR clear_col_dx = D3DCOLOR_RGBA((int)(myimgui->clear_color.x*255.0f), (int)(myimgui->clear_color.y*255.0f), (int)(myimgui->clear_color.z*255.0f), (int)(myimgui->clear_color.w*255.0f));
 		g_pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, clear_col_dx, 1.0f, 0);
 		if (g_pd3dDevice->BeginScene() >= 0)
 		{
@@ -261,22 +294,18 @@ int nti_imgui_modal(int, char**, HWND hwnd, HWND phwnd)
 		// Handle loss of D3D9 device
 		if (result == D3DERR_DEVICELOST && g_pd3dDevice->TestCooperativeLevel() == D3DERR_DEVICENOTRESET)
 			ResetDevice();
+
+		if (!wnddata->is_open)
+			++f;
+		if(f > 1)
+			break;
 	}
-
-	ImGui_ImplDX9_Shutdown();
-	ImGui_ImplWin32_Shutdown();
-	ImGui::DestroyContext();
-
-	CleanupDeviceD3D();
-	//if(nhwnd)
-	//	::DestroyWindow(nhwnd);
-	::UnregisterClass(wc.lpszClassName, wc.hInstance);
 
 	return 0;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////
 // Helper functions
-
 static bool CreateDeviceD3D(HWND hWnd)
 {
 	if ((g_pD3D = Direct3DCreate9(D3D_SDK_VERSION)) == NULL)
@@ -291,7 +320,8 @@ static bool CreateDeviceD3D(HWND hWnd)
 	g_d3dpp.AutoDepthStencilFormat = D3DFMT_D16;
 	g_d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_ONE;           // Present with vsync
 																	  //g_d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;   // Present without vsync, maximum unthrottled framerate
-	if (g_pD3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd, D3DCREATE_HARDWARE_VERTEXPROCESSING, &g_d3dpp, &g_pd3dDevice) < 0)
+	HRESULT hr = g_pD3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd, D3DCREATE_HARDWARE_VERTEXPROCESSING, &g_d3dpp, &g_pd3dDevice);
+	if (hr < 0)
 		return false;
 
 	return true;
@@ -320,7 +350,7 @@ static void ResetDevice()
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 // Win32 message handler
-static LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
+LRESULT WINAPI nti_imgui_WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam))
 		return true;

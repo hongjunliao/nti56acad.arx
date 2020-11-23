@@ -57,8 +57,8 @@ int test_nti_imgui_main(int, char**)
 	::RegisterClassEx(&wc);
 	g_hwnd = ::CreateWindowEx(WS_EX_TOPMOST, wc.lpszClassName, _T("nti56acad"), wstyle, 100, 100, 400, 200, 0, NULL, wc.hInstance, NULL);
 
-	rc = nti_imgui_create(g_hwnd);
-	nti_imgui_add_render(test_render, 0);
+	rc = nti_imgui_create(g_hwnd, 0);
+	nti_imgui_add(test_render, 0);
 	// Show the window
 	::ShowWindow(g_hwnd, SW_SHOWDEFAULT);
 	::UpdateWindow(g_hwnd);
@@ -83,7 +83,7 @@ int test_nti_imgui_main(int, char**)
 				continue;
 			}
 
-			nti_imgui_paint();
+			nti_imgui_render();
 		}
 	}
 

@@ -38,9 +38,10 @@ void nti_cmd_null()
 	acutPrintf(_T("\nnti_cmd_null\n"));
 }
 
-void nti_cmd_imgui_dx9()
+void nti_cmd_about()
 {
-	nti_imgui_modal(0, 0, 0, acedGetAcadFrame()->GetSafeHwnd());
+	nti_imgui_wnddata obj = { ("NTI About"), true }, *wnddata = &obj;
+	nti_imgui_modal(sample_render, wnddata);
 }
 
 void nti_cmd_dx9_main()
@@ -48,8 +49,12 @@ void nti_cmd_dx9_main()
 	win32_dx9_main(0, 0);
 }
 
+void nti_cmd_blocks() 
+{ 
+	g_wnddata->reactor.base.is_open = true; 
+}
 
-void nti_cmd_imgui_opengl()
+void nti_cmd_dockbar()
 {
 	int rc;
 	// Redirect the resource override   
@@ -59,16 +64,7 @@ void nti_cmd_imgui_opengl()
 	if (!dockBar) {
 		dockBar = new nti_dockbar;
 		dockBar->wnddata = g_wnddata;
-		dockBar->Create(acedGetAcadFrame(), _T("nti_dockbar"), 12345);
-
-		rc = nti_imgui_add_render(nti_tabswnd_render, (nti_imgui_wnddata *)&g_wnddata->reactor);
-		assert(rc == 0);
-
-		//nti_imgui_add_render(nti_tabswnd_render, 0);
-
-		//nti_imgui_add_render(nti_tabswnd_simple, 0);
-		//nti_imgui_add_render(nti_tabswnd_another, 0);
-
+		dockBar->Create(acedGetAcadFrame(), _T("nti_dockbar"), 32141);
 
 		dockBar->EnableDocking(CBRS_ALIGN_ANY);
 		dockBar->SetWindowText(_T("nti56acad"));
@@ -98,14 +94,14 @@ void nti56acad_win32()
 		::RegisterClassEx(&wc);
 		g_hwnd = ::CreateWindowEx(WS_EX_TOPMOST, wc.lpszClassName, _T("nti56acad"), wstyle, 100, 100, 400, 200, 0, NULL, wc.hInstance, NULL);
 
-		rc = nti_imgui_create(g_hwnd);
+		rc = nti_imgui_create(g_hwnd, 0);
 
-		rc = nti_imgui_add_render(nti_tabswnd_reactor, (nti_imgui_wnddata *)&g_wnddata->reactor);
+		rc = nti_imgui_add(nti_tabswnd_reactor, (nti_imgui_wnddata *)&g_wnddata->reactor);
 		assert(rc == 0);
 
-		nti_imgui_add_render(nti_tabswnd_render, 0);
-		nti_imgui_add_render(nti_tabswnd_simple, 0);
-		nti_imgui_add_render(nti_tabswnd_another, 0);
+		nti_imgui_add(nti_tabswnd_render, 0);
+		nti_imgui_add(nti_tabswnd_simple, 0);
+		nti_imgui_add(nti_tabswnd_another, 0);
 
 		SetTimer(g_hwnd, 1, 16, NULL);
 	}

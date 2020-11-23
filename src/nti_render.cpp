@@ -20,6 +20,10 @@
 #include "nti_render.h"
 #include "nti_xlsx.h"
 #include "ImGuiFileDialog/ImGuiFileDialog.h"
+#include <tchar.h>
+#include "nti_str.h"
+#include "imgui_sds.h"
+
 #ifndef NTI56_WITHOUT_ARX
 #include "nti_arx.h"		//
 #endif
@@ -29,6 +33,45 @@
 #endif
 
 /////////////////////////////////////////////////////////////////////////////////////
+
+void nti_render_blocks(nti_imgui_wnddata * wnddata)
+{
+	//if (ImGui::Begin(("Block", &wnddata->is_open))) {
+
+	//	// ImGuiComboFlags_PopupAlignLeft
+	//	if (!reactor->curr_block && listFirst(reactor->block_list))
+	//		reactor->curr_block = listFirst(reactor->block_list);
+	//	const char* combo_label = (reactor->curr_block ? (char const *)listNodeValue(reactor->curr_block) : "");
+
+	//	if (ImGui::BeginCombo("blocks", combo_label, 0)) {
+	//		listIter * iter = listGetIterator(reactor->block_list, 0);
+	//		listNode * node;
+	//		for (node = listNext(iter); node; ) {
+
+	//			char * bname = (char *)listNodeValue(node);
+	//			assert(bname);
+
+	//			const bool is_selected = (reactor->curr_block == node);
+	//			if (ImGui::Selectable(bname, is_selected))
+	//				reactor->curr_block = node;
+	//			if (is_selected)
+	//				ImGui::SetItemDefaultFocus();
+
+	//			node = listNext(iter);
+	//		}
+	//		listReleaseIterator(iter);
+
+	//		ImGui::EndCombo();
+	//	}
+
+	//	ImGui::InputText("what:", reactor->what, IM_ARRAYSIZE(reactor->what));
+	//	ImGui::InputText("class:", reactor->cls, IM_ARRAYSIZE(reactor->cls));
+	//	ImGui::InputText("object id:", reactor->obj_id, IM_ARRAYSIZE(reactor->obj_id));
+	//	ImGui::InputText("handle:", reactor->handle, IM_ARRAYSIZE(reactor->handle));
+
+	//	ImGui::End();
+	//}
+}
 
 //tabs window
 void nti_tabswnd_render(nti_imgui_wnddata * wnddata)
@@ -41,41 +84,6 @@ void nti_tabswnd_render(nti_imgui_wnddata * wnddata)
 	if (ImGui::BeginPopupModal(wnddata->title, &wnddata->is_open, 0)) {
 	ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags_None;
 	if (ImGui::BeginTabBar("tab", tab_bar_flags)) {
-		if (ImGui::BeginTabItem(("Block"))) {
-			
-			// ImGuiComboFlags_PopupAlignLeft
-			if(!reactor->curr_block && listFirst(reactor->block_list))
-				reactor->curr_block = listFirst(reactor->block_list);
-			const char* combo_label = (reactor->curr_block ? (char const *)listNodeValue(reactor->curr_block) : "");
-
-			if (ImGui::BeginCombo("blocks", combo_label, 0)){
-				listIter * iter = listGetIterator(reactor->block_list, 0);
-				listNode * node;
-				for (node = listNext(iter); node; ) {
-
-					char * bname = (char *)listNodeValue(node);
-					assert(bname);
-
-					const bool is_selected = (reactor->curr_block == node);
-					if(ImGui::Selectable(bname, is_selected))
-						reactor->curr_block = node;
-					if (is_selected)
-						ImGui::SetItemDefaultFocus();
-
-					node = listNext(iter);
-				}
-				listReleaseIterator(iter);
-
-				ImGui::EndCombo();
-			}
-
-			ImGui::InputText("what:", reactor->what, IM_ARRAYSIZE(reactor->what));
-			ImGui::InputText("class:", reactor->cls, IM_ARRAYSIZE(reactor->cls));
-			ImGui::InputText("object id:", reactor->obj_id, IM_ARRAYSIZE(reactor->obj_id));
-			ImGui::InputText("handle:", reactor->handle, IM_ARRAYSIZE(reactor->handle));
-
-			ImGui::EndTabItem();
-		}
 		if (ImGui::BeginTabItem(("Tools"))) {
 			ImGui::Text("This is the Cucumber tab!\nblah blah blah blah blah");
 			ImGui::EndTabItem();
@@ -151,6 +159,8 @@ void nti_tabswnd_render(nti_imgui_wnddata * wnddata)
 		}
 #ifndef NDEBUG
 		if (ImGui::BeginTabItem(("Test"))) {
+			static sds buf = sdsempty();
+			ImGui::InputText("name:", &buf);
 			if (ImGui::Button("MFC Choose File Dialog...")) {
 				CString gReadFilePathName;
 				CFileDialog fileDlg(true, _T("mp3"), _T("*.mp3"), OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT
@@ -203,7 +213,7 @@ void nti_tabswnd_reactor(nti_imgui_wnddata * wnddata)
 void nti_tabswnd_simple(nti_imgui_wnddata * wnddata)
 {
 	// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
-	static bool show_demo_window = true;
+	static bool show_demo_window = false;
 	static bool show_another_window = false;
 	static float f = 0.0f;
 	static int counter = 0;
@@ -212,22 +222,23 @@ void nti_tabswnd_simple(nti_imgui_wnddata * wnddata)
 	if (show_demo_window)
 		ImGui::ShowDemoWindow(&show_demo_window);
 
-	ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
+	if (ImGui::Begin(wnddata->title, &wnddata->is_open)) {
 
-	ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
-	ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
-	ImGui::Checkbox("Another Window", &show_another_window);
+		ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
+		ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
+		ImGui::Checkbox("Another Window", &show_another_window);
 
-	ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-	ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
+		ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
+		ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
 
-	if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
-		counter++;
-	ImGui::SameLine();
-	ImGui::Text("counter = %d", counter);
+		if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
+			counter++;
+		ImGui::SameLine();
+		ImGui::Text("counter = %d", counter);
 
-	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-	ImGui::End();
+		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+		ImGui::End();
+	}
 }
 
 // 3. Show another simple window.
@@ -240,3 +251,79 @@ void nti_tabswnd_another(nti_imgui_wnddata * wnddata)
 		show_another_window = false;
 	ImGui::End();
 }
+
+void sample_render(nti_imgui_wnddata * wnddata)
+{
+	if(!wnddata)
+		return;
+	static bool show_demo_window = false;
+	static bool show_another_window = false;
+
+	// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
+	if (show_demo_window)
+		ImGui::ShowDemoWindow(&show_demo_window);
+
+	// 2. Show a simple window that we create ourselves. We use a Begin/End pair to created a named window.
+	if (wnddata->is_open)                          // Create a window called "Hello, world!" and append into it.
+	{
+		ImGui::Begin("Hello, world!", &wnddata->is_open);
+		static float f = 0.0f;
+		static int counter = 0;
+
+		if (ImGui::Button("MessageBox")) {
+			::MessageBox(0, _T("hello"), _T(""), 0);
+		}
+		static TCHAR strFilename[MAX_PATH] = { 0 };//用于接收文件名
+		ImGui::Text("file:%s", U8(WA(strFilename)));
+		if (ImGui::Button("Select File...")) {
+
+		loop:
+			OPENFILENAME ofn = { 0 };
+			ofn.lStructSize = sizeof(OPENFILENAME);//结构体大小
+			ofn.hwndOwner = wnddata->imgui->phwnd;//拥有着窗口句柄，为NULL表示对话框是非模态的，实际应用中一般都要有这个句柄
+			ofn.lpstrFilter = TEXT("所有文件\0*.*\0C/C++ Flie\0*.cpp;*.c;*.h\0\0");//设置过滤
+			ofn.nFilterIndex = 1;//过滤器索引
+			ofn.lpstrFile = strFilename;//接收返回的文件名，注意第一个字符需要为NULL
+			ofn.nMaxFile = sizeof(strFilename);//缓冲区长度
+			ofn.lpstrInitialDir = NULL;//初始目录为默认
+			ofn.lpstrTitle = TEXT("请选择一个文件");//使用系统默认标题留空即可
+			ofn.Flags = OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST | OFN_HIDEREADONLY;//文件、目录必须存在，隐藏只读选项
+			if (GetOpenFileName(&ofn))
+			{
+				MessageBox(NULL, strFilename, TEXT("选择的文件"), 0);
+			}
+			else {
+				MessageBox(NULL, TEXT("请选择一个文件"), NULL, MB_ICONERROR);
+				goto loop;
+			}
+
+		}
+
+		ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
+		ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
+		ImGui::Checkbox("Another Window", &show_another_window);
+
+		ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
+		ImGui::ColorEdit3("clear color", (float*)&wnddata->imgui->clear_color); // Edit 3 floats representing a color
+
+		if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
+			counter++;
+		ImGui::SameLine();
+		ImGui::Text("counter = %d", counter);
+
+		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+		ImGui::End();
+	}
+
+	// 3. Show another simple window.
+	if (show_another_window)
+	{
+		ImGui::Begin("Another Window", &show_another_window);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
+		ImGui::Text("Hello from another window!");
+		if (ImGui::Button("Close Me"))
+			show_another_window = false;
+		ImGui::End();
+	}
+
+}
+/////////////////////////////////////////////////////////////////////////////////////

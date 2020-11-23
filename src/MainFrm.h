@@ -46,7 +46,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 public:
-	afx_msg void On32771();
+	afx_msg void on_ID_NTI_BLOCKS();
 	afx_msg void On32775();
 	afx_msg void On32776();
 };
