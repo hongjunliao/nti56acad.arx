@@ -4,6 +4,7 @@
 //
 #define IDD_ABOUTBOX                    100
 #define IDP_OLE_INIT_FAILED             100
+#define IDD_ABOUTBOX1                   101
 #define IDR_POPUP_EDIT                  119
 #define ID_STATUSBAR_PANE1              120
 #define ID_STATUSBAR_PANE2              121
@@ -85,12 +86,12 @@
 #define IDS_EXPLORER                    305
 #define IDS_EDIT_MENU                   306
 #define ID_32771                        32771
-#define NTI_MNU_APP                        32772
+#define NTI_MNU_APP                     32772
 #define ID_NTI_BLOCKS                   32773
-#define ID_NTI_ABOUT                        32774
-#define ID_NULL_ARX_CMD                        32775
-#define ID_NTI_TEST_DX9_MAIN                        32776
-#define ID_NTIMENU_DOCKBAR                        32777
+#define ID_NTI_ABOUT                    32774
+#define ID_NULL_ARX_CMD                 32775
+#define ID_NTI_TEST_DX9_MAIN            32776
+#define ID_NTIMENU_DOCKBAR              32777
 #define ID_NTI_DOCKBAR                  32778
 
 // Next default values for new objects

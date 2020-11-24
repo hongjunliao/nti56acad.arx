@@ -7,7 +7,7 @@
 #include "ClassView.h"
 #include "OutputWnd.h"
 #include "PropertiesWnd.h"
-#include "nti_dockbar.h"
+#include "nti_blocksbar.h"
 
 class CMainFrame : public CMDIFrameWndEx
 {
@@ -43,7 +43,7 @@ public:  // 控件条嵌入成员
 	CClassView        m_wndClassView;
 	COutputWnd        m_wndOutput;
 	CPropertiesWnd    m_wndProperties;
-	//nti_dockbar       m_dockbar;
+	nti_blocksbar       m_blocksbar;
 
 // 生成的消息映射函数
 protected:
@@ -61,7 +61,7 @@ protected:
 public:
 	afx_msg void on_ID_NTI_BLOCKS();
 	afx_msg void On32775();
-	afx_msg void On32776();
+	afx_msg void OnNtiAbout();
 	//afx_msg void OnNtiBlocks();
 	afx_msg void OnNtiBlocks();
 };

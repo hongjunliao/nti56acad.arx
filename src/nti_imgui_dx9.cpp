@@ -47,6 +47,8 @@ static void ResetDevice();
 struct nti_imgui_render_t {
 	nti_imgui_wnddata * wnddata;
 	void(*render)(nti_imgui_wnddata * wnddata);
+	nti_render_t wrender;
+	HWND hwnd;
 };
 
 static void renderlist_free(void *ptr)
@@ -75,6 +77,8 @@ int nti_imgui_create(HWND hwnd, HWND phwnd, int flags)
 	myimgui->hwnd = hwnd;
 	myimgui->renderlist = listCreate();
 	listSetFreeMethod(myimgui->renderlist, renderlist_free);
+	myimgui->wlist = listCreate();
+	listSetFreeMethod(myimgui->wlist, renderlist_free);
 
 	ImGui_ImplWin32_EnableDpiAwareness();
 
@@ -82,7 +86,7 @@ int nti_imgui_create(HWND hwnd, HWND phwnd, int flags)
 	//ImGui_ImplWin32_EnableDpiAwareness();
 
 	if (!hwnd) {
-		if (flags == 0) {
+		if (1) {
 			WNDCLASSEX wc = { sizeof(WNDCLASSEX), CS_CLASSDC, nti_imgui_WndProc, 0L, 0L
 				, GetModuleHandle(NULL), NULL, NULL, NULL, NULL, _T("ImGui Example"), NULL };
 			::RegisterClassEx(&wc);
@@ -92,18 +96,18 @@ int nti_imgui_create(HWND hwnd, HWND phwnd, int flags)
 				, 100, 100, 120, 30, myimgui->phwnd, NULL, wc.hInstance, NULL);
 		}
 		else {
-			// Initialize use of DockWnd.dll
-			rc = DockingInitialize(nti_imgui_msghdl);
-			assert(rc == 0);
-			DOCKINFO *dw = DockingAlloc(DWS_DOCKED_LEFT);
-			assert(dw);
-			// Create a Docking Frame window. Note that the docking library fills
-			// in DOCKINFO's hwnd field with the HWND of the tool window
-			myimgui->hwnd = hwnd = DockingCreateFrame(dw, phwnd, _T("nti"));
-			if (hwnd) {
-				DockingShowFrame(dw);
-				DockingUpdateLayout(hwnd);
-			}
+			//// Initialize use of DockWnd.dll
+			//rc = DockingInitialize(nti_imgui_msghdl);
+			//assert(rc == 0);
+			//DOCKINFO *dw = DockingAlloc(DWS_DOCKED_LEFT);
+			//assert(dw);
+			//// Create a Docking Frame window. Note that the docking library fills
+			//// in DOCKINFO's hwnd field with the HWND of the tool window
+			//myimgui->hwnd = hwnd = DockingCreateFrame(dw, phwnd, _T("nti"));
+			//if (hwnd) {
+			//	DockingShowFrame(dw);
+			//	DockingUpdateLayout(hwnd);
+			//}
 		}
 	}
 	// Initialize Direct3D
@@ -125,7 +129,7 @@ int nti_imgui_create(HWND hwnd, HWND phwnd, int flags)
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
 																//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 	//io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
-	//io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
+	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
 																//io.ConfigViewportsNoAutoMerge = true;
 																//io.ConfigViewportsNoTaskBarIcon = true;
 	// Setup Dear ImGui style
@@ -181,6 +185,19 @@ int nti_imgui_add(void(*render)(nti_imgui_wnddata * wnddata), nti_imgui_wnddata 
 	return 0;
 }
 
+int nti_imgui_add(nti_render_t render, HWND hwnd)
+{
+	if(!(render && hwnd))
+		return -1;
+	nti_imgui_render_t * ir = nti_new(nti_imgui_render_t);
+	ir->wrender = render;
+	ir->hwnd = hwnd;
+
+	listAddNodeTail(myimgui->wlist, ir);
+
+	return 0;
+}
+
 int nti_imgui_render()
 {
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
@@ -190,17 +207,14 @@ int nti_imgui_render()
 	ImGui::NewFrame();
 
 	/* render window */
-	if (myimgui->renderlist) {
-		listIter * iter = listGetIterator(myimgui->renderlist, 0);
+	if (myimgui->wlist) {
+		listIter * iter = listGetIterator(myimgui->wlist, 0);
 		for (listNode * node = listNext(iter); node; ) {
 
 			nti_imgui_render_t * ir = (nti_imgui_render_t *)listNodeValue(node);
-			assert(ir && ir->render);
+			assert(ir && ir->wrender);
 
-			RECT rec = nti_imgui_size();
-			ImVec2 size(rec.left, rec.top);
-			ImGui::SetNextWindowSize(size);
-			ir->render(ir->wnddata);
+			ir->wrender();
 
 			node = listNext(iter);
 		}

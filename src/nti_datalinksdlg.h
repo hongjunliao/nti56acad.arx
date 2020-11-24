@@ -1,33 +1,34 @@
 /*!
  * This file is PART of nti56acad project
- * @author hongjun.liao <docici@126.com>, @date 2020/09/11
+ * @author hongjun.liao <docici@126.com>, @date 2020/11/24
  *
- * dock ctrl bar
+ * blocks wnd
  * */
-#ifndef NTI_DOCKBAR_H
-#define NTI_DOCKBAR_H
+#ifndef NTI_DATALINKSBAR_H
+#define NTI_DATALINKSBAR_H
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif /* HAVE_CONFIG_H */
 
 #include "stdafx.h"
-#ifndef NTI56_WITHOUT_ARX
-#include "acuidock.h" //CAcUiDockControlBar
-#endif //NTI56_WITHOUT_ARX
-
-#include "nti_cmn.h"	//nti_wnddata
+#include "sds/win32_sds.h"
 /////////////////////////////////////////////////////////////////////////////////////
 
-class nti_dockbar : public nti_dockbase{
+class nti_datalinksdlg : public CDialogEx {
 public:
-	nti_dockbar();
-	virtual ~nti_dockbar();
+	nti_datalinksdlg();
+	virtual ~nti_datalinksdlg();
 public:
-	nti_wnddata * wnddata;
+	bool m_open;
+	sds m_name;
 public:
+	void render();
+protected:
 	//virtual BOOL Create(CWnd* pParent, LPCTSTR lpszTitle); 
-//	virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam);
+	//virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam);
+	virtual BOOL OnInitDialog();
+	virtual void PostNcDestroy();
 protected: 
 	//{{AFX_MSG(CDockControlBar) 
 	//afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
@@ -39,4 +40,4 @@ protected:
 
 	//virtual void AssertValid() const { } 
 };
-#endif //NTI_DOCKBAR_H
+#endif //NTI_DATALINKSBAR_H

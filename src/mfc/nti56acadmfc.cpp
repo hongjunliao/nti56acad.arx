@@ -176,9 +176,11 @@ BOOL Cnti56acadmfcApp::InitInstance()
 	pMainFrame->UpdateWindow();
 
 	g_hwnd = pMainFrame->GetSafeHwnd();
-	rc = nti_imgui_create(/*pMainFrame->m_dockbar.GetSafeHwnd()*/0, pMainFrame->GetSafeHwnd(), 1);
+//	rc = nti_imgui_create(/*pMainFrame->m_dockbar.GetSafeHwnd()*/0, pMainFrame->GetSafeHwnd(), 1);
+	rc = nti_imgui_create(0, pMainFrame->GetSafeHwnd(), 0);
 
-	rc = nti_imgui_add(nti_tabswnd_render, (nti_imgui_wnddata *)&g_wnddata->reactor);
+	rc = nti_imgui_add(std::bind(&nti_blocksbar::render, &pMainFrame->m_blocksbar), pMainFrame->m_blocksbar.GetSafeHwnd());
+	//rc = nti_imgui_add(nti_tabswnd_render, (nti_imgui_wnddata *)&g_wnddata->reactor);
 	assert(rc == 0);
 
 	//nti_imgui_add_render(nti_tabswnd_simple, 0);

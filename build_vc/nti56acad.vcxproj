@@ -327,6 +327,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="..\deps\imgui\backends\imgui_impl_opengl2.cpp" />
     <ClCompile Include="..\src\libxhhp\src\libxhhp\hp_log.c" />
     <ClCompile Include="..\src\nti_arx.cpp" />
+    <ClCompile Include="..\src\nti_blocksbar.cpp" />
     <ClCompile Include="..\src\nti_cmd.cpp" />
     <ClCompile Include="..\src\nti_cmn.cpp" />
     <ClCompile Include="..\src\nti_dockbar.cpp">
@@ -367,6 +368,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="..\deps\imgui\backends\imgui_impl_win32.cpp" />
     <ClCompile Include="..\deps\imgui\imgui_widgets.cpp" />
     <ClInclude Include="..\deps\imgui\backends\imgui_impl_dx9.h" />
+    <ClInclude Include="..\src\nti_blocksbar.h" />
     <ClInclude Include="..\src\nti_cmd.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="resource1.h" />

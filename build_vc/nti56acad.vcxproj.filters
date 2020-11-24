@@ -97,6 +97,9 @@
     <ClCompile Include="..\deps\imgui\misc\cpp\imgui_sds.cpp">
       <Filter>deps</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\nti_blocksbar.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\config.h">
@@ -144,6 +147,9 @@
     </ClInclude>
     <ClInclude Include="resource.h" />
     <ClInclude Include="..\src\nti_cmd.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\nti_blocksbar.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

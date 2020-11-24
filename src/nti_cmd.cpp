@@ -20,6 +20,8 @@
 #include "nti_render.h"		//
 #include "nti_cmn.h"	//nti_wnddata
 #include "nti_test.h"
+#include "nti_blocksbar.h"
+#include "resource.h"
 
 // per app
 extern CDocReactor* gpDocReactor;
@@ -51,7 +53,25 @@ void nti_cmd_dx9_main()
 
 void nti_cmd_blocks() 
 { 
-	g_wnddata->reactor.base.is_open = true; 
+	int rc;
+	// Redirect the resource override   
+	CAcModuleResourceOverride res;
+	//// Create the dock ctrl bar   
+	static nti_blocksbar * blocksbar = 0;
+	if (!blocksbar) {
+		blocksbar = new nti_blocksbar;
+		// nti dockbar
+		blocksbar->Create(acedGetAcadFrame(), _T("nti_dockbar"), 32141);
+
+		rc = nti_imgui_add(std::bind(&nti_blocksbar::render, blocksbar), blocksbar->GetSafeHwnd());
+
+		blocksbar->EnableDocking(CBRS_ALIGN_ANY);
+		blocksbar->SetWindowText(_T("nti56acad"));
+		acedGetAcadFrame()->DockControlBar(blocksbar);
+	}
+	// Now display it   
+	acedGetAcadFrame()->FloatControlBar(blocksbar, CPoint(), CBRS_ALIGN_LEFT);    // FloatControBar(...)   
+	acedGetAcadFrame()->ShowControlBar(blocksbar, TRUE, FALSE);
 }
 
 void nti_cmd_dockbar()

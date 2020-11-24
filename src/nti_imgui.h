@@ -11,15 +11,13 @@
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif /* HAVE_CONFIG_H */
+#include <functional>
 #include "imgui.h"
 
 extern "C" {
 #include "adlist.h"	//list
 }
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 /////////////////////////////////////////////////////////////////////////////////////
 
 struct nti_imgui {
@@ -27,6 +25,7 @@ struct nti_imgui {
 	HWND phwnd;
 	ImVec4 clear_color;
 	list * renderlist;
+	list * wlist;
 };
 
 struct nti_imgui_wnddata {
@@ -35,8 +34,11 @@ struct nti_imgui_wnddata {
 	nti_imgui * imgui;
 };
 
+typedef std::function<void()> nti_render_t;
+
 int nti_imgui_create(HWND hwnd, HWND phwnd, int flags = 0);
 int nti_imgui_add(void(*render)(nti_imgui_wnddata * wnddata), nti_imgui_wnddata * wnddata);
+int nti_imgui_add(nti_render_t render, HWND hwnd);
 int nti_imgui_render();
 RECT nti_imgui_size();
 int nti_imgui_modal(void(*render)(nti_imgui_wnddata * wnddata), nti_imgui_wnddata * wnddata);
@@ -46,7 +48,4 @@ LRESULT WINAPI nti_imgui_WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lPar
 nti_imgui * nti_imgui_();
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#ifdef __cplusplus
-}
-#endif
 #endif //NTI_IMGUI_H

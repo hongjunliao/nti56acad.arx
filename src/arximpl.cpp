@@ -53,6 +53,8 @@ void initApp()
 	//g_hwnd = acedGetAcadFrame()->GetMessageBar()->GetSafeHwnd();
 	rc = nti_wnddata_init(g_wnddata);
 
+	rc = nti_imgui_create(0, acedGetAcadFrame()->GetSafeHwnd(), 0);
+
 	//nti_imgui_create(0, acedGetAcadFrame()->GetSafeHwnd());
 	//rc = nti_imgui_add(nti_tabswnd_render, (nti_imgui_wnddata *)&g_wnddata->reactor);
 	//assert(rc == 0);

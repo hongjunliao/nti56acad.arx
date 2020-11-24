@@ -112,6 +112,12 @@
     <ClCompile Include="..\deps\dockwnd\DockWnd.c">
       <Filter>deps\dockwnd</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\nti_blocksbar.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\nti_datalinksdlg.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\deps\ImGuiFileDialog\ImGuiFileDialog\ImGuiFileDialog.h">
@@ -215,6 +221,12 @@
     </ClInclude>
     <ClInclude Include="..\deps\dockwnd\DockWnd.h">
       <Filter>deps\dockwnd</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\nti_blocksbar.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\nti_datalinksdlg.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

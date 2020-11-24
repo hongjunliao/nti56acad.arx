@@ -9,6 +9,7 @@
 #include "nti_test.h"
 #include "nti_render.h"
 #include "nti_cmn.h"
+#include "nti_datalinksdlg.h"
 extern nti_wnddata * g_wnddata;
 
 #ifdef _DEBUG
@@ -33,7 +34,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWndEx)
 	ON_WM_SETTINGCHANGE()
 	ON_COMMAND(ID_NTI_BLOCKS, &CMainFrame::OnNtiBlocks)
 	//ON_COMMAND(ID_32775, &CMainFrame::On32775)
-	//ON_COMMAND(ID_NTI_ABOUT, &CMainFrame::On32776)
+	ON_COMMAND(ID_NTI_ABOUT, &CMainFrame::OnNtiAbout)
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -134,8 +135,8 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndProperties.EnableDocking(CBRS_ALIGN_ANY);
 	DockPane(&m_wndProperties);
 
-	//m_dockbar.EnableDocking(CBRS_ALIGN_ANY);
-	//DockPane(&m_dockbar);
+	m_blocksbar.EnableDocking(CBRS_ALIGN_ANY);
+	DockPane(&m_blocksbar);
 
 	// 基于持久值设置视觉管理器和样式
 	OnApplicationLook(theApp.m_nAppLook);
@@ -245,14 +246,14 @@ BOOL CMainFrame::CreateDockingWindows()
 	}
 
 	// nti dockbar
-	//CString strNtiDockWnd = _T("nti dockbar");
-	//if (!m_dockbar.Create(strNtiDockWnd, this, CRect(0, 0, 200, 200)
-	//	, TRUE, ID_NTI_DOCKBAR, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS |
-	//		WS_CLIPCHILDREN | CBRS_RIGHT | CBRS_FLOAT_MULTI))
-	//{
-	//	TRACE0("未能创建“nti dockbar”窗口\n");
-	//	return FALSE; // 未能创建
-	//}
+	CString strNtiDockWnd = _T("nti blocksbar");
+	if (!m_blocksbar.Create(strNtiDockWnd, this, CRect(0, 0, 200, 200)
+		, TRUE, ID_NTI_DOCKBAR, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS |
+			WS_CLIPCHILDREN | CBRS_RIGHT | CBRS_FLOAT_MULTI))
+	{
+		TRACE0("未能创建“nti dockbar”窗口\n");
+		return FALSE; // 未能创建
+	}
 
 	SetDockingWindowIcons(theApp.m_bHiColorIcons);
 	return TRUE;
@@ -446,10 +447,11 @@ void CMainFrame::On32775()
 }
 
 
-void CMainFrame::On32776()
+void CMainFrame::OnNtiAbout()
 {
-	nti_imgui_wnddata obj = { ("NTI About"), true }, *wnddata = &obj;
-	nti_imgui_modal(sample_render, wnddata);
+	nti_datalinksdlg * dlg = new nti_datalinksdlg;
+	dlg->Create(IDD_ABOUTBOX1, this);
+	dlg->ShowWindow(SW_SHOW);
 }
 
 

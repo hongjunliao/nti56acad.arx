@@ -44,6 +44,13 @@ struct nti_wnddata {
 
 int nti_wnddata_init(nti_wnddata * wnddata);
 int nti_wnddata_uninit(nti_wnddata * wnddata);
+
+#ifndef NTI56_WITHOUT_ARX
+#define nti_dockbase CAcUiDockControlBar
+#else
+#define nti_dockbase CDockablePane
+#endif //NTI56_WITHOUT_ARX	
+
 /////////////////////////////////////////////////////////////////////////////////////
 
 #endif //NTI_CMN_H
