@@ -91,8 +91,8 @@ int nti_imgui_create(HWND hwnd, HWND phwnd, int flags)
 				, GetModuleHandle(NULL), NULL, NULL, NULL, NULL, _T("ImGui Example"), NULL };
 			::RegisterClassEx(&wc);
 			imgui_wc = wc;
-			myimgui->hwnd = hwnd = ::CreateWindowEx(WS_EX_TOPMOST, wc.lpszClassName, _T("nti")
-				, WS_OVERLAPPEDWINDOW
+			myimgui->hwnd = hwnd = ::CreateWindowEx(0, wc.lpszClassName, _T("nti56acad")
+				, WS_OVERLAPPED
 				, 100, 100, 120, 30, myimgui->phwnd, NULL, wc.hInstance, NULL);
 		}
 		else {
@@ -120,6 +120,12 @@ int nti_imgui_create(HWND hwnd, HWND phwnd, int flags)
 	if (myimgui->hwnd) {
 		::ShowWindow(hwnd, SW_SHOWDEFAULT);
 		::UpdateWindow(hwnd);
+
+		if (phwnd) {
+			RECT R, *rect = &R;
+			::GetWindowRect(phwnd, rect);
+			::MoveWindow(hwnd, rect->left, rect->bottom, 120, 30, 1);
+		}
 	}
 
 	// Setup Dear ImGui context
@@ -205,6 +211,12 @@ int nti_imgui_render()
 	ImGui_ImplDX9_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
+
+	if (myimgui->phwnd) {
+		RECT R, *rect = &R;
+		::GetWindowRect(myimgui->phwnd, rect);
+		::MoveWindow(myimgui->hwnd, rect->left, rect->bottom, 120, 30, 1);
+	}
 
 	/* render window */
 	if (myimgui->wlist) {

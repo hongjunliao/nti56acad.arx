@@ -29,8 +29,12 @@ public:
 	sds m_name;
 public:
 	void render();
+	void show();
 public:
 	//virtual BOOL Create(CWnd* pParent, LPCTSTR lpszTitle); 
+#ifndef NTI56_WITHOUT_ARX
+	virtual bool OnClosing();
+#endif
 #ifdef NTI56_WITHOUT_ARX
 	virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam);
 #endif
@@ -40,6 +44,7 @@ protected:
 	//afx_msg void OnPaint();
 	//afx_msg void OnTimer(UINT_PTR nIDEvent);
 	//afx_msg void OnSize(UINT nType, int cx, int cy);
+	afx_msg void OnClose();
 	//}}AFX_MSG 
 	DECLARE_MESSAGE_MAP() 
 

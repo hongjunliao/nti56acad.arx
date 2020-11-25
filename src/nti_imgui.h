@@ -26,6 +26,7 @@ struct nti_imgui {
 	ImVec4 clear_color;
 	list * renderlist;
 	list * wlist;
+	void * user;
 };
 
 struct nti_imgui_wnddata {

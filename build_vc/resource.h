@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ 生成的包含文件。
-// 供 nti56acadmfc.rc 使用
+// 供 nti56acad.rc 使用
 //
 #define IDD_ABOUTBOX                    100
 #define IDP_OLE_INIT_FAILED             100
@@ -85,6 +85,9 @@
 #define IDS_FIND_TAB                    302
 #define IDS_EXPLORER                    305
 #define IDS_EDIT_MENU                   306
+#define IDR_TOOLBAR_NTI                 310
+#define IDD_DIALOG1                     312
+#define IDD_DIALOG_NTI                  312
 #define ID_32771                        32771
 #define NTI_MNU_APP                     32772
 #define ID_NTI_BLOCKS                   32773
@@ -98,7 +101,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        310
+#define _APS_NEXT_RESOURCE_VALUE        314
 #define _APS_NEXT_COMMAND_VALUE         32779
 #define _APS_NEXT_CONTROL_VALUE         1000
 #define _APS_NEXT_SYMED_VALUE           310

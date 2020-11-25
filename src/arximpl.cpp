@@ -25,6 +25,8 @@
 #include "nti_cmn.h"	//nti_wnddata
 #include "nti_EdUiContext.h"
 #include "nti_render.h"
+#include "nti_blocksbar.h"
+#include "resource.h"
 
 /////////////////////////////////////////////////////////////////////////////////////
 static nti_wnddata g_wnddataobj = { 0 };
@@ -53,7 +55,51 @@ void initApp()
 	//g_hwnd = acedGetAcadFrame()->GetMessageBar()->GetSafeHwnd();
 	rc = nti_wnddata_init(g_wnddata);
 
+	/////////////////////////////////////////////////////////////////////////////
+	// Toolbar
+
+	//static CToolBar toolbar;
+	//rc = toolbar.CreateEx(acedGetAcadFrame());
+	//if(rc) rc = toolbar.LoadToolBar(IDR_TOOLBAR_NTI);
+	//if (!rc) 
+	//	return;
+	//acedGetAcadFrame()->DockControlBar(&toolbar);
+	/////////////////////////////////////////////////////////////////////////////
+	
+	CAcUiDockControlBar * dock2 = new CAcUiDockControlBar;
+	rc = dock2->Create(acedGetAcadFrame(), _T("dock2"), 34525);
+	dock2->EnableDocking(CBRS_ALIGN_ANY);
+	assert(rc);
+	acedGetAcadFrame()->DockControlBar(dock2);
+
+	/////////////////////////////////////////////////////////////////////////////
+	// dockbar
+	//CDialogBar * base = new CDialogBar;
+	//CPoint pt(100, 100);
+	//rc = base->Create(acedGetAcadFrame(), (UINT)IDD_DIALOG_NTI, 0, 0);
+	//base->EnableDocking(CBRS_ALIGN_ANY);
+	//acedGetAcadFrame()->FloatControlBar(base, pt, CBRS_ALIGN_LEFT);    // FloatControBar(...)   
+
+	/////////////////////////////////////////////////////////////////////////////
+	nti_blocksbar * blocksbar = 0;
+	blocksbar = new nti_blocksbar;
+	// nti dockbar
+	rc = blocksbar->Create(acedGetAcadFrame(), _T("nti_dockbar"), 32141);
+	assert(rc);
+	blocksbar->EnableDocking(CBRS_ALIGN_LEFT | CBRS_ALIGN_RIGHT);
+
+	RECT R, *rect = &R;
+	::GetWindowRect(acedGetAcadFrame()->GetSafeHwnd(), rect);
+	acedGetAcadFrame()->FloatControlBar(blocksbar, CPoint(rect->left, rect->top + 200), CBRS_ALIGN_LEFT);
+	acedGetAcadFrame()->DockControlBar(blocksbar);
+	// init imgui
 	rc = nti_imgui_create(0, acedGetAcadFrame()->GetSafeHwnd(), 0);
+	assert(rc == 0);
+	nti_imgui_()->user = blocksbar;
+
+	rc = nti_imgui_add(std::bind(&nti_blocksbar::render, blocksbar), blocksbar->GetSafeHwnd());
+	
+	/////////////////////////////////////////////////////////////////////////////
 
 	//nti_imgui_create(0, acedGetAcadFrame()->GetSafeHwnd());
 	//rc = nti_imgui_add(nti_tabswnd_render, (nti_imgui_wnddata *)&g_wnddata->reactor);

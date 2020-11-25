@@ -22,6 +22,7 @@ BEGIN_MESSAGE_MAP(nti_blocksbar, nti_dockbase)
 	//{{AFX_MSG_MAP(nti_blocksbar)
 	//ON_WM_CREATE()
 	//ON_WM_PAINT()   
+	ON_WM_CLOSE()
 	ON_WM_SIZE()
 	ON_WM_TIMER()
 	//}}AFX_MSG_MAP   
@@ -38,9 +39,19 @@ nti_blocksbar::~nti_blocksbar()
 	sdsfree(m_name);
 }
 
+void nti_blocksbar::show()
+{
+	m_open = true;
+#ifndef NTI56_WITHOUT_ARX
+	acedGetAcadFrame()->ShowControlBar(this, TRUE, FALSE);
+#endif
+}
 
 void nti_blocksbar::render()
 {
+	if(!m_open)
+		return;
+
 	HWND hwnd = GetSafeHwnd();
 
 	TITLEBARINFO tblarobj = { sizeof(TITLEBARINFO) }, *tbar = &tblarobj;
@@ -49,8 +60,8 @@ void nti_blocksbar::render()
 	::GetWindowRect(hwnd, rect);
 
 #ifndef NTI56_WITHOUT_ARX
-	ImVec2 size(rect->right - rect->left, rect->bottom - rect->top);
-	ImVec2 pos(rect->left, rect->top);
+	ImVec2 size(rect->right - rect->left, rect->bottom - rect->top - (this->IsFloating() ? 0 : 20));
+	ImVec2 pos(rect->left, rect->top + (this->IsFloating()? 0 : 20));
 #else
 	ImVec2 size(rect->right - rect->left, rect->bottom - rect->top - (IsDocked() ? 20 : 0));
 	ImVec2 pos(rect->left, rect->top + (IsDocked() ? 20 : 0));
@@ -59,20 +70,27 @@ void nti_blocksbar::render()
 	ImGui::SetNextWindowPos(pos);
 	ImGui::SetNextWindowSize(size);
 
-	if (ImGui::Begin("nti_blocksbar", &m_open
-			, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize)) {
-		ImGui::InputText("name", &m_name);
-		//test OK
-		if (ImGui::Button("about...")) {
-			PostMessage(WM_COMMAND, ID_APP_ABOUT);
-		}
-		if (ImGui::Button("imgui about...")) {
-			PostMessage(WM_COMMAND, ID_NTI_ABOUT);
-		}
-
-		ImGui::End();
+	ImGui::Begin("nti_blocksbar", 0
+			, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
+	ImGui::InputText("name", &m_name);
+	//test OK
+	if (ImGui::Button("about...")) {
+		PostMessage(WM_COMMAND, ID_APP_ABOUT);
 	}
+	if (ImGui::Button("imgui about...")) {
+		PostMessage(WM_COMMAND, ID_NTI_ABOUT);
+	}
+
+	ImGui::End();
 }
+
+#ifndef NTI56_WITHOUT_ARX
+bool nti_blocksbar::OnClosing()
+{
+	m_open = false;
+	return nti_dockbase::OnClosing();
+}
+#endif
 
 //BOOL nti_blocksbar::Create(CWnd* pParent, LPCTSTR lpszTitle)
 //{
@@ -124,11 +142,18 @@ void nti_blocksbar::render()
 //}
 //
 
+void nti_blocksbar::OnClose()
+{
+	m_open = false;
+	return nti_dockbase::OnClose();
+}
+
 #ifdef NTI56_WITHOUT_ARX
 LRESULT nti_blocksbar::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 {
 	nti_imgui_msghdl(GetSafeHwnd(), message, wParam, lParam);
 	return nti_dockbase::WindowProc(message, wParam, lParam);
 }
+
 #endif
 

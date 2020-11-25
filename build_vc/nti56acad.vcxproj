@@ -411,6 +411,9 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   <ItemGroup>
     <ResourceCompile Include="nti56acad.rc" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="toolbar1.bmp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

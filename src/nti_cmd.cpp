@@ -51,8 +51,46 @@ void nti_cmd_dx9_main()
 	win32_dx9_main(0, 0);
 }
 
+void nti_cmd_blocks3()
+{
+	int rc;
+	// Redirect the resource override   
+	CAcModuleResourceOverride res;
+	//// Create the dock ctrl bar   
+	static nti_blocksbar * blocksbar = 0;
+	if (!blocksbar) {
+		blocksbar = new nti_blocksbar;
+		// nti dockbar
+		blocksbar->Create(acedGetAcadFrame(), _T("nti_dockbar"), 32141);
+
+		//rc = nti_imgui_create(blocksbar->GetSafeHwnd(), acedGetAcadFrame()->GetSafeHwnd(), 0);
+		//assert(rc == 0);
+		//rc = nti_imgui_add(std::bind(&nti_blocksbar::render, blocksbar), blocksbar->GetSafeHwnd());
+
+		blocksbar->EnableDocking(CBRS_ALIGN_ANY);
+		blocksbar->SetWindowText(_T("nti56acad"));
+		acedGetAcadFrame()->DockControlBar(blocksbar);
+	}
+	// Now display it   
+	acedGetAcadFrame()->FloatControlBar(blocksbar, CPoint(), CBRS_ALIGN_LEFT);    // FloatControBar(...)   
+	acedGetAcadFrame()->ShowControlBar(blocksbar, TRUE, FALSE);
+}
+
+void nti_cmd_blocks2()
+{
+	int rc;
+	// Redirect the resource override   
+	CAcModuleResourceOverride res;
+	nti_blocksbar * blocksbar = (nti_blocksbar *)nti_imgui_()->user;
+	if (blocksbar) {
+		blocksbar->show();
+	}
+}
+
 void nti_cmd_blocks() 
 { 
+	return nti_cmd_blocks2();
+	
 	int rc;
 	// Redirect the resource override   
 	CAcModuleResourceOverride res;
