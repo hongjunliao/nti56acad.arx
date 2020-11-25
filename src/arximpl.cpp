@@ -39,6 +39,8 @@ CDocReactor* gpDocReactor = NULL;
 CEdReactor* gpEdReactor = NULL;
 // per doc
 CDbModReactor *gpDbReactor = NULL;
+
+nti_blocksbar * gnti_blocksbar = 0;
 /////////////////////////////////////////////////////////////////////////////
 // Define the sole extension module object.
 AC_IMPLEMENT_EXTENSION_MODULE(ntiacadDll);
@@ -82,7 +84,7 @@ void initApp()
 
 	/////////////////////////////////////////////////////////////////////////////
 	nti_blocksbar * blocksbar = 0;
-	blocksbar = new nti_blocksbar;
+	gnti_blocksbar = blocksbar = new nti_blocksbar;
 	// nti dockbar
 	rc = blocksbar->Create(acedGetAcadFrame(), _T("nti_dockbar"), 32141);
 	assert(rc);

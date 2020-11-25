@@ -27,6 +27,8 @@ public:
 public:
 	bool m_open;
 	sds m_name;
+	list * block_list;
+	listNode * curr_block;
 public:
 	void render();
 	void show();

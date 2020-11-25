@@ -18,10 +18,11 @@
 #include "nti_reactor.h" /**/
 #include "nti_str.h"		//
 #include "nti_cmn.h"	//nti_wnddata
+#include "nti_blocksbar.h"
 
 extern nti_wnddata * g_wnddata;
 extern CDbModReactor * gpDbReactor;
-
+extern nti_blocksbar * gnti_blocksbar;
 /////////////////////////////////////////////////////////////////////////////////////
 
 class CDocInfo
@@ -180,13 +181,13 @@ void CEdReactor::commandEnded(const TCHAR *cmd)
 // document manager reactor
 //
 
-int update_blocks()
+int update_blocks(list * blist)
 {
 	int rc = 0;
 
 	g_wnddata->reactor.curr_block = 0;
-	while (listFirst(g_wnddata->reactor.block_list))
-		listDelNode(g_wnddata->reactor.block_list, listFirst(g_wnddata->reactor.block_list));
+	while (listFirst(blist))
+		listDelNode(blist, listFirst(blist));
 
 	AcDbBlockTable *pBlockTable = 0;
 	acdbHostApplicationServices()->workingDatabase()->getSymbolTable(pBlockTable, AcDb::kForRead);
@@ -225,7 +226,7 @@ int update_blocks()
 
 			char * bname = nti_newn(128, char);
 			strncpy(bname, U8(WA(name)), 128);
-			listAddNodeTail(g_wnddata->reactor.block_list, bname);
+			listAddNodeTail(blist, bname);
 
 			pBlockTableRec->close();
 		}
@@ -251,7 +252,8 @@ void CDocReactor::documentActivated(AcApDocument* pDoc)
         acutPrintf(_T("\ndocumentActiveated: %s.\n"), pDoc->fileName());
         acedPostCommandPrompt();
 #endif
-		update_blocks();
+		gnti_blocksbar->curr_block = 0;
+		update_blocks(gnti_blocksbar->block_list);
 		nti_arx_update_datalinks(g_wnddata->reactor.datalinks);
 	}
 }

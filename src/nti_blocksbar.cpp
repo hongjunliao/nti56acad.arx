@@ -16,6 +16,26 @@
 #include "nti_render.h"		//
 #include "nti_cmn.h"	//nti_wnddata
 #include "imgui_sds.h"
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+/**
+*/
+static void * list_dup(void *ptr)
+{
+	return strdup((char *)ptr);
+}
+
+static void list_free(void *ptr)
+{
+	free(ptr);
+}
+
+static int list_match(void *ptr, void *key)
+{
+	return strncmp((char *)ptr, (char *)key, strlen((char *)ptr)) == 0;
+}
+
 /////////////////////////////////////////////////////////////////////////////////////
 
 BEGIN_MESSAGE_MAP(nti_blocksbar, nti_dockbase)
@@ -32,11 +52,18 @@ nti_blocksbar::nti_blocksbar()
 {
 	m_name = sdsempty();
 	m_open = true;
+
+	block_list = listCreate();
+	listSetDupMethod(block_list, list_dup);
+	listSetFreeMethod(block_list, list_free);
+	listSetMatchMethod(block_list, list_match);
+	curr_block = 0;
 }
 
 nti_blocksbar::~nti_blocksbar()
 {
 	sdsfree(m_name);
+	listRelease(block_list);
 }
 
 void nti_blocksbar::show()
@@ -72,13 +99,55 @@ void nti_blocksbar::render()
 
 	ImGui::Begin("nti_blocksbar", 0
 			, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
-	ImGui::InputText("name", &m_name);
-	//test OK
-	if (ImGui::Button("about...")) {
-		PostMessage(WM_COMMAND, ID_APP_ABOUT);
+
+	if (ImGui::TreeNode("blocks")) {
+		// ImGuiComboFlags_PopupAlignLeft
+		if (!curr_block && listFirst(block_list))
+			curr_block = listFirst(block_list);
+		const char* combo_label = (curr_block ? (char const *)listNodeValue(curr_block) : "");
+
+		if (ImGui::BeginCombo("blocks", combo_label, ImGuiComboFlags_HeightLarge)) {
+
+			listIter * iter = listGetIterator(block_list, 0);
+			listNode * node;
+			for (node = listNext(iter); node; ) {
+
+				char * bname = (char *)listNodeValue(node);
+				assert(bname);
+
+				const bool is_selected = (curr_block == node);
+				if (ImGui::Selectable(bname, is_selected))
+					curr_block = node;
+				if (is_selected)
+					ImGui::SetItemDefaultFocus();
+
+				node = listNext(iter);
+			}
+			listReleaseIterator(iter);
+
+			ImGui::EndCombo();
+		}
+		ImGui::TreePop();
 	}
-	if (ImGui::Button("imgui about...")) {
-		PostMessage(WM_COMMAND, ID_NTI_ABOUT);
+	if (ImGui::TreeNode("test")) {
+		ImGui::InputText("name", &m_name);
+
+		static bool show_demo_window = 0;
+		if (show_demo_window) {
+			ImGui::BeginChild("imgui demo window");
+			ImGui::ShowDemoWindow(&show_demo_window);
+			ImGui::EndChild();
+		}
+		ImGui::Checkbox("imgui demo window", &show_demo_window);
+
+		//test OK
+		if (ImGui::Button("about...")) {
+			PostMessage(WM_COMMAND, ID_APP_ABOUT);
+		}
+		if (ImGui::Button("imgui about...")) {
+			PostMessage(WM_COMMAND, ID_NTI_ABOUT);
+		}
+		ImGui::TreePop();
 	}
 
 	ImGui::End();

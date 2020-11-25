@@ -86,12 +86,6 @@ BOOL Cnti56acadmfcApp::InitInstance()
 
 	rc = nti_wnddata_init(g_wnddata);
 
-	for (i = 0; i < 50; ++i) {
-		char * bname = nti_newn(128, char);
-		sprintf(bname, u8"block－%d", i);
-		listAddNodeTail(g_wnddata->reactor.block_list, bname);
-	}
-
 	// 如果一个运行在 Windows XP 上的应用程序清单指定要
 	// 使用 ComCtl32.dll 版本 6 或更高版本来启用可视化方式，
 	//则需要 InitCommonControlsEx()。  否则，将无法创建窗口。
@@ -185,6 +179,14 @@ BOOL Cnti56acadmfcApp::InitInstance()
 
 	//nti_imgui_add_render(nti_tabswnd_simple, 0);
 	//nti_imgui_add_render(nti_tabswnd_another, 0);
+
+	// test data
+	for (i = 0; i < 50; ++i) {
+		char * bname = nti_newn(128, char);
+		sprintf(bname, u8"block－%d", i);
+		listAddNodeTail(pMainFrame->m_blocksbar.block_list, bname);
+	}
+
 
 	return TRUE;
 }
