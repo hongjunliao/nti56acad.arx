@@ -9,12 +9,18 @@
 #endif /* HAVE_CONFIG_H */
 
 #include "stdafx.h"
+#include <tchar.h>
 #include "resource.h"
 #include <assert.h>
 #include "nti_blocksbar.h" //nti_blocksbar
 #include "nti_imgui.h"		//nti_imgui_create
 #include "nti_render.h"		//
 #include "nti_cmn.h"	//nti_wnddata
+#include "nti_imgui.h"		//nti_imgui_create
+#include "nti_arx.h"		//
+#include "nti_xlsx.h"
+#include "ImGuiFileDialog/ImGuiFileDialog.h"
+#include "nti_str.h"
 #include "imgui_sds.h"
 
 /////////////////////////////////////////////////////////////////////////////////////
@@ -45,6 +51,8 @@ BEGIN_MESSAGE_MAP(nti_blocksbar, nti_dockbase)
 	ON_WM_CLOSE()
 	ON_WM_SIZE()
 	ON_WM_TIMER()
+	ON_WM_SETFOCUS()
+	ON_COMMAND(ID_NTI_ADD_DATALINK, OnNtiAddDatalinks)
 	//}}AFX_MSG_MAP   
 END_MESSAGE_MAP()
 
@@ -53,17 +61,23 @@ nti_blocksbar::nti_blocksbar()
 	m_name = sdsempty();
 	m_open = true;
 
-	block_list = listCreate();
-	listSetDupMethod(block_list, list_dup);
-	listSetFreeMethod(block_list, list_free);
-	listSetMatchMethod(block_list, list_match);
-	curr_block = 0;
+	m_block_list = listCreate();
+	listSetDupMethod(m_block_list, list_dup);
+	listSetFreeMethod(m_block_list, list_free);
+	listSetMatchMethod(m_block_list, list_match);
+
+	m_datalink_list = listCreate();
+	listSetFreeMethod(m_block_list, list_free);
+
+	m_curr_block = 0;
+	m_curr_datalink = 0;
 }
 
 nti_blocksbar::~nti_blocksbar()
 {
 	sdsfree(m_name);
-	listRelease(block_list);
+	listRelease(m_block_list);
+	listRelease(m_datalink_list);
 }
 
 void nti_blocksbar::show()
@@ -100,24 +114,24 @@ void nti_blocksbar::render()
 	ImGui::Begin("nti_blocksbar", 0
 			, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
 
-	if (ImGui::TreeNode("blocks")) {
+	if (ImGui::CollapsingHeader("Blocks")) {
 		// ImGuiComboFlags_PopupAlignLeft
-		if (!curr_block && listFirst(block_list))
-			curr_block = listFirst(block_list);
-		const char* combo_label = (curr_block ? (char const *)listNodeValue(curr_block) : "");
+		if (!m_curr_block && listFirst(m_block_list))
+			m_curr_block = listFirst(m_block_list);
+		const char* combo_label = (m_curr_block ? (char const *)listNodeValue(m_curr_block) : "");
 
 		if (ImGui::BeginCombo("blocks", combo_label, ImGuiComboFlags_HeightLarge)) {
 
-			listIter * iter = listGetIterator(block_list, 0);
+			listIter * iter = listGetIterator(m_block_list, 0);
 			listNode * node;
 			for (node = listNext(iter); node; ) {
 
 				char * bname = (char *)listNodeValue(node);
 				assert(bname);
 
-				const bool is_selected = (curr_block == node);
+				const bool is_selected = (m_curr_block == node);
 				if (ImGui::Selectable(bname, is_selected))
-					curr_block = node;
+					m_curr_block = node;
 				if (is_selected)
 					ImGui::SetItemDefaultFocus();
 
@@ -127,27 +141,117 @@ void nti_blocksbar::render()
 
 			ImGui::EndCombo();
 		}
-		ImGui::TreePop();
+		//ImGui::TreePop();
 	}
-	if (ImGui::TreeNode("test")) {
+#ifndef NTI56_WITHOUT_ARX
+	if (ImGui::CollapsingHeader("Datalinks")) {
+		if (!m_curr_datalink)
+			m_curr_datalink = listFirst(m_datalink_list);
+
+		ImGui::Columns(3, "datalinks"); // 4-ways, with border
+		ImGui::Separator();
+		ImGui::Text("Name"); ImGui::NextColumn();
+		ImGui::Text("File"); ImGui::NextColumn();
+		ImGui::Text("Desc"); ImGui::NextColumn();
+		ImGui::Separator();
+		listIter * iter = listGetIterator(m_datalink_list, 0);
+		listNode * node;
+		for (node = listNext(iter); node; ) {
+
+			nti_datalink * link = (nti_datalink *)listNodeValue(node);
+			assert(link);
+
+			if (ImGui::Selectable(link->name.utf8Ptr(), m_curr_datalink == node, ImGuiSelectableFlags_SpanAllColumns))
+				m_curr_datalink = node;
+			bool hovered = ImGui::IsItemHovered();
+			ImGui::NextColumn();
+			ImGui::Text(link->conn.utf8Ptr()); ImGui::NextColumn();
+			ImGui::Text(link->desc.utf8Ptr()); ImGui::NextColumn();
+
+			node = listNext(iter);
+		}
+		listReleaseIterator(iter);
+		ImGui::Columns(1);
+		ImGui::Separator();
+
+		if (ImGui::Button("Add")) {
+			PostMessage(WM_COMMAND, ID_NTI_ADD_DATALINK);
+		}
+
+		//ImGui::TreePop();
+	}
+#endif
+	if (ImGui::CollapsingHeader("Test")) {
 		ImGui::InputText("name", &m_name);
 
+		// test: imgui dmeo window
 		static bool show_demo_window = 0;
 		if (show_demo_window) {
-			ImGui::BeginChild("imgui demo window");
 			ImGui::ShowDemoWindow(&show_demo_window);
-			ImGui::EndChild();
 		}
 		ImGui::Checkbox("imgui demo window", &show_demo_window);
 
-		//test OK
+		// test: table
+		ImGui::Columns(4, "mycolumns"); // 4-ways, with border
+		ImGui::Separator();
+		ImGui::Text("ID"); ImGui::NextColumn();
+		ImGui::Text("Name"); ImGui::NextColumn();
+		ImGui::Text("Path"); ImGui::NextColumn();
+		ImGui::Text("Hovered"); ImGui::NextColumn();
+		ImGui::Separator();
+		const char* names[3] = { "One", "Two", "Three" };
+		const char* paths[3] = { "/path/one", "/path/two", "/path/three" };
+		static int selected = -1;
+		for (int i = 0; i < 3; i++)
+		{
+			char label[32];
+			sprintf(label, "%04d", i);
+			if (ImGui::Selectable(label, selected == i, ImGuiSelectableFlags_SpanAllColumns))
+				selected = i;
+			bool hovered = ImGui::IsItemHovered();
+			ImGui::NextColumn();
+			ImGui::Text(names[i]); ImGui::NextColumn();
+			ImGui::Text(paths[i]); ImGui::NextColumn();
+			ImGui::Text("%d", hovered); ImGui::NextColumn();
+		}
+		ImGui::Columns(1);
+		ImGui::Separator();
+
+		// test: ImGuiFileDialog
+		static std::string filePathName;
+
+		ImGui::Text("%s", filePathName.c_str());
+		if (ImGui::Button("File...")) {
+			igfd::ImGuiFileDialog::Instance()->OpenModal("ChooseFileDlgKey", "Choose File", ".xlsx", ".");
+
+			nti_import_from_excel("test/device1.xlsx", 0);
+#if (!NDEBUG && !NTI56_WITHOUT_ARX)
+			int rc = nti_insert_table();
+#endif
+		}
+		if (igfd::ImGuiFileDialog::Instance()->FileDialog("ChooseFileDlgKey"))
+		{
+			// action if OK
+			if (igfd::ImGuiFileDialog::Instance()->IsOk == true)
+			{
+				filePathName = igfd::ImGuiFileDialog::Instance()->GetFilePathName();
+				std::string filePath = igfd::ImGuiFileDialog::Instance()->GetCurrentPath();
+				// action
+			}
+			// close
+			igfd::ImGuiFileDialog::Instance()->CloseDialog("ChooseFileDlgKey");
+		}
+
+		//test: modal dialog
 		if (ImGui::Button("about...")) {
 			PostMessage(WM_COMMAND, ID_APP_ABOUT);
 		}
+
+		//test: modal dialog with imgui
 		if (ImGui::Button("imgui about...")) {
 			PostMessage(WM_COMMAND, ID_NTI_ABOUT);
 		}
-		ImGui::TreePop();
+		//ImGui::TreePop();
 	}
 
 	ImGui::End();
@@ -205,6 +309,13 @@ bool nti_blocksbar::OnClosing()
 //	//nti_imgui_render();
 //}
 
+
+void nti_blocksbar::OnSetFocus(CWnd* pOldWnd)
+{
+	m_setfocus = true;
+	return nti_dockbase::OnSetFocus(pOldWnd);
+}
+
 //void nti_blocksbar::OnSize(UINT nType, int cx, int cy)
 //{
 //	nti_dockbase::OnSize(nType, cx, cy);
@@ -215,6 +326,14 @@ void nti_blocksbar::OnClose()
 {
 	m_open = false;
 	return nti_dockbase::OnClose();
+}
+
+
+void nti_blocksbar::OnNtiAddDatalinks()
+{
+#ifndef NTI56_WITHOUT_ARX
+	createAndSetDataLink();
+#endif
 }
 
 #ifdef NTI56_WITHOUT_ARX

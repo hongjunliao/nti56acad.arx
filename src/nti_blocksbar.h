@@ -26,9 +26,13 @@ public:
 	virtual ~nti_blocksbar();
 public:
 	bool m_open;
+	bool m_setfocus;
 	sds m_name;
-	list * block_list;
-	listNode * curr_block;
+	list * m_block_list;
+	listNode * m_curr_block;
+
+	list * m_datalink_list;
+	listNode * m_curr_datalink;
 public:
 	void render();
 	void show();
@@ -46,7 +50,9 @@ protected:
 	//afx_msg void OnPaint();
 	//afx_msg void OnTimer(UINT_PTR nIDEvent);
 	//afx_msg void OnSize(UINT nType, int cx, int cy);
+	afx_msg void OnSetFocus(CWnd* pOldWnd);
 	afx_msg void OnClose();
+	afx_msg void OnNtiAddDatalinks();
 	//}}AFX_MSG 
 	DECLARE_MESSAGE_MAP() 
 

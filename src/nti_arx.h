@@ -13,11 +13,16 @@
 #endif /* HAVE_CONFIG_H */
 #include "AdAChar.h"
 #include "AcString.h"
+extern "C" {
+#include "adlist.h"	//list
+}
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 /////////////////////////////////////////////////////////////////////////////////////
+
+typedef struct nti_datalink nti_datalink;
 
 int nti_read(ACHAR const * file);
 int nti_insert_table();
@@ -32,7 +37,7 @@ struct nti_datalink {
 };
 
 void createAndSetDataLink();
-int nti_arx_update_datalinks(nti_datalink * datalinks);
+int nti_arx_update_datalinks(list * datalinks);
 
 /////////////////////////////////////////////////////////////////////////////////////////
 #ifndef NDEBUG

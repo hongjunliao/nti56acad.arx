@@ -184,7 +184,7 @@ BOOL Cnti56acadmfcApp::InitInstance()
 	for (i = 0; i < 50; ++i) {
 		char * bname = nti_newn(128, char);
 		sprintf(bname, u8"block£­%d", i);
-		listAddNodeTail(pMainFrame->m_blocksbar.block_list, bname);
+		listAddNodeTail(pMainFrame->m_blocksbar.m_block_list, bname);
 	}
 
 

@@ -252,9 +252,11 @@ void CDocReactor::documentActivated(AcApDocument* pDoc)
         acutPrintf(_T("\ndocumentActiveated: %s.\n"), pDoc->fileName());
         acedPostCommandPrompt();
 #endif
-		gnti_blocksbar->curr_block = 0;
-		update_blocks(gnti_blocksbar->block_list);
-		nti_arx_update_datalinks(g_wnddata->reactor.datalinks);
+		gnti_blocksbar->m_curr_block = 0;
+		update_blocks(gnti_blocksbar->m_block_list);
+
+		gnti_blocksbar->m_curr_datalink = 0;
+		nti_arx_update_datalinks(gnti_blocksbar->m_datalink_list);
 	}
 }
 //

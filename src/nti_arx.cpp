@@ -8,6 +8,7 @@
 #include "config.h"
 #endif /* HAVE_CONFIG_H */
 #include "stdafx.h"
+#include "nti_cmn.h"		//nti_new
 #include "nti_arx.h" /*nti_read*/
 #include "DbTableTemplate.h"
 #include "ArxDbgUtils.h" /*selectEntity*/
@@ -629,30 +630,30 @@ void createAndSetDataLink()
 	}
 	// Get an Excel file
 	//
-	struct resbuf *result;
-	int rc;
-	if ((result = acutNewRb(RTSTR)) == NULL)
-	{
-		pTbl->close();
-		acutPrintf(ACRX_T("\nUnable to allocate buffer!"));
-		return;
-	}
-	result->resval.rstring = NULL;
-	rc = acedGetFileD(ACRX_T("Excel File"),	// Title
-		ACRX_T("c:/temp"),	// Default pathname  
-		ACRX_T("xls"),	//Default extension
-		16,					// Control flags
-		result);	// The path selected by the user.
-	if (rc != RTNORM)
-	{
-		pTbl->close();
-		acutPrintf(ACRX_T("\nError in selecting an EXCEL file!"));
-		return;
-	}
+	//struct resbuf *result;
+	//int rc;
+	//if ((result = acutNewRb(RTSTR)) == NULL)
+	//{
+	//	pTbl->close();
+	//	acutPrintf(ACRX_T("\nUnable to allocate buffer!"));
+	//	return;
+	//}
+	//result->resval.rstring = NULL;
+	//rc = acedGetFileD(ACRX_T("Excel File"),	// Title
+	//	ACRX_T("c:/temp"),	// Default pathname  
+	//	ACRX_T("xls"),	//Default extension
+	//	16,					// Control flags
+	//	result);	// The path selected by the user.
+	//if (rc != RTNORM)
+	//{
+	//	pTbl->close();
+	//	acutPrintf(ACRX_T("\nError in selecting an EXCEL file!"));
+	//	return;
+	//}
 	// Retrieve the file name from the ResBuf.
-	ACHAR fileName[MAX_PATH];
-	_tcscpy(fileName, result->resval.rstring);
-	rc = acutRelRb(result);
+	ACHAR fileName[MAX_PATH] = _T("Debug\\test\\datalink.xls");
+	//_tcscpy(fileName, result->resval.rstring);
+	//rc = acutRelRb(result);
 	static ACHAR sMyDataLink[MAX_PATH] = ACRX_T("MyDataLinkTest");
 	// Get the Data Link Manager.
 	Acad::ErrorStatus es;
@@ -672,6 +673,9 @@ void createAndSetDataLink()
 			return;
 		}
 	}
+
+	AcApDocument* pDoc = acDocManager->curDocument();
+	es = acDocManager->lockDocument(pDoc, AcAp::kAutoWrite, NULL, NULL, false);
 	// Create the Data Link with the name.
 	es = pDlMan->createDataLink(ACRX_T("AcExcel"), sMyDataLink, ACRX_T("This is a test for Excel type data link."), fileName, idDL);
 	if (es != Acad::eOk)
@@ -693,9 +697,9 @@ void createAndSetDataLink()
 	es = pDL->setUpdateOption(pDL->updateOption() | AcDb::kUpdateOptionAllowSourceUpdate);
 
 	// Close the Data Link.
-	pDL->close();
+	es = pDL->close();
 	// Set data link to the table object at cell(2,2).
-	es = pTbl->setDataLink(2, 2, idDL, true);
+	es = pTbl->setDataLink(1, 1, idDL, true);
 	if (es != Acad::eOk)
 	{
 		pTbl->close();
@@ -704,6 +708,7 @@ void createAndSetDataLink()
 	}
 	// Don't forget to close the table object.
 	es = pTbl->close();
+	acDocManager->unlockDocument(pDoc);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -747,10 +752,13 @@ int nti_insert_table()
 	return 0;
 }
 
-int nti_arx_update_datalinks(nti_datalink * links)
+int nti_arx_update_datalinks(list * links)
 {
 	if(!links)
 		return -1;
+
+	while (listFirst(links))
+		listDelNode(links, listFirst(links));
 
 	int i, rc;
 	Acad::ErrorStatus es;
@@ -766,11 +774,15 @@ int nti_arx_update_datalinks(nti_datalink * links)
 		if (!pDL)
 			continue;
 		
-		links[i].name = pDL->name();
+		nti_datalink * link = nti_new(nti_datalink);
+		link->name = pDL->name();
+		link->desc = pDL->description();
+		link->conn = pDL->connectionString();
+
+		listAddNodeTail(links, link);
 
 		pDL->close();
 	}
-	links[i].name = _T("");
 
 	return rc;
 }
