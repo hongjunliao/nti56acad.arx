@@ -620,47 +620,53 @@ void createTemplate()
 // Create a data link and set it to the cell(2,2) of a selected table.
 void createAndSetDataLink()
 {
+	Acad::ErrorStatus es;
+	AcDbObjectId idDL;
+	AcDbDataLink *pDL = NULL;
+
+	AcApDocument* pDoc = acDocManager->curDocument();
+	if(!pDoc)
+		return;
+
+	es = acDocManager->lockDocument(pDoc, AcAp::kAutoWrite, NULL, NULL, false);
 	// Select a table
 	AcDbTable *pTbl = NULL;
 	if (NULL == (pTbl =
-		AcDbTable::cast(ArxDbgUtils::selectEntity(_T("\nSelect a table: ")))))
+		AcDbTable::cast(ArxDbgUtils::selectEntity(_T("\nSelect a table: "), AcDb::kForWrite))))
 	{
 		acutPrintf(ACRX_T("\nSelected entity was not a table!"));
-		return;
+		goto ret;
 	}
 	// Get an Excel file
-	//
-	//struct resbuf *result;
-	//int rc;
-	//if ((result = acutNewRb(RTSTR)) == NULL)
-	//{
-	//	pTbl->close();
-	//	acutPrintf(ACRX_T("\nUnable to allocate buffer!"));
-	//	return;
-	//}
-	//result->resval.rstring = NULL;
-	//rc = acedGetFileD(ACRX_T("Excel File"),	// Title
-	//	ACRX_T("c:/temp"),	// Default pathname  
-	//	ACRX_T("xls"),	//Default extension
-	//	16,					// Control flags
-	//	result);	// The path selected by the user.
-	//if (rc != RTNORM)
-	//{
-	//	pTbl->close();
-	//	acutPrintf(ACRX_T("\nError in selecting an EXCEL file!"));
-	//	return;
-	//}
+	
+	struct resbuf *result;
+	int rc;
+	if ((result = acutNewRb(RTSTR)) == NULL)
+	{
+		pTbl->close();
+		acutPrintf(ACRX_T("\nUnable to allocate buffer!"));
+		return;
+	}
+	result->resval.rstring = NULL;
+	rc = acedGetFileD(ACRX_T("Excel File"),	// Title
+		0/*ACRX_T("c:/temp")*/,	// Default pathname  
+		ACRX_T("xls;xlsx"),	//Default extension
+		16,					// Control flags
+		result);	// The path selected by the user.
+	if (rc != RTNORM)
+	{
+		pTbl->close();
+		acutPrintf(ACRX_T("\nError in selecting an EXCEL file!"));
+		return;
+	}
 	// Retrieve the file name from the ResBuf.
-	ACHAR fileName[MAX_PATH] = _T("Debug\\test\\datalink.xls");
+	ACHAR fileName[MAX_PATH] = _T("");
 	//_tcscpy(fileName, result->resval.rstring);
 	//rc = acutRelRb(result);
 	static ACHAR sMyDataLink[MAX_PATH] = ACRX_T("MyDataLinkTest");
 	// Get the Data Link Manager.
-	Acad::ErrorStatus es;
 	AcDbDataLinkManager* pDlMan = acdbHostApplicationServices()->workingDatabase()->getDataLinkManager();
 	assert(pDlMan);
-	AcDbObjectId idDL;
-	AcDbDataLink *pDL = NULL;
 	// Check if a Data Link with the name already exists. If so, remove it.
 	if (pDlMan->getDataLink(sMyDataLink, pDL, AcDb::kForRead) == Acad::eOk && pDL)
 	{
@@ -670,19 +676,17 @@ void createAndSetDataLink()
 		{
 			pTbl->close();
 			acutPrintf(ACRX_T("\nError in removing the Data Link!"));
-			return;
+			goto ret;
 		}
 	}
 
-	AcApDocument* pDoc = acDocManager->curDocument();
-	es = acDocManager->lockDocument(pDoc, AcAp::kAutoWrite, NULL, NULL, false);
 	// Create the Data Link with the name.
 	es = pDlMan->createDataLink(ACRX_T("AcExcel"), sMyDataLink, ACRX_T("This is a test for Excel type data link."), fileName, idDL);
 	if (es != Acad::eOk)
 	{
 		pTbl->close();
 		acutPrintf(ACRX_T("\nError in creating Data Link!\nPlease check if there is a sheet named 'Sheet1' in the XLS file."));
-		return;
+		goto ret;
 	}
 	// Open the Data Link.
 	es = acdbOpenObject<AcDbDataLink>(pDL, idDL, AcDb::kForWrite);
@@ -690,7 +694,7 @@ void createAndSetDataLink()
 	{
 		pTbl->close();
 		acutPrintf(ACRX_T("\nError in opening the Data Link object!"));
-		return;
+		goto ret;
 	}
 	//  Set options of the Data Link
 	es = pDL->setOption(AcDb::kDataLinkOptionPersistCache);
@@ -699,15 +703,16 @@ void createAndSetDataLink()
 	// Close the Data Link.
 	es = pDL->close();
 	// Set data link to the table object at cell(2,2).
-	es = pTbl->setDataLink(1, 1, idDL, true);
+	es = pTbl->setDataLink(0, 0, idDL, true);
 	if (es != Acad::eOk)
 	{
 		pTbl->close();
 		acutPrintf(ACRX_T("\nError in setting Data Link to the selected table!\nPlease check if there is a sheet named 'Sheet1' in the XLS file."));
-		return;
+		goto ret;
 	}
 	// Don't forget to close the table object.
 	es = pTbl->close();
+ret:
 	acDocManager->unlockDocument(pDoc);
 }
 
