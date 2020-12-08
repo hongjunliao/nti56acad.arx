@@ -93,7 +93,7 @@ int nti_imgui_create(HWND hwnd, HWND phwnd, int flags)
 			imgui_wc = wc;
 			myimgui->hwnd = hwnd = ::CreateWindowEx(0, wc.lpszClassName, _T("nti56acad")
 				, WS_OVERLAPPED
-				, 100, 100, 120, 30, myimgui->phwnd, NULL, wc.hInstance, NULL);
+				, 100, 100, 60, 50, myimgui->phwnd, NULL, wc.hInstance, NULL);
 		}
 		else {
 			//// Initialize use of DockWnd.dll
@@ -121,11 +121,6 @@ int nti_imgui_create(HWND hwnd, HWND phwnd, int flags)
 		::ShowWindow(hwnd, SW_SHOWDEFAULT);
 		::UpdateWindow(hwnd);
 
-		if (phwnd) {
-			RECT R, *rect = &R;
-			::GetWindowRect(phwnd, rect);
-			::MoveWindow(hwnd, rect->left, rect->bottom, 120, 30, 1);
-		}
 	}
 
 	// Setup Dear ImGui context
@@ -215,7 +210,7 @@ int nti_imgui_render()
 	if (myimgui->phwnd) {
 		RECT R, *rect = &R;
 		::GetWindowRect(myimgui->phwnd, rect);
-		::MoveWindow(myimgui->hwnd, rect->left, rect->bottom, 120, 30, 1);
+		::MoveWindow(myimgui->hwnd, rect->left, rect->bottom - 20, 60, 50, 1);
 	}
 
 	/* render window */

@@ -39,9 +39,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="CMakeLists.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <Filter Include="Header Files">
       <UniqueIdentifier>{AE1F7974-897C-3247-B26E-D99CB065E0B1}</UniqueIdentifier>
     </Filter>
@@ -80,5 +77,8 @@
     <ClInclude Include="..\src\nti_str.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CMakeLists.txt" />
   </ItemGroup>
 </Project>
