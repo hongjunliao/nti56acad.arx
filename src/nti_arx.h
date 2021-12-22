@@ -14,7 +14,7 @@
 #include "AdAChar.h"
 #include "AcString.h"
 extern "C" {
-#include "adlist.h"	//list
+#include "redis/src/adlist.h"	//list
 }
 
 #ifdef __cplusplus

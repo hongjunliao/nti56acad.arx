@@ -16,12 +16,12 @@
 //#include <time.h>
 
 #include <locale.h>
-#include "libxhhp/hp_iocp.h"
-#include "libxhhp/hp_log.h"	 /* hp_log */
-#include "libxhhp/hp_test.h" /* hp_test */
-#include "libxhhp/hp_opt.h" /* hp_opt_argv */
-#include "libxhhp/hp_err.h"
-
+#include "hp/hp_iocp.h"
+#include "hp/hp_log.h"	 /* hp_log */
+#include "hp/hp_test.h" /* hp_test */
+#include "hp/hp_opt.h" /* hp_opt_argv */
+#include "hp/hp_err.h"
+#include "hp/sdsinc.h"	//sds
 #define OPTPARSE_IMPLEMENTATION
 #define OPTPARSE_API static
 #include "optparse/optparse.h"		/* option */
@@ -58,10 +58,6 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 {
 	int i, rc;
 	setlocale(LC_COLLATE, "");
-	zmalloc_enable_thread_safeness();
-	zmalloc_set_oom_handler(outOfMemoryHandler);
-	srand((unsigned int)time(NULL) ^ getpid());                                   WIN_PORT_FIX /* cast (unsigned int) */
-
 	/* init COM */
 	HRESULT Hr = CoInitialize(NULL);
 	if (FAILED(Hr)) return 0;

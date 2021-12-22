@@ -8,8 +8,8 @@
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif /* HAVE_CONFIG_H */
-
 #include "stdafx.h"
+
 #include "imgui.h"
 #include "imgui_impl_opengl2.h"
 #include "imgui_impl_win32.h"
@@ -19,7 +19,7 @@
 #include "nti_cmn.h"		//nti_new
 
 extern "C" {
-#include "adlist.h"	//list
+#include "redis/src/adlist.h"	//list
 }
 
 #ifndef WM_DPICHANGED
@@ -27,12 +27,13 @@ extern "C" {
 #endif
 
 static nti_imgui myimguiobj = { 0, 0, ImVec4(0.45f, 0.55f, 0.60f, 1.00f) }, *myimgui = &myimguiobj;
-
+nti_imgui * nti_imgui_() { return myimgui; }
 /////////////////////////////////////////////////////////////////////////////////////
 
 struct nti_imgui_render_t {
 	nti_imgui_wnddata * wnddata;
 	void(*render)(nti_imgui_wnddata * wnddata);
+	nti_render_t mrender;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////
@@ -52,8 +53,6 @@ static int g_Width;
 static int g_Height;
 
 /////////////////////////////////////////////////////////////////////////////////////
-#ifdef NTI_USE_OPENGL
-
 
 // Forward declarations of helper functions
 static bool CreateDeviceOpenGL2(HWND hWnd, RendererData* data);
@@ -159,7 +158,7 @@ static void renderlist_free(void *ptr)
 	free(ptr);
 }
 
-int nti_imgui_create(HWND hwnd, HWND phwnd)
+int nti_imgui_create(HWND hwnd, HWND phwnd, int flags)
 {
 	ImGui_ImplWin32_EnableDpiAwareness();
 
@@ -252,6 +251,18 @@ int nti_imgui_add(void(* render)(nti_imgui_wnddata * wnddata), nti_imgui_wnddata
 	nti_imgui_render_t * ir = nti_new(nti_imgui_render_t);
 	ir->render = render;
 	ir->wnddata = wnddata;
+
+	listAddNodeTail(myimgui->renderlist, ir);
+
+	return 0;
+}
+
+int nti_imgui_add(nti_render_t render)
+{
+	if (!(render))
+		return -1;
+	nti_imgui_render_t * ir = nti_new(nti_imgui_render_t);
+	ir->mrender = render;
 
 	listAddNodeTail(myimgui->renderlist, ir);
 
@@ -386,4 +397,5 @@ LRESULT WINAPI nti_imgui_WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lPar
 	}
 	return 0;
 }
-#endif //NTI_USE_OPENGL
+
+//#endif // NTI_USE_OPENGL

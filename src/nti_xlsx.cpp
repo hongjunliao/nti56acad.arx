@@ -4,14 +4,18 @@
  *
  * .xlsx file process
  * */
+#if 0
+
+
+
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif /* HAVE_CONFIG_H */
 
 #include <stdio.h>
 #include <assert.h>
-#include "sds/win32_sds.h" //sds
-#include "libxhhp/hp_log.h"			/* hp_log */
+#include "hp/sdsinc.h" //sds
+#include "hp/hp_log.h"			/* hp_log */
 #include "nti_xlsx.h"
 #include "xlsxio_read.h"
 
@@ -103,3 +107,4 @@ int test_nti_xlsx_main(int argc, char ** argv)
 
 
 
+#endif

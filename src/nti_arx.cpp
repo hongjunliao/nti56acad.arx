@@ -11,7 +11,7 @@
 #include "nti_cmn.h"		//nti_new
 #include "nti_arx.h" /*nti_read*/
 #include "DbTableTemplate.h"
-#include "ArxDbgUtils.h" /*selectEntity*/
+#include "ARXDBG/Inc/ArxDbgUtils.h" /*selectEntity*/
 /////////////////////////////////////////////////////////////////////////////////////
 
 int nti_read(ACHAR const * file)

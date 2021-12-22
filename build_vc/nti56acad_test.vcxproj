@@ -28,21 +28,25 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>Dynamic</UseOfMfc>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>Dynamic</UseOfMfc>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>Dynamic</UseOfMfc>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>Dynamic</UseOfMfc>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
@@ -82,7 +86,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>include\;..\deps\imgui\;..\deps\imgui\backends\;..\deps\imgui\examples\;..\deps\ImGuiFileDialog\;..\deps\xlsxio\include;..\deps\dirent\include;..\deps\redis\src\;..\deps\arx\inc-x64\;..\deps\arx\inc\;src\libxhhp\src\;src\;..\deps\redis\deps\jemalloc-win\include;..\deps\libc\;H:\nti56acad.arx\include;H:\nti56acad.arx\src;H:\nti56acad.arx\deps;H:\nti56acad.arx\deps\imgui;H:\nti56acad.arx\deps\imgui\examples;H:\nti56acad.arx\deps\ImGuiFileDialog;H:\nti56acad.arx\deps\xlsxio\include;H:\nti56acad.arx\deps\dirent\include;H:\nti56acad.arx\..\deps\redis\src;H:\nti56acad.arx\src\libxhhp\src;H:\nti56acad.arx\.;H:\nti56acad.arx\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>H:\nti56acad.arx\include;H:\nti56acad.arx\deps;H:\nti56acad.arx\deps\imgui;H:\nti56acad.arx\deps\imgui\backends;H:\nti56acad.arx\deps\imgui\examples;H:\nti56acad.arx\deps\ImGuiFileDialog;H:\nti56acad.arx\deps\dirent\include;H:\nti56acad.arx\deps\arx\inc-x64;H:\nti56acad.arx\deps\arx\inc;H:\nti56acad.arx\deps\libhp\include;H:\nti56acad.arx\deps\libhp\deps;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <CompileAs>CompileAsCpp</CompileAs>
@@ -91,19 +95,19 @@
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
       <Optimization>Disabled</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;NTI56_WITHOUT_ARX;_WIN32;UNICODE;_UNICODE;HAVE_CONFIG_H;IMGUI_IMPL_OPENGL_LOADER_GLAD;_AFXDLL;HAVE_STRING_H;_OFF_T_DEFINED;LACKS_STDLIB_H;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR="Debug";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NTI56_WITHOUT_ARX;_WIN32;UNICODE;_UNICODE;HAVE_CONFIG_H;IMGUI_IMPL_OPENGL_LOADER_GLAD;_AFXDLL;HAVE_STRING_H;_CRT_SECURE_NO_WARNINGS;_GNU_SOURCE;CMAKE_EXPORT_COMPILE_COMMANDS;DICT_BENCHMARK_MAIN;cJSON_FREE_PRINT;CMAKE_INTDIR="Debug";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
     </ClCompile>
     <ResourceCompile>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;NTI56_WITHOUT_ARX;_WIN32;UNICODE;_UNICODE;HAVE_CONFIG_H;IMGUI_IMPL_OPENGL_LOADER_GLAD;_AFXDLL;HAVE_STRING_H;_OFF_T_DEFINED;LACKS_STDLIB_H;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"Debug\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>H:\nti56acad.arx\include;H:\nti56acad.arx\src;H:\nti56acad.arx\deps;H:\nti56acad.arx\deps\imgui;H:\nti56acad.arx\deps\imgui\examples;H:\nti56acad.arx\deps\ImGuiFileDialog;H:\nti56acad.arx\deps\xlsxio\include;H:\nti56acad.arx\deps\dirent\include;H:\nti56acad.arx\..\deps\redis\src;H:\nti56acad.arx\src\libxhhp\src;H:\nti56acad.arx\.;H:\nti56acad.arx\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;NTI56_WITHOUT_ARX;_WIN32;UNICODE;_UNICODE;HAVE_CONFIG_H;IMGUI_IMPL_OPENGL_LOADER_GLAD;_AFXDLL;HAVE_STRING_H;_CRT_SECURE_NO_WARNINGS;_GNU_SOURCE;CMAKE_EXPORT_COMPILE_COMMANDS;DICT_BENCHMARK_MAIN;cJSON_FREE_PRINT;CMAKE_INTDIR=\"Debug\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>H:\nti56acad.arx\include;H:\nti56acad.arx\deps;H:\nti56acad.arx\deps\imgui;H:\nti56acad.arx\deps\imgui\backends;H:\nti56acad.arx\deps\imgui\examples;H:\nti56acad.arx\deps\ImGuiFileDialog;H:\nti56acad.arx\deps\dirent\include;H:\nti56acad.arx\deps\arx\inc-x64;H:\nti56acad.arx\deps\arx\inc;H:\nti56acad.arx\deps\libhp\include;H:\nti56acad.arx\deps\libhp\deps;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>H:\nti56acad.arx\include;H:\nti56acad.arx\src;H:\nti56acad.arx\deps;H:\nti56acad.arx\deps\imgui;H:\nti56acad.arx\deps\imgui\examples;H:\nti56acad.arx\deps\ImGuiFileDialog;H:\nti56acad.arx\deps\xlsxio\include;H:\nti56acad.arx\deps\dirent\include;H:\nti56acad.arx\..\deps\redis\src;H:\nti56acad.arx\src\libxhhp\src;H:\nti56acad.arx\.;H:\nti56acad.arx\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>H:\nti56acad.arx\include;H:\nti56acad.arx\deps;H:\nti56acad.arx\deps\imgui;H:\nti56acad.arx\deps\imgui\backends;H:\nti56acad.arx\deps\imgui\examples;H:\nti56acad.arx\deps\ImGuiFileDialog;H:\nti56acad.arx\deps\dirent\include;H:\nti56acad.arx\deps\arx\inc-x64;H:\nti56acad.arx\deps\arx\inc;H:\nti56acad.arx\deps\libhp\include;H:\nti56acad.arx\deps\libhp\deps;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -111,11 +115,11 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;jemalloc.lib;src\libxhhp\Debug\xhhp.lib;libxlsxio_read.lib;libxlsxio_write.lib;lib\Debug\dl.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;deps\libhp\Debug\libhp.lib;lib\Debug\dl.lib;deps\libhp\deps\cJSON\Debug\cjson.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>H:/nti56acad.arx/lib;H:/nti56acad.arx/lib/$(Configuration);H:/nti56acad.arx/deps/xlsxio/lib;H:/nti56acad.arx/deps/xlsxio/lib/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <IgnoreSpecificDefaultLibraries>msvcrt.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ImportLibrary>H:/nti56acad.arx/build_vc/Debug/nti56acad_test.lib</ImportLibrary>
       <ProgramDataBaseFile>H:/nti56acad.arx/build_vc/Debug/nti56acad_test.pdb</ProgramDataBaseFile>
       <SubSystem>Windows</SubSystem>
@@ -126,28 +130,28 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>include\;..\deps\imgui\;..\deps\imgui\backends\;..\deps\imgui\examples\;..\deps\ImGuiFileDialog\;..\deps\xlsxio\include;..\deps\dirent\include;..\deps\redis\src\;..\deps\arx\inc-x64\;..\deps\arx\inc\;src\libxhhp\src\;src\;..\deps\redis\deps\jemalloc-win\include;..\deps\libc\;H:\nti56acad.arx\include;H:\nti56acad.arx\src;H:\nti56acad.arx\deps;H:\nti56acad.arx\deps\imgui;H:\nti56acad.arx\deps\imgui\examples;H:\nti56acad.arx\deps\ImGuiFileDialog;H:\nti56acad.arx\deps\xlsxio\include;H:\nti56acad.arx\deps\dirent\include;H:\nti56acad.arx\..\deps\redis\src;H:\nti56acad.arx\src\libxhhp\src;H:\nti56acad.arx\.;H:\nti56acad.arx\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>H:\nti56acad.arx\include;H:\nti56acad.arx\deps;H:\nti56acad.arx\deps\imgui;H:\nti56acad.arx\deps\imgui\backends;H:\nti56acad.arx\deps\imgui\examples;H:\nti56acad.arx\deps\ImGuiFileDialog;H:\nti56acad.arx\deps\dirent\include;H:\nti56acad.arx\deps\arx\inc-x64;H:\nti56acad.arx\deps\arx\inc;H:\nti56acad.arx\deps\libhp\include;H:\nti56acad.arx\deps\libhp\deps;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <CompileAs>CompileAsCpp</CompileAs>
       <ExceptionHandling>Sync</ExceptionHandling>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <Optimization>MaxSpeed</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;NTI56_WITHOUT_ARX;_WIN32;UNICODE;_UNICODE;HAVE_CONFIG_H;IMGUI_IMPL_OPENGL_LOADER_GLAD;_AFXDLL;HAVE_STRING_H;_OFF_T_DEFINED;LACKS_STDLIB_H;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR="Release";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;NTI56_WITHOUT_ARX;_WIN32;UNICODE;_UNICODE;HAVE_CONFIG_H;IMGUI_IMPL_OPENGL_LOADER_GLAD;_AFXDLL;HAVE_STRING_H;_CRT_SECURE_NO_WARNINGS;_GNU_SOURCE;CMAKE_EXPORT_COMPILE_COMMANDS;DICT_BENCHMARK_MAIN;cJSON_FREE_PRINT;CMAKE_INTDIR="Release";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
       <DebugInformationFormat>
       </DebugInformationFormat>
     </ClCompile>
     <ResourceCompile>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;NTI56_WITHOUT_ARX;_WIN32;UNICODE;_UNICODE;HAVE_CONFIG_H;IMGUI_IMPL_OPENGL_LOADER_GLAD;_AFXDLL;HAVE_STRING_H;_OFF_T_DEFINED;LACKS_STDLIB_H;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>H:\nti56acad.arx\include;H:\nti56acad.arx\src;H:\nti56acad.arx\deps;H:\nti56acad.arx\deps\imgui;H:\nti56acad.arx\deps\imgui\examples;H:\nti56acad.arx\deps\ImGuiFileDialog;H:\nti56acad.arx\deps\xlsxio\include;H:\nti56acad.arx\deps\dirent\include;H:\nti56acad.arx\..\deps\redis\src;H:\nti56acad.arx\src\libxhhp\src;H:\nti56acad.arx\.;H:\nti56acad.arx\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;NTI56_WITHOUT_ARX;_WIN32;UNICODE;_UNICODE;HAVE_CONFIG_H;IMGUI_IMPL_OPENGL_LOADER_GLAD;_AFXDLL;HAVE_STRING_H;_CRT_SECURE_NO_WARNINGS;_GNU_SOURCE;CMAKE_EXPORT_COMPILE_COMMANDS;DICT_BENCHMARK_MAIN;cJSON_FREE_PRINT;CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>H:\nti56acad.arx\include;H:\nti56acad.arx\deps;H:\nti56acad.arx\deps\imgui;H:\nti56acad.arx\deps\imgui\backends;H:\nti56acad.arx\deps\imgui\examples;H:\nti56acad.arx\deps\ImGuiFileDialog;H:\nti56acad.arx\deps\dirent\include;H:\nti56acad.arx\deps\arx\inc-x64;H:\nti56acad.arx\deps\arx\inc;H:\nti56acad.arx\deps\libhp\include;H:\nti56acad.arx\deps\libhp\deps;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>H:\nti56acad.arx\include;H:\nti56acad.arx\src;H:\nti56acad.arx\deps;H:\nti56acad.arx\deps\imgui;H:\nti56acad.arx\deps\imgui\examples;H:\nti56acad.arx\deps\ImGuiFileDialog;H:\nti56acad.arx\deps\xlsxio\include;H:\nti56acad.arx\deps\dirent\include;H:\nti56acad.arx\..\deps\redis\src;H:\nti56acad.arx\src\libxhhp\src;H:\nti56acad.arx\.;H:\nti56acad.arx\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>H:\nti56acad.arx\include;H:\nti56acad.arx\deps;H:\nti56acad.arx\deps\imgui;H:\nti56acad.arx\deps\imgui\backends;H:\nti56acad.arx\deps\imgui\examples;H:\nti56acad.arx\deps\ImGuiFileDialog;H:\nti56acad.arx\deps\dirent\include;H:\nti56acad.arx\deps\arx\inc-x64;H:\nti56acad.arx\deps\arx\inc;H:\nti56acad.arx\deps\libhp\include;H:\nti56acad.arx\deps\libhp\deps;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -155,11 +159,11 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;jemalloc.lib;src\libxhhp\Release\xhhp.lib;libxlsxio_read.lib;libxlsxio_write.lib;lib\Release\dl.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;deps\libhp\Release\libhp.lib;lib\Release\dl.lib;deps\libhp\deps\cJSON\Release\cjson.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>H:/nti56acad.arx/lib;H:/nti56acad.arx/lib/$(Configuration);H:/nti56acad.arx/deps/xlsxio/lib;H:/nti56acad.arx/deps/xlsxio/lib/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>false</GenerateDebugInformation>
-      <IgnoreSpecificDefaultLibraries>msvcrt.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ImportLibrary>H:/nti56acad.arx/build_vc/Release/nti56acad_test.lib</ImportLibrary>
       <ProgramDataBaseFile>H:/nti56acad.arx/build_vc/Release/nti56acad_test.pdb</ProgramDataBaseFile>
       <SubSystem>Windows</SubSystem>
@@ -170,28 +174,28 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>include\;..\deps\imgui\;..\deps\imgui\backends\;..\deps\imgui\examples\;..\deps\ImGuiFileDialog\;..\deps\xlsxio\include;..\deps\dirent\include;..\deps\redis\src\;..\deps\arx\inc-x64\;..\deps\arx\inc\;src\libxhhp\src\;src\;..\deps\redis\deps\jemalloc-win\include;..\deps\libc\;H:\nti56acad.arx\include;H:\nti56acad.arx\src;H:\nti56acad.arx\deps;H:\nti56acad.arx\deps\imgui;H:\nti56acad.arx\deps\imgui\examples;H:\nti56acad.arx\deps\ImGuiFileDialog;H:\nti56acad.arx\deps\xlsxio\include;H:\nti56acad.arx\deps\dirent\include;H:\nti56acad.arx\..\deps\redis\src;H:\nti56acad.arx\src\libxhhp\src;H:\nti56acad.arx\.;H:\nti56acad.arx\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>H:\nti56acad.arx\include;H:\nti56acad.arx\deps;H:\nti56acad.arx\deps\imgui;H:\nti56acad.arx\deps\imgui\backends;H:\nti56acad.arx\deps\imgui\examples;H:\nti56acad.arx\deps\ImGuiFileDialog;H:\nti56acad.arx\deps\dirent\include;H:\nti56acad.arx\deps\arx\inc-x64;H:\nti56acad.arx\deps\arx\inc;H:\nti56acad.arx\deps\libhp\include;H:\nti56acad.arx\deps\libhp\deps;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <CompileAs>CompileAsCpp</CompileAs>
       <ExceptionHandling>Sync</ExceptionHandling>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <Optimization>MinSpace</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;NTI56_WITHOUT_ARX;_WIN32;UNICODE;_UNICODE;HAVE_CONFIG_H;IMGUI_IMPL_OPENGL_LOADER_GLAD;_AFXDLL;HAVE_STRING_H;_OFF_T_DEFINED;LACKS_STDLIB_H;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR="MinSizeRel";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;NTI56_WITHOUT_ARX;_WIN32;UNICODE;_UNICODE;HAVE_CONFIG_H;IMGUI_IMPL_OPENGL_LOADER_GLAD;_AFXDLL;HAVE_STRING_H;_CRT_SECURE_NO_WARNINGS;_GNU_SOURCE;CMAKE_EXPORT_COMPILE_COMMANDS;DICT_BENCHMARK_MAIN;cJSON_FREE_PRINT;CMAKE_INTDIR="MinSizeRel";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
       <DebugInformationFormat>
       </DebugInformationFormat>
     </ClCompile>
     <ResourceCompile>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;NTI56_WITHOUT_ARX;_WIN32;UNICODE;_UNICODE;HAVE_CONFIG_H;IMGUI_IMPL_OPENGL_LOADER_GLAD;_AFXDLL;HAVE_STRING_H;_OFF_T_DEFINED;LACKS_STDLIB_H;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"MinSizeRel\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>H:\nti56acad.arx\include;H:\nti56acad.arx\src;H:\nti56acad.arx\deps;H:\nti56acad.arx\deps\imgui;H:\nti56acad.arx\deps\imgui\examples;H:\nti56acad.arx\deps\ImGuiFileDialog;H:\nti56acad.arx\deps\xlsxio\include;H:\nti56acad.arx\deps\dirent\include;H:\nti56acad.arx\..\deps\redis\src;H:\nti56acad.arx\src\libxhhp\src;H:\nti56acad.arx\.;H:\nti56acad.arx\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;NTI56_WITHOUT_ARX;_WIN32;UNICODE;_UNICODE;HAVE_CONFIG_H;IMGUI_IMPL_OPENGL_LOADER_GLAD;_AFXDLL;HAVE_STRING_H;_CRT_SECURE_NO_WARNINGS;_GNU_SOURCE;CMAKE_EXPORT_COMPILE_COMMANDS;DICT_BENCHMARK_MAIN;cJSON_FREE_PRINT;CMAKE_INTDIR=\"MinSizeRel\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>H:\nti56acad.arx\include;H:\nti56acad.arx\deps;H:\nti56acad.arx\deps\imgui;H:\nti56acad.arx\deps\imgui\backends;H:\nti56acad.arx\deps\imgui\examples;H:\nti56acad.arx\deps\ImGuiFileDialog;H:\nti56acad.arx\deps\dirent\include;H:\nti56acad.arx\deps\arx\inc-x64;H:\nti56acad.arx\deps\arx\inc;H:\nti56acad.arx\deps\libhp\include;H:\nti56acad.arx\deps\libhp\deps;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>H:\nti56acad.arx\include;H:\nti56acad.arx\src;H:\nti56acad.arx\deps;H:\nti56acad.arx\deps\imgui;H:\nti56acad.arx\deps\imgui\examples;H:\nti56acad.arx\deps\ImGuiFileDialog;H:\nti56acad.arx\deps\xlsxio\include;H:\nti56acad.arx\deps\dirent\include;H:\nti56acad.arx\..\deps\redis\src;H:\nti56acad.arx\src\libxhhp\src;H:\nti56acad.arx\.;H:\nti56acad.arx\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>H:\nti56acad.arx\include;H:\nti56acad.arx\deps;H:\nti56acad.arx\deps\imgui;H:\nti56acad.arx\deps\imgui\backends;H:\nti56acad.arx\deps\imgui\examples;H:\nti56acad.arx\deps\ImGuiFileDialog;H:\nti56acad.arx\deps\dirent\include;H:\nti56acad.arx\deps\arx\inc-x64;H:\nti56acad.arx\deps\arx\inc;H:\nti56acad.arx\deps\libhp\include;H:\nti56acad.arx\deps\libhp\deps;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -199,11 +203,11 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;jemalloc.lib;src\libxhhp\MinSizeRel\xhhp.lib;libxlsxio_read.lib;libxlsxio_write.lib;lib\MinSizeRel\dl.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;deps\libhp\MinSizeRel\libhp.lib;lib\MinSizeRel\dl.lib;deps\libhp\deps\cJSON\MinSizeRel\cjson.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>H:/nti56acad.arx/lib;H:/nti56acad.arx/lib/$(Configuration);H:/nti56acad.arx/deps/xlsxio/lib;H:/nti56acad.arx/deps/xlsxio/lib/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>false</GenerateDebugInformation>
-      <IgnoreSpecificDefaultLibraries>msvcrt.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ImportLibrary>H:/nti56acad.arx/build_vc/MinSizeRel/nti56acad_test.lib</ImportLibrary>
       <ProgramDataBaseFile>H:/nti56acad.arx/build_vc/MinSizeRel/nti56acad_test.pdb</ProgramDataBaseFile>
       <SubSystem>Windows</SubSystem>
@@ -214,7 +218,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>include\;..\deps\imgui\;..\deps\imgui\backends\;..\deps\imgui\examples\;..\deps\ImGuiFileDialog\;..\deps\xlsxio\include;..\deps\dirent\include;..\deps\redis\src\;..\deps\arx\inc-x64\;..\deps\arx\inc\;src\libxhhp\src\;src\;..\deps\redis\deps\jemalloc-win\include;..\deps\libc\;H:\nti56acad.arx\include;H:\nti56acad.arx\src;H:\nti56acad.arx\deps;H:\nti56acad.arx\deps\imgui;H:\nti56acad.arx\deps\imgui\examples;H:\nti56acad.arx\deps\ImGuiFileDialog;H:\nti56acad.arx\deps\xlsxio\include;H:\nti56acad.arx\deps\dirent\include;H:\nti56acad.arx\..\deps\redis\src;H:\nti56acad.arx\src\libxhhp\src;H:\nti56acad.arx\.;H:\nti56acad.arx\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>H:\nti56acad.arx\include;H:\nti56acad.arx\deps;H:\nti56acad.arx\deps\imgui;H:\nti56acad.arx\deps\imgui\backends;H:\nti56acad.arx\deps\imgui\examples;H:\nti56acad.arx\deps\ImGuiFileDialog;H:\nti56acad.arx\deps\dirent\include;H:\nti56acad.arx\deps\arx\inc-x64;H:\nti56acad.arx\deps\arx\inc;H:\nti56acad.arx\deps\libhp\include;H:\nti56acad.arx\deps\libhp\deps;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <CompileAs>CompileAsCpp</CompileAs>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -222,19 +226,19 @@
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <Optimization>MaxSpeed</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;NTI56_WITHOUT_ARX;_WIN32;UNICODE;_UNICODE;HAVE_CONFIG_H;IMGUI_IMPL_OPENGL_LOADER_GLAD;_AFXDLL;HAVE_STRING_H;_OFF_T_DEFINED;LACKS_STDLIB_H;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR="RelWithDebInfo";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;NTI56_WITHOUT_ARX;_WIN32;UNICODE;_UNICODE;HAVE_CONFIG_H;IMGUI_IMPL_OPENGL_LOADER_GLAD;_AFXDLL;HAVE_STRING_H;_CRT_SECURE_NO_WARNINGS;_GNU_SOURCE;CMAKE_EXPORT_COMPILE_COMMANDS;DICT_BENCHMARK_MAIN;cJSON_FREE_PRINT;CMAKE_INTDIR="RelWithDebInfo";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
     </ClCompile>
     <ResourceCompile>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;NTI56_WITHOUT_ARX;_WIN32;UNICODE;_UNICODE;HAVE_CONFIG_H;IMGUI_IMPL_OPENGL_LOADER_GLAD;_AFXDLL;HAVE_STRING_H;_OFF_T_DEFINED;LACKS_STDLIB_H;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"RelWithDebInfo\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>H:\nti56acad.arx\include;H:\nti56acad.arx\src;H:\nti56acad.arx\deps;H:\nti56acad.arx\deps\imgui;H:\nti56acad.arx\deps\imgui\examples;H:\nti56acad.arx\deps\ImGuiFileDialog;H:\nti56acad.arx\deps\xlsxio\include;H:\nti56acad.arx\deps\dirent\include;H:\nti56acad.arx\..\deps\redis\src;H:\nti56acad.arx\src\libxhhp\src;H:\nti56acad.arx\.;H:\nti56acad.arx\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;NTI56_WITHOUT_ARX;_WIN32;UNICODE;_UNICODE;HAVE_CONFIG_H;IMGUI_IMPL_OPENGL_LOADER_GLAD;_AFXDLL;HAVE_STRING_H;_CRT_SECURE_NO_WARNINGS;_GNU_SOURCE;CMAKE_EXPORT_COMPILE_COMMANDS;DICT_BENCHMARK_MAIN;cJSON_FREE_PRINT;CMAKE_INTDIR=\"RelWithDebInfo\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>H:\nti56acad.arx\include;H:\nti56acad.arx\deps;H:\nti56acad.arx\deps\imgui;H:\nti56acad.arx\deps\imgui\backends;H:\nti56acad.arx\deps\imgui\examples;H:\nti56acad.arx\deps\ImGuiFileDialog;H:\nti56acad.arx\deps\dirent\include;H:\nti56acad.arx\deps\arx\inc-x64;H:\nti56acad.arx\deps\arx\inc;H:\nti56acad.arx\deps\libhp\include;H:\nti56acad.arx\deps\libhp\deps;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>H:\nti56acad.arx\include;H:\nti56acad.arx\src;H:\nti56acad.arx\deps;H:\nti56acad.arx\deps\imgui;H:\nti56acad.arx\deps\imgui\examples;H:\nti56acad.arx\deps\ImGuiFileDialog;H:\nti56acad.arx\deps\xlsxio\include;H:\nti56acad.arx\deps\dirent\include;H:\nti56acad.arx\..\deps\redis\src;H:\nti56acad.arx\src\libxhhp\src;H:\nti56acad.arx\.;H:\nti56acad.arx\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>H:\nti56acad.arx\include;H:\nti56acad.arx\deps;H:\nti56acad.arx\deps\imgui;H:\nti56acad.arx\deps\imgui\backends;H:\nti56acad.arx\deps\imgui\examples;H:\nti56acad.arx\deps\ImGuiFileDialog;H:\nti56acad.arx\deps\dirent\include;H:\nti56acad.arx\deps\arx\inc-x64;H:\nti56acad.arx\deps\arx\inc;H:\nti56acad.arx\deps\libhp\include;H:\nti56acad.arx\deps\libhp\deps;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -242,11 +246,11 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;jemalloc.lib;src\libxhhp\RelWithDebInfo\xhhp.lib;libxlsxio_read.lib;libxlsxio_write.lib;lib\RelWithDebInfo\dl.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;deps\libhp\RelWithDebInfo\libhp.lib;lib\RelWithDebInfo\dl.lib;deps\libhp\deps\cJSON\RelWithDebInfo\cjson.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>H:/nti56acad.arx/lib;H:/nti56acad.arx/lib/$(Configuration);H:/nti56acad.arx/deps/xlsxio/lib;H:/nti56acad.arx/deps/xlsxio/lib/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <IgnoreSpecificDefaultLibraries>msvcrt.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ImportLibrary>H:/nti56acad.arx/build_vc/RelWithDebInfo/nti56acad_test.lib</ImportLibrary>
       <ProgramDataBaseFile>H:/nti56acad.arx/build_vc/RelWithDebInfo/nti56acad_test.pdb</ProgramDataBaseFile>
       <SubSystem>Windows</SubSystem>
@@ -314,6 +318,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="H:\nti56acad.arx\src\main.cpp" />
+    <ClInclude Include="H:\nti56acad.arx\src\stdafx.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="H:\nti56acad.arx\build_vc\ZERO_CHECK.vcxproj">
@@ -322,13 +327,17 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="H:\nti56acad.arx\build_vc\src\libxhhp\deps\dlfcn-win32\src\dl.vcxproj">
+    <ProjectReference Include="H:\nti56acad.arx\build_vc\deps\libhp\deps\cJSON\cjson.vcxproj">
+      <Project>{61F54C70-5D0E-3159-A032-9774250F2636}</Project>
+      <Name>cjson</Name>
+    </ProjectReference>
+    <ProjectReference Include="H:\nti56acad.arx\build_vc\deps\libhp\deps\dlfcn-win32\src\dl.vcxproj">
       <Project>{E96BA4F3-378A-3614-90C0-34676413CC1F}</Project>
       <Name>dl</Name>
     </ProjectReference>
-    <ProjectReference Include="H:\nti56acad.arx\build_vc\src\libxhhp\xhhp.vcxproj">
-      <Project>{2E5E40A5-36FA-3167-ACD2-25A32D64258E}</Project>
-      <Name>xhhp</Name>
+    <ProjectReference Include="H:\nti56acad.arx\build_vc\deps\libhp\libhp.vcxproj">
+      <Project>{BF7C554C-265F-35B7-BDA6-F82BC7834027}</Project>
+      <Name>libhp</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

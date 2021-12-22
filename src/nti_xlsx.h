@@ -12,7 +12,7 @@
 #include "config.h"
 #endif /* HAVE_CONFIG_H */
 
-#include "sds/win32_sds.h" //sds
+#include "hp/sdsinc.h" //sds
 
 #ifdef __cplusplus
 extern "C" {

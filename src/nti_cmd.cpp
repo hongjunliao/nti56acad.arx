@@ -11,7 +11,7 @@
 
 #include "stdafx.h"
 #include "nti_imgui.h"		//nti_imgui_create
-#include "nti_dockbar.h" //nti_dockbar
+//#include "nti_dockbar.h" //nti_dockbar
 #include "nti_cmd.h"
 #include "nti_arx.h"		//
 #include "AdskDMgr.h"
@@ -48,7 +48,7 @@ void nti_cmd_about()
 
 void nti_cmd_dx9_main()
 {
-	win32_dx9_main(0, 0);
+	//win32_dx9_main(0, 0);
 }
 
 void nti_cmd_blocks3()
@@ -89,7 +89,7 @@ void nti_cmd_blocks2()
 
 void nti_cmd_blocks() 
 { 
-	return nti_cmd_blocks2();
+	//return nti_cmd_blocks2();
 	
 	int rc;
 	// Redirect the resource override   
@@ -101,7 +101,7 @@ void nti_cmd_blocks()
 		// nti dockbar
 		blocksbar->Create(acedGetAcadFrame(), _T("nti_dockbar"), 32141);
 
-		rc = nti_imgui_add(std::bind(&nti_blocksbar::render, blocksbar), blocksbar->GetSafeHwnd());
+		//rc = nti_imgui_add(std::bind(&nti_blocksbar::render, blocksbar), blocksbar->GetSafeHwnd());
 
 		blocksbar->EnableDocking(CBRS_ALIGN_ANY);
 		blocksbar->SetWindowText(_T("nti56acad"));
@@ -115,22 +115,22 @@ void nti_cmd_blocks()
 void nti_cmd_dockbar()
 {
 	int rc;
-	// Redirect the resource override   
-	CAcModuleResourceOverride res;
-	//// Create the dock ctrl bar   
-	static nti_dockbar * dockBar = 0;
-	if (!dockBar) {
-		dockBar = new nti_dockbar;
-		dockBar->wnddata = g_wnddata;
-		dockBar->Create(acedGetAcadFrame(), _T("nti_dockbar"), 32141);
+	//// Redirect the resource override   
+	//CAcModuleResourceOverride res;
+	////// Create the dock ctrl bar   
+	//static nti_dockbar * dockBar = 0;
+	//if (!dockBar) {
+	//	dockBar = new nti_dockbar;
+	//	dockBar->wnddata = g_wnddata;
+	//	dockBar->Create(acedGetAcadFrame(), _T("nti_dockbar"), 32141);
 
-		dockBar->EnableDocking(CBRS_ALIGN_ANY);
-		dockBar->SetWindowText(_T("nti56acad"));
-		acedGetAcadFrame()->DockControlBar(dockBar);
-	}
-	// Now display it   
-	//acedGetAcadFrame()->FloatControlBar(dockBar, CPoint(750, 150), CBRS_ALIGN_RIGHT);    // FloatControBar(...)   
-	acedGetAcadFrame()->ShowControlBar(dockBar, TRUE, FALSE);
+	//	dockBar->EnableDocking(CBRS_ALIGN_ANY);
+	//	dockBar->SetWindowText(_T("nti56acad"));
+	//	acedGetAcadFrame()->DockControlBar(dockBar);
+	//}
+	//// Now display it   
+	////acedGetAcadFrame()->FloatControlBar(dockBar, CPoint(750, 150), CBRS_ALIGN_RIGHT);    // FloatControBar(...)   
+	//acedGetAcadFrame()->ShowControlBar(dockBar, TRUE, FALSE);
 }
 
 // Win32 message handler

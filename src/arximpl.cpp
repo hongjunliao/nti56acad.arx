@@ -17,7 +17,7 @@
 #include "adslib.h"
 #include "dbents.h"
 #include "tchar.h"
-#include "sds/win32_sds.h"
+#include "hp/sdsinc.h"  /* sds */
 
 #include "nti_imgui.h" /*nti_wnddata*/
 #include "nti_cmd.h"
@@ -99,12 +99,12 @@ void initApp()
 	assert(rc == 0);
 	nti_imgui_()->user = blocksbar;
 
-	rc = nti_imgui_add(std::bind(&nti_blocksbar::render, blocksbar), blocksbar->GetSafeHwnd());
+	rc = nti_imgui_add(std::bind(&nti_blocksbar::render, blocksbar));
 	
 	/////////////////////////////////////////////////////////////////////////////
 
 	//nti_imgui_create(0, acedGetAcadFrame()->GetSafeHwnd());
-	//rc = nti_imgui_add(nti_tabswnd_render, (nti_imgui_wnddata *)&g_wnddata->reactor);
+	rc = nti_imgui_add(nti_tabswnd_render, (nti_imgui_wnddata *)&g_wnddata->reactor);
 	//assert(rc == 0);
 	//nti_imgui_add_render(nti_tabswnd_simple, 0);
 	//nti_imgui_add_render(nti_tabswnd_another, 0);

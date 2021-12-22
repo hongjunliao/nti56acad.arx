@@ -14,7 +14,7 @@
 #endif
 
 #include "nti_EdUiContext.h"
-#include "ArxDbgEdUiContext.h"
+#include "ARXDBG/Inc/ArxDbgEdUiContext.h"
 #include "AcExtensionModule.h"
 #include "nti_cmn.h"
 

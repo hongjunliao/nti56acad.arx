@@ -2,7 +2,7 @@
 #pragma once
 
 #include "imgui.h"
-#include "sds/win32_sds.h"
+#include "hp/sdsinc.h"
 
 namespace ImGui
 {
@@ -13,6 +13,3 @@ namespace ImGui
     IMGUI_API bool  InputTextWithHint(const char* label, const char* hint, sds* str, ImGuiInputTextFlags flags = 0, ImGuiInputTextCallback callback = NULL, void* user_data = NULL);
 }
 
-#ifndef NDEBUG
-int test_imgui_sds_main(int argc, char ** argv);
-#endif

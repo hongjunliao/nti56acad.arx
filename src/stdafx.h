@@ -13,13 +13,6 @@
 
 #define WIN32_LEAN_AND_MEAN             // 从 Windows 头文件中排除极少使用的内容
 
-#ifdef _MSC_VER
-#ifdef _WIN32
-#include "Win32_Interop/win32_types.h"
-#endif
-
-#endif /* _MSC_VER */
-
 //////////////////////////////////////////////////////////////////////////////
 //
 // Check if the build is DEBUG version and it's intended

@@ -4,6 +4,9 @@
  * tests for libxlsxwriter
  *
  * */
+#if 0
+
+
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif /* HAVE_CONFIG_H */
@@ -15,7 +18,7 @@
 #include <ctype.h>	       /* isblank */
 #include <limits.h>	       /* INT_MAX, IOV_MAX */
 #include <assert.h>        /* define NDEBUG to disable assertion */
-#include "sds/sds.h"        /* sds */
+#include "hp/sdsinc.h"        /* sds */
 
 #include "xlsxio_read.h"
 #include "xlsxio_write.h"
@@ -99,3 +102,4 @@ int test_libxlsxio_main(int argc, char ** argv)
 }
 
 #endif /* NDEBUG */
+#endif

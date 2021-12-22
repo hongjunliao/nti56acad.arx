@@ -21,7 +21,7 @@
 #include "nti_xlsx.h"
 #include "ImGuiFileDialog/ImGuiFileDialog.h"
 #include "nti_str.h"
-#include "imgui_sds.h"
+#include "imgui/misc/cpp/imgui_sds.h"
 
 /////////////////////////////////////////////////////////////////////////////////////
 
@@ -242,7 +242,7 @@ void nti_blocksbar::render()
 		if (ImGui::Button("File...")) {
 			igfd::ImGuiFileDialog::Instance()->OpenModal("ChooseFileDlgKey", "Choose File", ".xlsx", ".");
 
-			nti_import_from_excel("test/device1.xlsx", 0);
+			//nti_import_from_excel("test/device1.xlsx", 0);
 #if (!NDEBUG && !NTI56_WITHOUT_ARX)
 			int rc = nti_insert_table();
 #endif

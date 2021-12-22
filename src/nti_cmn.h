@@ -13,8 +13,9 @@
 #include "nti_imgui.h" //nti_imgui_wnddata
 #include "nti_arx.h"
 extern "C" {
-#include "adlist.h"	//list
+#include "redis/src/adlist.h"	//list
 }
+
 
 /////////////////////////////////////////////////////////////////////////////////////
 

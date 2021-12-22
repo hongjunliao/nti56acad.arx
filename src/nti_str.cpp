@@ -11,7 +11,7 @@
 
 #include "stdafx.h"
 #include <string>	//std::string
-#include "sds/win32_sds.h" //sds
+#include "hp/sdsinc.h" //sds
 #include "gbk-utf8/utf8.h"
 #include "nti_str.h"
 /////////////////////////////////////////////////////////////////////////////////////

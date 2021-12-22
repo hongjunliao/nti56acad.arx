@@ -17,7 +17,7 @@
 #endif //NTI56_WITHOUT_ARX
 
 #include "nti_cmn.h"
-#include "sds/win32_sds.h"
+#include "hp/sdsinc.h"
 /////////////////////////////////////////////////////////////////////////////////////
 
 class nti_blocksbar : public nti_dockbase{

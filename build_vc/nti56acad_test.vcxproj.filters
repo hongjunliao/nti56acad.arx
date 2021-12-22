@@ -6,9 +6,17 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="H:\nti56acad.arx\src\stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
     <CustomBuild Include="H:\nti56acad.arx\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{56C20AF2-0CDF-3DE8-B025-59143323DA18}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source Files">
       <UniqueIdentifier>{B9395AE0-7602-383A-A111-274FAB89CF33}</UniqueIdentifier>
     </Filter>
