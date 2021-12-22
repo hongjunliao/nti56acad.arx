@@ -10,6 +10,7 @@
 #endif /* HAVE_CONFIG_H */
 #include "stdafx.h"
 
+#ifdef  NTI_USE_OPENGL 
 #include "imgui.h"
 #include "imgui_impl_opengl2.h"
 #include "imgui_impl_win32.h"
@@ -398,4 +399,4 @@ LRESULT WINAPI nti_imgui_WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lPar
 	return 0;
 }
 
-//#endif // NTI_USE_OPENGL
+#endif // NTI_USE_OPENGL

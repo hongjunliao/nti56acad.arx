@@ -32,6 +32,7 @@ file(GLOB SRCS
 	deps/imgui/imgui_draw.cpp
 	deps/imgui/backends/imgui_impl_win32.cpp
 	deps/imgui/backends/imgui_impl_opengl2.cpp
+	deps/imgui/backends/imgui_impl_dx9.cpp
 	src/glad.c
 	deps/imgui/misc/cpp/imgui_sds.cpp deps/imgui/misc/cpp/imgui_stdlib.cpp
 )
@@ -43,6 +44,7 @@ file(GLOB SRCS ${SRCS}
 	src/nti_render.cpp src/nti_str.cpp src/nti_xlsx.cpp src/test_libxlsxio.c
 	src/nti_cmn.cpp src/nti_blocksbar.cpp
 	src/test_imgui_sds.cpp 
+	src/nti_EdUiContext.cpp
 )
 # build nti56acad.dll
 add_library(nti56acad  SHARED ${SRCS})
@@ -51,7 +53,7 @@ set_property(TARGET nti56acad PROPERTY
 target_compile_options(nti56acad PUBLIC
 	-DHAVE_CONFIG_H -D_GNU_SOURCE -DCMAKE_EXPORT_COMPILE_COMMANDS
 	-D_WIN32 -DUNICODE -D_UNICODE -DHAVE_CONFIG_H -DIMGUI_IMPL_OPENGL_LOADER_GLAD "/MD"
-	-D_AFXDLL -D_CRT_SECURE_NO_WARNINGS -DNTI_USE_OPENGL)
+	-D_AFXDLL -D_CRT_SECURE_NO_WARNINGS)
 target_include_directories(nti56acad PRIVATE 
 	include/ 
 	deps/ deps/imgui/ deps/imgui/backends/ deps/imgui/examples/ deps/ImGuiFileDialog/ 

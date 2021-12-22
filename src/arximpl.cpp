@@ -99,7 +99,7 @@ void initApp()
 	assert(rc == 0);
 	nti_imgui_()->user = blocksbar;
 
-	rc = nti_imgui_add(std::bind(&nti_blocksbar::render, blocksbar));
+	rc = nti_imgui_add(std::bind(&nti_blocksbar::render, blocksbar), blocksbar->GetSafeHwnd());
 	
 	/////////////////////////////////////////////////////////////////////////////
 

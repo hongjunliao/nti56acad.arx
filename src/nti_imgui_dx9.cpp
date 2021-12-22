@@ -77,8 +77,8 @@ int nti_imgui_create(HWND hwnd, HWND phwnd, int flags)
 	myimgui->hwnd = hwnd;
 	myimgui->renderlist = listCreate();
 	listSetFreeMethod(myimgui->renderlist, renderlist_free);
-	myimgui->wlist = listCreate();
-	listSetFreeMethod(myimgui->wlist, renderlist_free);
+	myimgui->renderlist = listCreate();
+	listSetFreeMethod(myimgui->renderlist, renderlist_free);
 
 	ImGui_ImplWin32_EnableDpiAwareness();
 
@@ -194,7 +194,7 @@ int nti_imgui_add(nti_render_t render, HWND hwnd)
 	ir->wrender = render;
 	ir->hwnd = hwnd;
 
-	listAddNodeTail(myimgui->wlist, ir);
+	listAddNodeTail(myimgui->renderlist, ir);
 
 	return 0;
 }
@@ -214,14 +214,15 @@ int nti_imgui_render()
 	}
 
 	/* render window */
-	if (myimgui->wlist) {
-		listIter * iter = listGetIterator(myimgui->wlist, 0);
+	if (myimgui->renderlist) {
+		listIter * iter = listGetIterator(myimgui->renderlist, 0);
 		for (listNode * node = listNext(iter); node; ) {
 
 			nti_imgui_render_t * ir = (nti_imgui_render_t *)listNodeValue(node);
-			assert(ir && ir->wrender);
+			assert(ir && (ir->wrender || ir->render));
 
-			ir->wrender();
+			if(ir->wrender) { ir->wrender(); }
+			if (ir->render) { ir->render(ir->wnddata); }
 
 			node = listNext(iter);
 		}

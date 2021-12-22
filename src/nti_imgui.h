@@ -38,7 +38,7 @@ typedef std::function<void()> nti_render_t;
 
 int nti_imgui_create(HWND hwnd, HWND phwnd, int flags = 0);
 int nti_imgui_add(void(*render)(nti_imgui_wnddata * wnddata), nti_imgui_wnddata * wnddata);
-int nti_imgui_add(nti_render_t render);
+int nti_imgui_add(nti_render_t render, HWND hwnd);
 int nti_imgui_render();
 RECT nti_imgui_size();
 int nti_imgui_modal(void(*render)(nti_imgui_wnddata * wnddata), nti_imgui_wnddata * wnddata);
