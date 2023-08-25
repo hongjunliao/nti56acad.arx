@@ -61,15 +61,15 @@ void initApp()
 	//	return;
 	//acedGetAcadFrame()->DockControlBar(&toolbar);
 	/////////////////////////////////////////////////////////////////////////////
-	
-	CAcUiDockControlBar * dock2 = new CAcUiDockControlBar;
-	rc = dock2->Create(acedGetAcadFrame(), _T("dock2"), IDR_NTIDOCK1);
-	dock2->EnableDocking(CBRS_ALIGN_ANY);
-	assert(rc);
-	acedGetAcadFrame()->DockControlBar(dock2);
+	// sample CAcUiDockControlBar
+//	CAcUiDockControlBar * dock2 = new CAcUiDockControlBar;
+//	rc = dock2->Create(acedGetAcadFrame(), _T("dock2"), IDR_NTIDOCK1);
+//	dock2->EnableDocking(CBRS_ALIGN_ANY);
+//	assert(rc);
+//	acedGetAcadFrame()->DockControlBar(dock2);
 
 	/////////////////////////////////////////////////////////////////////////////
-	// dockbar 
+	// ntidockbar
 	auto b = new nti_dockbar;
 	rc = b->Create(acedGetAcadFrame(), _T("nti56dockbar"), IDR_NTIDOCK2);
 	b->EnableDocking(CBRS_ALIGN_ANY);

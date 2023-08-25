@@ -74,64 +74,218 @@ static void CALLBACK MyTimerProc(
 	//   frame->m_imguipane.GetWindowRect();
 }
 
+
+struct MyItem
+{
+    const char* field;
+    const char* value;
+};
+
+static int imgui_do_render(ImGuiIO& io)
+{
+	static  bool show_demo_window = false;
+	if (show_demo_window)
+		ImGui::ShowDemoWindow(&show_demo_window);
+
+	if (ImGui::CollapsingHeader(u8"数据库信息")) {
+		if (ImGui::BeginTabBar("database_info", ImGuiTabBarFlags_None)) {
+			if (ImGui::BeginTabItem(u8"符号表")) {
+				//Tree:
+				ImGui::BeginChild("left pane", ImVec2(300, 600), true);
+				static int node_clicked = 0;
+				char const * data[] = { u8"NTI-光电开关示例", u8"NTI-物流开关示例" };
+				ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow
+						 |ImGuiTreeNodeFlags_OpenOnDoubleClick
+						 /*|ImGuiTreeNodeFlags_SpanAvailWidth*/;
+				node_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen; // ImGuiTreeNodeFlags_Bullet
+				if (ImGui::TreeNode("Block table")) {
+					for (int i = 0; i < 2; ++i) {
+						ImGui::TreeNodeEx((void*)(intptr_t)&i, node_flags, data[i]);
+						if (ImGui::IsItemClicked() && !ImGui::IsItemToggledOpen())
+							node_clicked = i;
+					}
+					ImGui::TreePop();
+				}
+				if (ImGui::TreeNode("Dimension Style Table")) {
+					for (int i = 0; i < 2; ++i) {
+						ImGui::TreeNodeEx((void*)(intptr_t)&i, node_flags, data[i]);
+						if (ImGui::IsItemClicked() && !ImGui::IsItemToggledOpen())
+							node_clicked = i;
+					}
+					ImGui::TreePop();
+				}
+				if (ImGui::TreeNode("Layer Table")) {
+					for (int i = 0; i < 2; ++i) {
+						ImGui::TreeNodeEx((void*)(intptr_t)&i, node_flags, data[i]);
+						if (ImGui::IsItemClicked() && !ImGui::IsItemToggledOpen())
+							node_clicked = i;
+					}
+					ImGui::TreePop();
+				}
+				if (ImGui::TreeNode("Linetype Table")) {
+					for (int i = 0; i < 2; ++i) {
+						ImGui::TreeNodeEx((void*)(intptr_t)&i, node_flags, data[i]);
+						if (ImGui::IsItemClicked() && !ImGui::IsItemToggledOpen())
+							node_clicked = i;
+					}
+					ImGui::TreePop();
+				}
+				ImGui::EndChild();
+			    ImGui::SameLine();
+			    //table: Field/Value
+	            ImGui::BeginChild("item view", ImVec2(0, 600/*-ImGui::GetFrameHeightWithSpacing()*/)); // Leave room for 1 line below us
+			    static ImGuiTableFlags flags = ImGuiTableFlags_Borders |ImGuiTableFlags_RowBg;
+		        if (ImGui::BeginTable("table1", 2, flags))  {
+	                ImGui::TableSetupColumn("Field");
+	                ImGui::TableSetupColumn("Value");
+	                ImGui::TableHeadersRow();
+
+		            for (int row = 0; row < 5; row++)
+		            {
+		                ImGui::TableNextRow();
+		                for (int column = 0; column < 2; column++)
+		                {
+		                    ImGui::TableSetColumnIndex(column);
+		                    char buf[32];
+		                    sprintf(buf, "%s %d,%d", column == 0? "key":"value", column, row);
+		                    ImGui::TextUnformatted(buf);
+		                }
+		            }
+		            ImGui::EndTable();
+		        }
+		        ImGui::EndChild();
+			    ImGui::EndTabItem();
+			}
+			if (ImGui::BeginTabItem("Dictionaries")) {
+				//Tree:
+				ImGui::BeginChild("left pane", ImVec2(300, 600), true);
+				static int node_clicked = 0;
+				char const * data[] = { u8"ACAD_1", u8"ACAD_2" };
+				ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow
+						 |ImGuiTreeNodeFlags_OpenOnDoubleClick
+						 /*|ImGuiTreeNodeFlags_SpanAvailWidth*/;
+				node_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen; // ImGuiTreeNodeFlags_Bullet
+				if (ImGui::TreeNode("<Root Directory>")) {
+					for (int i = 0; i < 2; ++i) {
+						ImGui::TreeNodeEx((void*)(intptr_t)&i, node_flags, data[i]);
+						if (ImGui::IsItemClicked() && !ImGui::IsItemToggledOpen())
+							node_clicked = i;
+					}
+					ImGui::TreePop();
+				}
+				ImGui::EndChild();
+			    ImGui::SameLine();
+			    //table: Field/Value
+	            ImGui::BeginChild("item view", ImVec2(0, 600/*-ImGui::GetFrameHeightWithSpacing()*/)); // Leave room for 1 line below us
+			    static ImGuiTableFlags flags = ImGuiTableFlags_Borders |ImGuiTableFlags_RowBg;
+		        if (ImGui::BeginTable("table1", 2, flags))  {
+	                ImGui::TableSetupColumn("Field");
+	                ImGui::TableSetupColumn("Value");
+	                ImGui::TableHeadersRow();
+
+		            for (int row = 0; row < 5; row++)
+		            {
+		                ImGui::TableNextRow();
+		                for (int column = 0; column < 2; column++)
+		                {
+		                    ImGui::TableSetColumnIndex(column);
+		                    char buf[32];
+		                    sprintf(buf, "%s %d,%d", column == 0? "key":"value", column, row);
+		                    ImGui::TextUnformatted(buf);
+		                }
+		            }
+		            ImGui::EndTable();
+		        }
+		        ImGui::EndChild();
+			    ImGui::EndTabItem();
+			}
+			if (ImGui::BeginTabItem("Database")) {
+				//Image:
+				ImGui::BeginChild("left pane", ImVec2(300, 600), true);
+		        ImTextureID my_tex_id = io.Fonts->TexID;
+		        float my_tex_w = (float)io.Fonts->TexWidth;
+		        float my_tex_h = (float)io.Fonts->TexHeight;
+		        {
+		            static bool use_text_color_for_tint = false;
+		            ImGui::Text("Preview Image");
+		            ImVec2 pos = ImGui::GetCursorScreenPos();
+		            ImVec2 uv_min = ImVec2(0.0f, 0.0f);                 // Top-left
+		            ImVec2 uv_max = ImVec2(1.0f, 1.0f);                 // Lower-right
+		            ImVec4 tint_col = use_text_color_for_tint ? ImGui::GetStyleColorVec4(ImGuiCol_Text) : ImVec4(1.0f, 1.0f, 1.0f, 1.0f);   // No tint
+		            ImVec4 border_col = ImGui::GetStyleColorVec4(ImGuiCol_Border);
+		            ImGui::Image(my_tex_id, ImVec2(my_tex_w, my_tex_h), uv_min, uv_max, tint_col, border_col);
+		        }
+
+				ImGui::EndChild();
+			    ImGui::SameLine();
+			    //table: Field/Value
+	            ImGui::BeginChild("item view", ImVec2(0, 600/*-ImGui::GetFrameHeightWithSpacing()*/)); // Leave room for 1 line below us
+			    static ImGuiTableFlags flags = ImGuiTableFlags_Borders |ImGuiTableFlags_RowBg;
+		        if (ImGui::BeginTable("table1", 2, flags))  {
+	                ImGui::TableSetupColumn("Field");
+	                ImGui::TableSetupColumn("Value");
+	                ImGui::TableHeadersRow();
+
+		            for (int row = 0; row < 5; row++)
+		            {
+		                ImGui::TableNextRow();
+		                for (int column = 0; column < 2; column++)
+		                {
+		                    ImGui::TableSetColumnIndex(column);
+		                    char buf[32];
+		                    sprintf(buf, "%s %d,%d", column == 0? "key":"value", column, row);
+		                    ImGui::TextUnformatted(buf);
+		                }
+		            }
+		            ImGui::EndTable();
+		        }
+		        ImGui::EndChild();
+			    ImGui::EndTabItem();
+			}
+			ImGui::EndTabBar();
+		}
+	}
+	if (ImGui::CollapsingHeader(u8"设置")) {
+		// Setup Dear ImGui style
+        ImGui::SeparatorText(u8"主题/风格");
+        static int e = 0;
+        ImGui::RadioButton(u8"深色", &e, 0); ImGui::SameLine();
+        ImGui::RadioButton(u8"浅色", &e, 1); ImGui::SameLine();
+        ImGui::RadioButton(u8"经典", &e, 2);
+
+		if(e == 0 )       ImGui::StyleColorsDark();
+		else if(e == 1 )  ImGui::StyleColorsLight();
+		else              ImGui::StyleColorsClassic();
+	}
+	if (ImGui::CollapsingHeader(u8"关于/帮助")) {
+		ImGui::Text("url: git@gitee.com:jun/nti56acad.arx");
+		ImGui::Text("a simple AotuCAD ObjectARX app");
+	}
+
+	ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
+	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
+
+	return 0;
+}
+
 static int imgui_render(HDC hdc, RECT * rect)
 {
 	wglMakeCurrent(hdc, g_hRC);
-	static bool show_demo_window = false;
-	static bool show_another_window = false;
 	static ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
-
 	// Start the Dear ImGui frame
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
 
-	// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
-	if (show_demo_window)
-		ImGui::ShowDemoWindow(&show_demo_window);
+	ImVec2 size(rect->right - rect->left, rect->bottom - rect->top);
+	ImVec2 pos(rect->left, rect->top);
+	ImGui::SetNextWindowPos(pos);
+	ImGui::SetNextWindowSize(size);
 
-	// 2. Show a simple window that we create ourselves. We use a Begin/End pair to create a named window.
-	{
-		static float f = 0.0f;
-		static int counter = 0;
-
-		ImVec2 size(rect->right - rect->left, rect->bottom - rect->top);
-		ImVec2 pos(rect->left, rect->top);
-
-		ImGui::SetNextWindowPos(pos);
-		ImGui::SetNextWindowSize(size);
-
-		ImGui::Begin("Hello, world!", 0
-			, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);                          // Create a window called "Hello, world!" and append into it.
-
-		ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
-		ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
-		ImGui::Checkbox("Another Window", &show_another_window);
-
-		ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-		ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
-
-		if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
-			counter++;
-		ImGui::SameLine();
-		ImGui::Text("counter = %d", counter);
-
-		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
-		ImGui::End();
-	}
-
-	// 3. Show another simple window.
-	if (show_another_window)
-	{
-		ImGui::Begin("Another Window", &show_another_window);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
-		ImGui::Text("Hello from another window!");
-		if (ImGui::Button("Close Me"))
-			show_another_window = false;
-		ImGui::End();
-	}
-
+	ImGui::Begin("ntidockbar", 0, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);  // Create a window called "Hello, world!" and append into it.
+	imgui_do_render(io);
+	ImGui::End();
 	// Rendering
 	ImGui::Render();
 	glViewport(0, 0, g_Width, g_Height);
@@ -177,6 +331,20 @@ static LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		// Setup Platform/Renderer backends
 		ImGui_ImplWin32_InitForOpenGL(hWnd);
 		ImGui_ImplOpenGL3_Init();
+		// Load Fonts
+		// - If no fonts are loaded, dear imgui will use the default font. You can also load multiple fonts and use ImGui::PushFont()/PopFont() to select them.
+		// - AddFontFromFileTTF() will return the ImFont* so you can store it if you need to select the font among multiple.
+		// - If the file cannot be loaded, the function will return NULL. Please handle those errors in your application (e.g. use an assertion, or display an error and quit).
+		// - The fonts will be rasterized at a given size (w/ oversampling) and stored into a texture when calling ImFontAtlas::Build()/GetTexDataAsXXXX(), which ImGui_ImplXXXX_NewFrame below will call.
+		// - Read 'docs/FONTS.md' for more instructions and details.
+		// - Remember that in C/C++ if you want to include a backslash \ in a string literal you need to write a double backslash \\ !
+		//io.Fonts->AddFontDefault();
+		//io.Fonts->AddFontFromFileTTF("../../misc/fonts/Roboto-Medium.ttf", 16.0f);
+		//io.Fonts->AddFontFromFileTTF("../../misc/fonts/Cousine-Regular.ttf", 15.0f);
+		//io.Fonts->AddFontFromFileTTF("../../misc/fonts/DroidSans.ttf", 16.0f);
+		//io.Fonts->AddFontFromFileTTF("../../misc/fonts/ProggyTiny.ttf", 10.0f);
+		ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\simsun.ttc", 13.0f, NULL, io.Fonts->GetGlyphRangesChineseSimplifiedCommon());
+		IM_ASSERT(font != NULL);
 
 		SetTimer(hWnd, (UINT_PTR)0, 16, MyTimerProc);
 		break;
