@@ -1,5 +1,5 @@
-
-// MainFrm.h : CMainFrame ÀàµÄ½Ó¿Ú
+ï»¿
+// MainFrm.h: CMainFrame ç±»çš„æ¥å£
 //
 
 #pragma once
@@ -7,26 +7,26 @@
 #include "ClassView.h"
 #include "OutputWnd.h"
 #include "PropertiesWnd.h"
-#include "nti_blocksbar.h"
+#include "CImguiPane.h"
 
 class CMainFrame : public CMDIFrameWndEx
 {
 	DECLARE_DYNAMIC(CMainFrame)
 public:
-	CMainFrame();
+	CMainFrame() noexcept;
 
-// ÌØĞÔ
+// ç‰¹æ€§
 public:
 
-// ²Ù×÷
+// æ“ä½œ
 public:
 
-// ÖØĞ´
+// é‡å†™
 public:
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
-	virtual BOOL LoadFrame(UINT nIDResource, DWORD dwDefaultStyle = WS_OVERLAPPEDWINDOW | FWS_ADDTOTITLE, CWnd* pParentWnd = NULL, CCreateContext* pContext = NULL);
+	virtual BOOL LoadFrame(UINT nIDResource, DWORD dwDefaultStyle = WS_OVERLAPPEDWINDOW | FWS_ADDTOTITLE, CWnd* pParentWnd = nullptr, CCreateContext* pContext = nullptr);
 
-// ÊµÏÖ
+// å®ç°
 public:
 	virtual ~CMainFrame();
 #ifdef _DEBUG
@@ -34,7 +34,7 @@ public:
 	virtual void Dump(CDumpContext& dc) const;
 #endif
 
-public:  // ¿Ø¼şÌõÇ¶Èë³ÉÔ±
+protected:  // æ§ä»¶æ¡åµŒå…¥æˆå‘˜
 	CMFCMenuBar       m_wndMenuBar;
 	CMFCToolBar       m_wndToolBar;
 	CMFCStatusBar     m_wndStatusBar;
@@ -43,9 +43,9 @@ public:  // ¿Ø¼şÌõÇ¶Èë³ÉÔ±
 	CClassView        m_wndClassView;
 	COutputWnd        m_wndOutput;
 	CPropertiesWnd    m_wndProperties;
-	nti_blocksbar       m_blocksbar;
+    CImguiPane        m_imguipane;
 
-// Éú³ÉµÄÏûÏ¢Ó³Éäº¯Êı
+// ç”Ÿæˆçš„æ¶ˆæ¯æ˜ å°„å‡½æ•°
 protected:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnWindowManager();
@@ -58,12 +58,6 @@ protected:
 
 	BOOL CreateDockingWindows();
 	void SetDockingWindowIcons(BOOL bHiColorIcons);
-public:
-	afx_msg void on_ID_NTI_BLOCKS();
-	afx_msg void On32775();
-	afx_msg void OnNtiAbout();
-	//afx_msg void OnNtiBlocks();
-	afx_msg void OnNtiBlocks();
 };
 
 

@@ -1,10 +1,10 @@
-
-#include "stdafx.h"
+ï»¿
+#include "../stdafx.h"
 
 #include "PropertiesWnd.h"
 #include "Resource.h"
 #include "MainFrm.h"
-#include "nti56acadmfc.h"
+#include "exmaple_mfc.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -15,7 +15,7 @@ static char THIS_FILE[]=__FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CResourceViewBar
 
-CPropertiesWnd::CPropertiesWnd()
+CPropertiesWnd::CPropertiesWnd() noexcept
 {
 	m_nComboHeight = 0;
 }
@@ -40,11 +40,11 @@ BEGIN_MESSAGE_MAP(CPropertiesWnd, CDockablePane)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
-// CResourceViewBar ÏûÏ¢´¦Àí³ÌÐò
+// CResourceViewBar æ¶ˆæ¯å¤„ç†ç¨‹åº
 
 void CPropertiesWnd::AdjustLayout()
 {
-	if (GetSafeHwnd () == NULL || (AfxGetMainWnd() != NULL && AfxGetMainWnd()->IsIconic()))
+	if (GetSafeHwnd () == nullptr || (AfxGetMainWnd() != nullptr && AfxGetMainWnd()->IsIconic()))
 	{
 		return;
 	}
@@ -54,9 +54,9 @@ void CPropertiesWnd::AdjustLayout()
 
 	int cyTlb = m_wndToolBar.CalcFixedLayout(FALSE, TRUE).cy;
 
-	m_wndObjectCombo.SetWindowPos(NULL, rectClient.left, rectClient.top, rectClient.Width(), m_nComboHeight, SWP_NOACTIVATE | SWP_NOZORDER);
-	m_wndToolBar.SetWindowPos(NULL, rectClient.left, rectClient.top + m_nComboHeight, rectClient.Width(), cyTlb, SWP_NOACTIVATE | SWP_NOZORDER);
-	m_wndPropList.SetWindowPos(NULL, rectClient.left, rectClient.top + m_nComboHeight + cyTlb, rectClient.Width(), rectClient.Height() -(m_nComboHeight+cyTlb), SWP_NOACTIVATE | SWP_NOZORDER);
+	m_wndObjectCombo.SetWindowPos(nullptr, rectClient.left, rectClient.top, rectClient.Width(), m_nComboHeight, SWP_NOACTIVATE | SWP_NOZORDER);
+	m_wndToolBar.SetWindowPos(nullptr, rectClient.left, rectClient.top + m_nComboHeight, rectClient.Width(), cyTlb, SWP_NOACTIVATE | SWP_NOZORDER);
+	m_wndPropList.SetWindowPos(nullptr, rectClient.left, rectClient.top + m_nComboHeight + cyTlb, rectClient.Width(), rectClient.Height() -(m_nComboHeight+cyTlb), SWP_NOACTIVATE | SWP_NOZORDER);
 }
 
 int CPropertiesWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
@@ -67,17 +67,17 @@ int CPropertiesWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	CRect rectDummy;
 	rectDummy.SetRectEmpty();
 
-	// ´´½¨×éºÏ: 
+	// åˆ›å»ºç»„åˆ: 
 	const DWORD dwViewStyle = WS_CHILD | WS_VISIBLE | CBS_DROPDOWNLIST | WS_BORDER | CBS_SORT | WS_CLIPSIBLINGS | WS_CLIPCHILDREN;
 
 	if (!m_wndObjectCombo.Create(dwViewStyle, rectDummy, this, 1))
 	{
-		TRACE0("Î´ÄÜ´´½¨ÊôÐÔ×éºÏ \n");
-		return -1;      // Î´ÄÜ´´½¨
+		TRACE0("æœªèƒ½åˆ›å»ºå±žæ€§ç»„åˆ \n");
+		return -1;      // æœªèƒ½åˆ›å»º
 	}
 
-	m_wndObjectCombo.AddString(_T("Ó¦ÓÃ³ÌÐò"));
-	m_wndObjectCombo.AddString(_T("ÊôÐÔ´°¿Ú"));
+	m_wndObjectCombo.AddString(_T("åº”ç”¨ç¨‹åº"));
+	m_wndObjectCombo.AddString(_T("å±žæ€§çª—å£"));
 	m_wndObjectCombo.SetCurSel(0);
 
 	CRect rectCombo;
@@ -87,22 +87,22 @@ int CPropertiesWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	if (!m_wndPropList.Create(WS_VISIBLE | WS_CHILD, rectDummy, this, 2))
 	{
-		TRACE0("Î´ÄÜ´´½¨ÊôÐÔÍø¸ñ\n");
-		return -1;      // Î´ÄÜ´´½¨
+		TRACE0("æœªèƒ½åˆ›å»ºå±žæ€§ç½‘æ ¼\n");
+		return -1;      // æœªèƒ½åˆ›å»º
 	}
 
 	InitPropList();
 
 	m_wndToolBar.Create(this, AFX_DEFAULT_TOOLBAR_STYLE, IDR_PROPERTIES);
-	m_wndToolBar.LoadToolBar(IDR_PROPERTIES, 0, 0, TRUE /* ÒÑËø¶¨*/);
+	m_wndToolBar.LoadToolBar(IDR_PROPERTIES, 0, 0, TRUE /* å·²é”å®š*/);
 	m_wndToolBar.CleanUpLockedImages();
-	m_wndToolBar.LoadBitmap(theApp.m_bHiColorIcons ? IDB_PROPERTIES_HC : IDR_PROPERTIES, 0, 0, TRUE /* Ëø¶¨*/);
+	m_wndToolBar.LoadBitmap(theApp.m_bHiColorIcons ? IDB_PROPERTIES_HC : IDR_PROPERTIES, 0, 0, TRUE /* é”å®š*/);
 
 	m_wndToolBar.SetPaneStyle(m_wndToolBar.GetPaneStyle() | CBRS_TOOLTIPS | CBRS_FLYBY);
 	m_wndToolBar.SetPaneStyle(m_wndToolBar.GetPaneStyle() & ~(CBRS_GRIPPER | CBRS_SIZE_DYNAMIC | CBRS_BORDER_TOP | CBRS_BORDER_BOTTOM | CBRS_BORDER_LEFT | CBRS_BORDER_RIGHT));
 	m_wndToolBar.SetOwner(this);
 
-	// ËùÓÐÃüÁî½«Í¨¹ý´Ë¿Ø¼þÂ·ÓÉ£¬¶ø²»ÊÇÍ¨¹ýÖ÷¿ò¼ÜÂ·ÓÉ: 
+	// æ‰€æœ‰å‘½ä»¤å°†é€šè¿‡æ­¤æŽ§ä»¶è·¯ç”±ï¼Œè€Œä¸æ˜¯é€šè¿‡ä¸»æ¡†æž¶è·¯ç”±: 
 	m_wndToolBar.SetRouteCommandsViaFrame(FALSE);
 
 	AdjustLayout();
@@ -136,22 +136,22 @@ void CPropertiesWnd::OnUpdateSortProperties(CCmdUI* pCmdUI)
 
 void CPropertiesWnd::OnProperties1()
 {
-	// TODO: ÔÚ´Ë´¦Ìí¼ÓÃüÁî´¦Àí³ÌÐò´úÂë
+	// TODO: åœ¨æ­¤å¤„æ·»åŠ å‘½ä»¤å¤„ç†ç¨‹åºä»£ç 
 }
 
 void CPropertiesWnd::OnUpdateProperties1(CCmdUI* /*pCmdUI*/)
 {
-	// TODO: ÔÚ´Ë´¦Ìí¼ÓÃüÁî¸üÐÂ UI ´¦Àí³ÌÐò´úÂë
+	// TODO: åœ¨æ­¤å¤„æ·»åŠ å‘½ä»¤æ›´æ–° UI å¤„ç†ç¨‹åºä»£ç 
 }
 
 void CPropertiesWnd::OnProperties2()
 {
-	// TODO: ÔÚ´Ë´¦Ìí¼ÓÃüÁî´¦Àí³ÌÐò´úÂë
+	// TODO: åœ¨æ­¤å¤„æ·»åŠ å‘½ä»¤å¤„ç†ç¨‹åºä»£ç 
 }
 
 void CPropertiesWnd::OnUpdateProperties2(CCmdUI* /*pCmdUI*/)
 {
-	// TODO: ÔÚ´Ë´¦Ìí¼ÓÃüÁî¸üÐÂ UI ´¦Àí³ÌÐò´úÂë
+	// TODO: åœ¨æ­¤å¤„æ·»åŠ å‘½ä»¤æ›´æ–° UI å¤„ç†ç¨‹åºä»£ç 
 }
 
 void CPropertiesWnd::InitPropList()
@@ -163,75 +163,75 @@ void CPropertiesWnd::InitPropList()
 	m_wndPropList.SetVSDotNetLook();
 	m_wndPropList.MarkModifiedProperties();
 
-	CMFCPropertyGridProperty* pGroup1 = new CMFCPropertyGridProperty(_T("Íâ¹Û"));
+	CMFCPropertyGridProperty* pGroup1 = new CMFCPropertyGridProperty(_T("å¤–è§‚"));
 
-	pGroup1->AddSubItem(new CMFCPropertyGridProperty(_T("ÈýÎ¬Íâ¹Û"), (_variant_t) false, _T("Ö¸¶¨´°¿ÚµÄ×ÖÌå²»Ê¹ÓÃ´ÖÌå£¬²¢ÇÒ¿Ø¼þ½«Ê¹ÓÃÈýÎ¬±ß¿ò")));
+	pGroup1->AddSubItem(new CMFCPropertyGridProperty(_T("ä¸‰ç»´å¤–è§‚"), (_variant_t) false, _T("æŒ‡å®šçª—å£çš„å­—ä½“ä¸ä½¿ç”¨ç²—ä½“ï¼Œå¹¶ä¸”æŽ§ä»¶å°†ä½¿ç”¨ä¸‰ç»´è¾¹æ¡†")));
 
-	CMFCPropertyGridProperty* pProp = new CMFCPropertyGridProperty(_T("±ß¿ò"), _T("¶Ô»°¿òÍâ¿ò"), _T("ÆäÖÐÖ®Ò»: ¡°ÎÞ¡±¡¢¡°Ï¸¡±¡¢¡°¿Éµ÷Õû´óÐ¡¡±»ò¡°¶Ô»°¿òÍâ¿ò¡±"));
-	pProp->AddOption(_T("ÎÞ"));
-	pProp->AddOption(_T("Ï¸"));
-	pProp->AddOption(_T("¿Éµ÷Õû´óÐ¡"));
-	pProp->AddOption(_T("¶Ô»°¿òÍâ¿ò"));
+	CMFCPropertyGridProperty* pProp = new CMFCPropertyGridProperty(_T("è¾¹æ¡†"), _T("å¯¹è¯æ¡†å¤–æ¡†"), _T("å…¶ä¸­ä¹‹ä¸€: â€œæ— â€ã€â€œç»†â€ã€â€œå¯è°ƒæ•´å¤§å°â€æˆ–â€œå¯¹è¯æ¡†å¤–æ¡†â€"));
+	pProp->AddOption(_T("æ— "));
+	pProp->AddOption(_T("ç»†"));
+	pProp->AddOption(_T("å¯è°ƒæ•´å¤§å°"));
+	pProp->AddOption(_T("å¯¹è¯æ¡†å¤–æ¡†"));
 	pProp->AllowEdit(FALSE);
 
 	pGroup1->AddSubItem(pProp);
-	pGroup1->AddSubItem(new CMFCPropertyGridProperty(_T("±êÌâ"), (_variant_t) _T("¹ØÓÚ"), _T("Ö¸¶¨´°¿Ú±êÌâÀ¸ÖÐÏÔÊ¾µÄÎÄ±¾")));
+	pGroup1->AddSubItem(new CMFCPropertyGridProperty(_T("æ ‡é¢˜"), (_variant_t) _T("å…³äºŽ"), _T("æŒ‡å®šçª—å£æ ‡é¢˜æ ä¸­æ˜¾ç¤ºçš„æ–‡æœ¬")));
 
 	m_wndPropList.AddProperty(pGroup1);
 
-	CMFCPropertyGridProperty* pSize = new CMFCPropertyGridProperty(_T("´°¿Ú´óÐ¡"), 0, TRUE);
+	CMFCPropertyGridProperty* pSize = new CMFCPropertyGridProperty(_T("çª—å£å¤§å°"), 0, TRUE);
 
-	pProp = new CMFCPropertyGridProperty(_T("¸ß¶È"), (_variant_t) 250l, _T("Ö¸¶¨´°¿ÚµÄ¸ß¶È"));
+	pProp = new CMFCPropertyGridProperty(_T("é«˜åº¦"), (_variant_t) 250l, _T("æŒ‡å®šçª—å£çš„é«˜åº¦"));
 	pProp->EnableSpinControl(TRUE, 50, 300);
 	pSize->AddSubItem(pProp);
 
-	pProp = new CMFCPropertyGridProperty( _T("¿í¶È"), (_variant_t) 150l, _T("Ö¸¶¨´°¿ÚµÄ¿í¶È"));
+	pProp = new CMFCPropertyGridProperty( _T("å®½åº¦"), (_variant_t) 150l, _T("æŒ‡å®šçª—å£çš„å®½åº¦"));
 	pProp->EnableSpinControl(TRUE, 50, 200);
 	pSize->AddSubItem(pProp);
 
 	m_wndPropList.AddProperty(pSize);
 
-	CMFCPropertyGridProperty* pGroup2 = new CMFCPropertyGridProperty(_T("×ÖÌå"));
+	CMFCPropertyGridProperty* pGroup2 = new CMFCPropertyGridProperty(_T("å­—ä½“"));
 
 	LOGFONT lf;
 	CFont* font = CFont::FromHandle((HFONT) GetStockObject(DEFAULT_GUI_FONT));
 	font->GetLogFont(&lf);
 
-	_tcscpy_s(lf.lfFaceName, _T("ËÎÌå, Arial"));
+	_tcscpy_s(lf.lfFaceName, _T("å®‹ä½“, Arial"));
 
-	pGroup2->AddSubItem(new CMFCPropertyGridFontProperty(_T("×ÖÌå"), lf, CF_EFFECTS | CF_SCREENFONTS, _T("Ö¸¶¨´°¿ÚµÄÄ¬ÈÏ×ÖÌå")));
-	pGroup2->AddSubItem(new CMFCPropertyGridProperty(_T("Ê¹ÓÃÏµÍ³×ÖÌå"), (_variant_t) true, _T("Ö¸¶¨´°¿ÚÊ¹ÓÃ¡°MS Shell Dlg¡±×ÖÌå")));
+	pGroup2->AddSubItem(new CMFCPropertyGridFontProperty(_T("å­—ä½“"), lf, CF_EFFECTS | CF_SCREENFONTS, _T("æŒ‡å®šçª—å£çš„é»˜è®¤å­—ä½“")));
+	pGroup2->AddSubItem(new CMFCPropertyGridProperty(_T("ä½¿ç”¨ç³»ç»Ÿå­—ä½“"), (_variant_t) true, _T("æŒ‡å®šçª—å£ä½¿ç”¨â€œMS Shell Dlgâ€å­—ä½“")));
 
 	m_wndPropList.AddProperty(pGroup2);
 
-	CMFCPropertyGridProperty* pGroup3 = new CMFCPropertyGridProperty(_T("ÔÓÏî"));
-	pProp = new CMFCPropertyGridProperty(_T("(Ãû³Æ)"), _T("Ó¦ÓÃ³ÌÐò"));
+	CMFCPropertyGridProperty* pGroup3 = new CMFCPropertyGridProperty(_T("æ‚é¡¹"));
+	pProp = new CMFCPropertyGridProperty(_T("(åç§°)"), _T("åº”ç”¨ç¨‹åº"));
 	pProp->Enable(FALSE);
 	pGroup3->AddSubItem(pProp);
 
-	CMFCPropertyGridColorProperty* pColorProp = new CMFCPropertyGridColorProperty(_T("´°¿ÚÑÕÉ«"), RGB(210, 192, 254), NULL, _T("Ö¸¶¨Ä¬ÈÏµÄ´°¿ÚÑÕÉ«"));
-	pColorProp->EnableOtherButton(_T("ÆäËû..."));
-	pColorProp->EnableAutomaticButton(_T("Ä¬ÈÏ"), ::GetSysColor(COLOR_3DFACE));
+	CMFCPropertyGridColorProperty* pColorProp = new CMFCPropertyGridColorProperty(_T("çª—å£é¢œè‰²"), RGB(210, 192, 254), nullptr, _T("æŒ‡å®šé»˜è®¤çš„çª—å£é¢œè‰²"));
+	pColorProp->EnableOtherButton(_T("å…¶ä»–..."));
+	pColorProp->EnableAutomaticButton(_T("é»˜è®¤"), ::GetSysColor(COLOR_3DFACE));
 	pGroup3->AddSubItem(pColorProp);
 
-	static const TCHAR szFilter[] = _T("Í¼±êÎÄ¼þ(*.ico)|*.ico|ËùÓÐÎÄ¼þ(*.*)|*.*||");
-	pGroup3->AddSubItem(new CMFCPropertyGridFileProperty(_T("Í¼±ê"), TRUE, _T(""), _T("ico"), 0, szFilter, _T("Ö¸¶¨´°¿ÚÍ¼±ê")));
+	static const TCHAR szFilter[] = _T("å›¾æ ‡æ–‡ä»¶(*.ico)|*.ico|æ‰€æœ‰æ–‡ä»¶(*.*)|*.*||");
+	pGroup3->AddSubItem(new CMFCPropertyGridFileProperty(_T("å›¾æ ‡"), TRUE, _T(""), _T("ico"), 0, szFilter, _T("æŒ‡å®šçª—å£å›¾æ ‡")));
 
-	pGroup3->AddSubItem(new CMFCPropertyGridFileProperty(_T("ÎÄ¼þ¼Ð"), _T("c:\\")));
+	pGroup3->AddSubItem(new CMFCPropertyGridFileProperty(_T("æ–‡ä»¶å¤¹"), _T("c:\\")));
 
 	m_wndPropList.AddProperty(pGroup3);
 
-	CMFCPropertyGridProperty* pGroup4 = new CMFCPropertyGridProperty(_T("²ã´Î½á¹¹"));
+	CMFCPropertyGridProperty* pGroup4 = new CMFCPropertyGridProperty(_T("å±‚æ¬¡ç»“æž„"));
 
-	CMFCPropertyGridProperty* pGroup41 = new CMFCPropertyGridProperty(_T("µÚÒ»¸ö×Ó¼¶"));
+	CMFCPropertyGridProperty* pGroup41 = new CMFCPropertyGridProperty(_T("ç¬¬ä¸€ä¸ªå­çº§"));
 	pGroup4->AddSubItem(pGroup41);
 
-	CMFCPropertyGridProperty* pGroup411 = new CMFCPropertyGridProperty(_T("µÚ¶þ¸ö×Ó¼¶"));
+	CMFCPropertyGridProperty* pGroup411 = new CMFCPropertyGridProperty(_T("ç¬¬äºŒä¸ªå­çº§"));
 	pGroup41->AddSubItem(pGroup411);
 
-	pGroup411->AddSubItem(new CMFCPropertyGridProperty(_T("Ïî 1"), (_variant_t) _T("Öµ 1"), _T("´ËÎªËµÃ÷")));
-	pGroup411->AddSubItem(new CMFCPropertyGridProperty(_T("Ïî 2"), (_variant_t) _T("Öµ 2"), _T("´ËÎªËµÃ÷")));
-	pGroup411->AddSubItem(new CMFCPropertyGridProperty(_T("Ïî 3"), (_variant_t) _T("Öµ 3"), _T("´ËÎªËµÃ÷")));
+	pGroup411->AddSubItem(new CMFCPropertyGridProperty(_T("é¡¹ 1"), (_variant_t) _T("å€¼ 1"), _T("æ­¤ä¸ºè¯´æ˜Ž")));
+	pGroup411->AddSubItem(new CMFCPropertyGridProperty(_T("é¡¹ 2"), (_variant_t) _T("å€¼ 2"), _T("æ­¤ä¸ºè¯´æ˜Ž")));
+	pGroup411->AddSubItem(new CMFCPropertyGridProperty(_T("é¡¹ 3"), (_variant_t) _T("å€¼ 3"), _T("æ­¤ä¸ºè¯´æ˜Ž")));
 
 	pGroup4->Expand(FALSE);
 	m_wndPropList.AddProperty(pGroup4);

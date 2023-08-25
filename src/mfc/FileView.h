@@ -1,4 +1,4 @@
-
+ï»¿
 #pragma once
 
 #include "ViewTree.h"
@@ -15,14 +15,14 @@ class CFileViewToolBar : public CMFCToolBar
 
 class CFileView : public CDockablePane
 {
-// ¹¹Ôì
+// æž„é€ 
 public:
-	CFileView();
+	CFileView() noexcept;
 
 	void AdjustLayout();
 	void OnChangeVisualStyle();
 
-// ÌØÐÔ
+// ç‰¹æ€§
 protected:
 
 	CViewTree m_wndFileView;
@@ -32,7 +32,7 @@ protected:
 protected:
 	void FillFileView();
 
-// ÊµÏÖ
+// å®žçŽ°
 public:
 	virtual ~CFileView();
 

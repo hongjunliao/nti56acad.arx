@@ -1,6 +1,11 @@
 ﻿
-#include "stdafx.h"
-#include "nti_dockbar.h"
+#include "../stdafx.h"
+#include "MainFrm.h"
+#include "CImguiPane.h"
+#include "Resource.h"
+#include "exmaple_mfc.h"
+
+
 #include "imgui.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_win32.h"
@@ -53,53 +58,31 @@ static void CleanupDeviceWGL(HWND hWnd, WGL_WindowData* data)
 // Forward declare message handler from imgui_impl_win32.cpp
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-static void CALLBACK MyTimerProc(
-
-	HWND hwnd,        // handle to window for timer messages 
-	UINT message,     // WM_TIMER message 
-	UINT_PTR idTimer,     // timer identifier 
-	DWORD dwTime)     // current system time 
-{
-	assert(idTimer);
-	nti_dockbar * d = (nti_dockbar *)(idTimer);
-	d->InvalidateRect(0);
-	//   frame->m_imguipane.GetWindowRect();
-}
-
 // 构造/析构
 //////////////////////////////////////////////////////////////////////
 
-nti_dockbar::nti_dockbar() noexcept
+CImguiPane::CImguiPane() noexcept
 {
 }
 
-nti_dockbar::~nti_dockbar()
+CImguiPane::~CImguiPane()
 {
 }
 
-BEGIN_MESSAGE_MAP(nti_dockbar, nti_dockbase)
+BEGIN_MESSAGE_MAP(CImguiPane, CDockablePane)
 	ON_WM_CREATE()
 	ON_WM_SIZE()
 	ON_WM_PAINT()
     ON_WM_DESTROY()
-	ON_WM_ERASEBKGND()
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
-// nti_dockbar 消息处理程序
+// CImguiPane 消息处理程序
 
-BOOL nti_dockbar::PreCreateWindow(CREATESTRUCT& cs)
+int CImguiPane::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
-	// TODO: 在此处通过修改
-	//  CREATESTRUCT cs 来修改窗口类或样式
-	cs.style |= (WS_CLIPCHILDREN | WS_CLIPSIBLINGS);
-	return nti_dockbase::PreCreateWindow(cs);
-}
-
-BOOL nti_dockbar::CreateControlBar(LPCREATESTRUCT lpCreateStruct)
-{
-	if (!nti_dockbase::CreateControlBar(lpCreateStruct))
-		return FALSE;
+	if (CDockablePane::OnCreate(lpCreateStruct) == -1)
+		return -1;
 
     // Create application window
      //ImGui_ImplWin32_EnableDpiAwareness();
@@ -117,6 +100,10 @@ BOOL nti_dockbar::CreateControlBar(LPCREATESTRUCT lpCreateStruct)
     }
     wglMakeCurrent(g_MainWindow.hDC, g_hRC);
 
+    // Show the window
+    ::ShowWindow(hwnd, SW_SHOWDEFAULT);
+    ::UpdateWindow(hwnd);
+
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
@@ -132,11 +119,11 @@ BOOL nti_dockbar::CreateControlBar(LPCREATESTRUCT lpCreateStruct)
     ImGui_ImplWin32_InitForOpenGL(hwnd);
     ImGui_ImplOpenGL3_Init();
 
-	SetTimer((UINT_PTR)this, 16, MyTimerProc);
-	return TRUE;
+
+	return 0;
 }
 
-bool nti_dockbar::OnClosing()
+void CImguiPane::OnDestroy()
 {
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplWin32_Shutdown();
@@ -145,35 +132,47 @@ bool nti_dockbar::OnClosing()
     HWND hwnd = GetSafeHwnd();
     CleanupDeviceWGL(hwnd, &g_MainWindow);
     wglDeleteContext(g_hRC);
+ //   ::DestroyWindow(hwnd);
+ //   ::UnregisterClassW(wc.lpszClassName, wc.hInstance);
 
-	return true;
 }
 
-void nti_dockbar::SizeChanged(CRect * lpRect, BOOL /*bFloating*/, int /*flags*/)
+void CImguiPane::OnSize(UINT nType, int cx, int cy)
 {
-    g_Width = lpRect->Width();
-    g_Height = lpRect->Height();
+    g_Width = cx;
+    g_Height = cy;
+
+    CDockablePane::OnSize(nType, cx, cy);
 }
 
-BOOL nti_dockbar::PreTranslateMessage(MSG* pMsg)
+BOOL CImguiPane::PreTranslateMessage(MSG* pMsg)
 {
-	return FALSE;
-	ImGui_ImplWin32_WndProcHandler(GetSafeHwnd(), pMsg->message, pMsg->wParam, pMsg->lParam);
-	return nti_dockbase::PreTranslateMessage(pMsg);
+    ImGui_ImplWin32_WndProcHandler(GetSafeHwnd(), pMsg->message, pMsg->wParam, pMsg->lParam);
+	return CDockablePane::PreTranslateMessage(pMsg);
 }
 
-//LRESULT nti_dockbar::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
+//LRESULT CImguiPane::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 //{
 //
 //    //	nti_imgui_msghdl(GetSafeHwnd(), message, wParam, lParam);
 //    if(ImGui_ImplWin32_WndProcHandler(GetSafeHwnd(), message, wParam, lParam))
 //        return TRUE;
-//    return nti_dockbase::WindowProc(message, wParam, lParam);
+//    return CDockablePane::WindowProc(message, wParam, lParam);
 //}
 
-void nti_dockbar::PaintControlBar(CDC *pDC)
+void CImguiPane::OnPaint()
 {
-    wglMakeCurrent(pDC->m_hDC, g_hRC);
+	CPaintDC dc(this); // 用于绘制的设备上下文
+
+	//CRect rectTree;
+	//m_wndClassView.GetWindowRect(rectTree);
+	//ScreenToClient(rectTree);
+
+	//rectTree.InflateRect(1, 1);
+	//dc.Draw3dRect(rectTree, ::GetSysColor(COLOR_3DSHADOW), ::GetSysColor(COLOR_3DSHADOW));
+
+
+    wglMakeCurrent(dc.m_hDC, g_hRC);
     static bool show_demo_window = false;
     static bool show_another_window = false;
     static ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
@@ -196,8 +195,8 @@ void nti_dockbar::PaintControlBar(CDC *pDC)
 
         RECT rectobj, * rect = &rectobj;
         GetClientRect(rect);
-        ImVec2 size(rect->right - rect->left, rect->bottom - rect->top);
-        ImVec2 pos(rect->left, rect->top);
+        ImVec2 size(rect->right - rect->left, rect->bottom - rect->top - (IsDocked() ? 0 : 0));
+        ImVec2 pos(rect->left, rect->top + (IsDocked() ? 0 : 0));
 
         ImGui::SetNextWindowPos(pos);
         ImGui::SetNextWindowSize(size);
@@ -240,9 +239,9 @@ void nti_dockbar::PaintControlBar(CDC *pDC)
 
     // Present
     ::SwapBuffers(g_MainWindow.hDC);
-}
 
-BOOL nti_dockbar::OnEraseBkgnd(CDC* pDC)
-{
-	return TRUE;
+
+    RECT rectobj, *rect = &rectobj;
+    GetClientRect(rect);
+    InvalidateRect(rect);
 }

@@ -11,18 +11,19 @@
 
 #include "StdAfx.h"
 #include <axlock.h>
-//
 #include "AdskDMgr.h"
-#include <cinttypes>
-#include "nti_imgui.h" /*nti_wnddata*/
-#include "nti_reactor.h" /**/
-#include "nti_str.h"		//
-#include "nti_cmn.h"	//nti_wnddata
-#include "nti_blocksbar.h"
+#include "nti_reactor.h"
+//
+//#include <cinttypes>
+//#include "nti_imgui.h" /*nti_wnddata*/
+//#include "nti_reactor.h" /**/
+//#include "nti_str.h"		//
+//#include "nti_cmn.h"	//nti_wnddata
+//#include "nti_blocksbar.h"
 
-extern nti_wnddata * g_wnddata;
-extern CDbModReactor * gpDbReactor;
-extern nti_blocksbar * gnti_blocksbar;
+//extern nti_wnddata * g_wnddata;
+static CDbModReactor * gpDbReactor;
+//extern nti_blocksbar * gnti_blocksbar;
 /////////////////////////////////////////////////////////////////////////////////////
 
 class CDocInfo
@@ -59,7 +60,7 @@ void objDisplay(const TCHAR* pWhat, const AcDbObject* pDbObj)
             _T("class %s, id %lx, handle %s.\n"),
             pWhat, pClsName , id, hstr);
     
-        _stprintf_s(idstr, _countof(idstr), _T("0x%08")PRIx64, id.handle().operator Adesk::UInt64());
+//        _stprintf_s(idstr, _countof(idstr), _T("0x%08")PRIx64, id.handle().operator Adesk::UInt64());
     }
     else
     {
@@ -68,10 +69,10 @@ void objDisplay(const TCHAR* pWhat, const AcDbObject* pDbObj)
         _tcscpy_s(idstr, _countof(idstr), _T(""));
     }
 
-	wcpy(g_wnddata->reactor.what, pWhat);
-	wcpy(g_wnddata->reactor.cls, pClsName);
-	wcpy(g_wnddata->reactor.obj_id, idstr);
-	wcpy(g_wnddata->reactor.handle, hstr);
+	//wcpy(g_wnddata->reactor.what, pWhat);
+	//wcpy(g_wnddata->reactor.cls, pClsName);
+	//wcpy(g_wnddata->reactor.obj_id, idstr);
+	//wcpy(g_wnddata->reactor.handle, hstr);
 
     // g_hwnd->SetDlgItemText(IDC_EDIT_CLASS, pClsName);
     // g_hwnd->SetDlgItemText(IDC_EDIT_OBJID, idstr);
@@ -181,61 +182,61 @@ void CEdReactor::commandEnded(const TCHAR *cmd)
 // document manager reactor
 //
 
-int update_blocks(list * blist)
-{
-	int rc = 0;
-
-	g_wnddata->reactor.curr_block = 0;
-	while (listFirst(blist))
-		listDelNode(blist, listFirst(blist));
-
-	AcDbBlockTable *pBlockTable = 0;
-	acdbHostApplicationServices()->workingDatabase()->getSymbolTable(pBlockTable, AcDb::kForRead);
-
-	AcDbBlockTableIterator * iter = 0;
-	pBlockTable->newIterator(iter);
-
-	for (; iter && !iter->done(); iter->step()) {
-
-		AcDbBlockTableRecord *pBlockTableRec = 0;
-		ACHAR * name = 0;
-		iter->getRecord(pBlockTableRec);
-		if (pBlockTableRec) {
-			pBlockTableRec->getName(name);
-			AcDbObjectId id = pBlockTableRec->objectId();
-
-
-
-			//AcDbBlockTableRecordIterator * riter = 0;
-			//pBlockTableRec->newIterator(riter);
-
-			//for (; riter && !riter->done(); riter->step()) {
-			//	AcDbEntity * ent = 0;
-			//	riter->getEntity(ent);
-
-			//	AcDbAttributeDefinition *pAttDef = NULL;
-			//	pAttDef = AcDbAttributeDefinition::cast(ent);
-			//	if (pAttDef) {
-
-			//	}
-
-			//	ent->close();
-			//	delete ent;
-			//}
-			//delete riter;
-
-			char * bname = nti_newn(128, char);
-			strncpy(bname, U8(WA(name)), 128);
-			listAddNodeTail(blist, bname);
-
-			pBlockTableRec->close();
-		}
-	}
-	pBlockTable->close();
-	delete iter;
-
-	return rc;
-}
+//int update_blocks(list * blist)
+//{
+//	int rc = 0;
+//
+//	g_wnddata->reactor.curr_block = 0;
+//	while (listFirst(blist))
+//		listDelNode(blist, listFirst(blist));
+//
+//	AcDbBlockTable *pBlockTable = 0;
+//	acdbHostApplicationServices()->workingDatabase()->getSymbolTable(pBlockTable, AcDb::kForRead);
+//
+//	AcDbBlockTableIterator * iter = 0;
+//	pBlockTable->newIterator(iter);
+//
+//	for (; iter && !iter->done(); iter->step()) {
+//
+//		AcDbBlockTableRecord *pBlockTableRec = 0;
+//		ACHAR * name = 0;
+//		iter->getRecord(pBlockTableRec);
+//		if (pBlockTableRec) {
+//			pBlockTableRec->getName(name);
+//			AcDbObjectId id = pBlockTableRec->objectId();
+//
+//
+//
+//			//AcDbBlockTableRecordIterator * riter = 0;
+//			//pBlockTableRec->newIterator(riter);
+//
+//			//for (; riter && !riter->done(); riter->step()) {
+//			//	AcDbEntity * ent = 0;
+//			//	riter->getEntity(ent);
+//
+//			//	AcDbAttributeDefinition *pAttDef = NULL;
+//			//	pAttDef = AcDbAttributeDefinition::cast(ent);
+//			//	if (pAttDef) {
+//
+//			//	}
+//
+//			//	ent->close();
+//			//	delete ent;
+//			//}
+//			//delete riter;
+//
+//			char * bname = nti_newn(128, char);
+//			strncpy(bname, U8(WA(name)), 128);
+//			listAddNodeTail(blist, bname);
+//
+//			pBlockTableRec->close();
+//		}
+//	}
+//	pBlockTable->close();
+//	delete iter;
+//
+//	return rc;
+//}
 
 /////////////////////////////////////////////////////////////////////////////////////
 //
@@ -252,11 +253,11 @@ void CDocReactor::documentActivated(AcApDocument* pDoc)
         acutPrintf(_T("\ndocumentActiveated: %s.\n"), pDoc->fileName());
         acedPostCommandPrompt();
 #endif
-		gnti_blocksbar->m_curr_block = 0;
-		update_blocks(gnti_blocksbar->m_block_list);
+		//gnti_blocksbar->m_curr_block = 0;
+		//update_blocks(gnti_blocksbar->m_block_list);
 
-		gnti_blocksbar->m_curr_datalink = 0;
-		nti_arx_update_datalinks(gnti_blocksbar->m_datalink_list);
+		//gnti_blocksbar->m_curr_datalink = 0;
+		//nti_arx_update_datalinks(gnti_blocksbar->m_datalink_list);
 	}
 }
 //

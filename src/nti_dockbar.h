@@ -4,39 +4,44 @@
  *
  * dock ctrl bar
  * */
-#ifndef NTI_DOCKBAR_H
-#define NTI_DOCKBAR_H
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif /* HAVE_CONFIG_H */
+#pragma once
 
-#include "stdafx.h"
 #ifndef NTI56_WITHOUT_ARX
-#include "acuidock.h" //CAcUiDockControlBar
+#define nti_dockbase CAcUiDockControlBar
+#else
+#define nti_dockbase CDockablePane
 #endif //NTI56_WITHOUT_ARX
 
-#include "nti_cmn.h"	//nti_wnddata
-/////////////////////////////////////////////////////////////////////////////////////
-
-class nti_dockbar : public nti_dockbase{
+class nti_dockbar : public nti_dockbase
+{
+protected:
+	CView m_view;
 public:
-	nti_dockbar();
+	nti_dockbar() noexcept;
 	virtual ~nti_dockbar();
-public:
-	nti_wnddata * wnddata;
-public:
-	//virtual BOOL Create(CWnd* pParent, LPCTSTR lpszTitle); 
-//	virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam);
-protected: 
-	//{{AFX_MSG(CDockControlBar) 
-	//afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-	//afx_msg void OnPaint();
-	//afx_msg void OnTimer(UINT_PTR nIDEvent);
-	//afx_msg void OnSize(UINT nType, int cx, int cy);
-	//}}AFX_MSG 
-	DECLARE_MESSAGE_MAP() 
 
-	//virtual void AssertValid() const { } 
+protected:
+
+// 重写
+public:
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
+//    virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam);
+protected:
+	virtual void PaintControlBar(CDC *pDC);
+	virtual BOOL CreateControlBar(LPCREATESTRUCT lpCreateStruct);
+	virtual void SizeChanged(CRect * /*lpRect*/, BOOL /*bFloating*/, int /*flags*/);
+	virtual bool OnClosing();
+	//virtual void GetFloatingMinSize(long *pnMinWidth, long *pnMinHeight);
+	//virtual BOOL AddCustomMenuItems(LPARAM hMenu);
+	//virtual void OnUserSizing(UINT /*nSide*/, LPRECT /*pRect*/) {};
+
+protected:
+	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
+	//afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+    //afx_msg void OnDestroy();
+	//afx_msg void OnSize(UINT nType, int cx, int cy);
+	//afx_msg void OnPaint();
+	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
+	DECLARE_MESSAGE_MAP()
 };
-#endif //NTI_DOCKBAR_H

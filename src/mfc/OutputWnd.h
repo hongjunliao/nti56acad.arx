@@ -1,16 +1,16 @@
-
+ï»¿
 #pragma once
 
 /////////////////////////////////////////////////////////////////////////////
-// COutputList ´°¿Ú
+// COutputList çª—å£
 
 class COutputList : public CListBox
 {
-// ¹¹Ôì
+// æ„é€ 
 public:
-	COutputList();
+	COutputList() noexcept;
 
-// ÊµÏÖ
+// å®ç°
 public:
 	virtual ~COutputList();
 
@@ -25,13 +25,13 @@ protected:
 
 class COutputWnd : public CDockablePane
 {
-// ¹¹Ôì
+// æ„é€ 
 public:
-	COutputWnd();
+	COutputWnd() noexcept;
 
 	void UpdateFonts();
 
-// ÌØĞÔ
+// ç‰¹æ€§
 protected:
 	CMFCTabCtrl	m_wndTabs;
 
@@ -46,7 +46,7 @@ protected:
 
 	void AdjustHorzScroll(CListBox& wndListBox);
 
-// ÊµÏÖ
+// å®ç°
 public:
 	virtual ~COutputWnd();
 

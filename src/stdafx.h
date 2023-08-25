@@ -61,6 +61,11 @@
 #include <adeskabb.h>
 #include <axlock.h>
 #include <acdocman.h>
+#include "aced.h"
+#include "dbsymtb.h"
+#include "adslib.h"
+#include "dbents.h"
+#include "rxregsvc.h"
 
 #if defined(_DEBUG) && !defined(AC_FULL_DEBUG)
 #define _DEBUG_WAS_DEFINED
@@ -81,6 +86,8 @@
 
 #endif //NTI56_WITHOUT_ARX
 
+#include <assert.h> //assert
+#include "framework.h"
 #include <afxdisp.h>        // MFC 自动化类
 
 #ifndef _AFX_NO_OLE_SUPPORT

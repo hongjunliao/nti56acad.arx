@@ -1,5 +1,5 @@
-
-#include "stdafx.h"
+ï»¿
+#include "../stdafx.h"
 
 #include "OutputWnd.h"
 #include "Resource.h"
@@ -14,7 +14,7 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // COutputBar
 
-COutputWnd::COutputWnd()
+COutputWnd::COutputWnd() noexcept
 {
 }
 
@@ -35,22 +35,22 @@ int COutputWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	CRect rectDummy;
 	rectDummy.SetRectEmpty();
 
-	// ´´½¨Ñ¡Ïî¿¨´°¿Ú: 
+	// åˆ›å»ºé€‰é¡¹å¡çª—å£: 
 	if (!m_wndTabs.Create(CMFCTabCtrl::STYLE_FLAT, rectDummy, this, 1))
 	{
-		TRACE0("Î´ÄÜ´´½¨Êä³öÑ¡Ïî¿¨´°¿Ú\n");
-		return -1;      // Î´ÄÜ´´½¨
+		TRACE0("æœªèƒ½åˆ›å»ºè¾“å‡ºé€‰é¡¹å¡çª—å£\n");
+		return -1;      // æœªèƒ½åˆ›å»º
 	}
 
-	// ´´½¨Êä³ö´°¸ñ: 
+	// åˆ›å»ºè¾“å‡ºçª—æ ¼: 
 	const DWORD dwStyle = LBS_NOINTEGRALHEIGHT | WS_CHILD | WS_VISIBLE | WS_HSCROLL | WS_VSCROLL;
 
 	if (!m_wndOutputBuild.Create(dwStyle, rectDummy, &m_wndTabs, 2) ||
 		!m_wndOutputDebug.Create(dwStyle, rectDummy, &m_wndTabs, 3) ||
 		!m_wndOutputFind.Create(dwStyle, rectDummy, &m_wndTabs, 4))
 	{
-		TRACE0("Î´ÄÜ´´½¨Êä³ö´°¿Ú\n");
-		return -1;      // Î´ÄÜ´´½¨
+		TRACE0("æœªèƒ½åˆ›å»ºè¾“å‡ºçª—å£\n");
+		return -1;      // æœªèƒ½åˆ›å»º
 	}
 
 	UpdateFonts();
@@ -58,7 +58,7 @@ int COutputWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	CString strTabName;
 	BOOL bNameValid;
 
-	// ½«ÁÐ±í´°¿Ú¸½¼Óµ½Ñ¡Ïî¿¨: 
+	// å°†åˆ—è¡¨çª—å£é™„åŠ åˆ°é€‰é¡¹å¡: 
 	bNameValid = strTabName.LoadString(IDS_BUILD_TAB);
 	ASSERT(bNameValid);
 	m_wndTabs.AddTab(&m_wndOutputBuild, strTabName, (UINT)0);
@@ -69,7 +69,7 @@ int COutputWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	ASSERT(bNameValid);
 	m_wndTabs.AddTab(&m_wndOutputFind, strTabName, (UINT)2);
 
-	// Ê¹ÓÃÒ»Ð©ÐéÄâÎÄ±¾ÌîÐ´Êä³öÑ¡Ïî¿¨(ÎÞÐè¸´ÔÓÊý¾Ý)
+	// ä½¿ç”¨ä¸€äº›è™šæ‹Ÿæ–‡æœ¬å¡«å†™è¾“å‡ºé€‰é¡¹å¡(æ— éœ€å¤æ‚æ•°æ®)
 	FillBuildWindow();
 	FillDebugWindow();
 	FillFindWindow();
@@ -81,8 +81,8 @@ void COutputWnd::OnSize(UINT nType, int cx, int cy)
 {
 	CDockablePane::OnSize(nType, cx, cy);
 
-	// Ñ¡Ïî¿¨¿Ø¼þÓ¦¸²¸ÇÕû¸ö¹¤×÷Çø: 
-	m_wndTabs.SetWindowPos (NULL, -1, -1, cx, cy, SWP_NOMOVE | SWP_NOACTIVATE | SWP_NOZORDER);
+	// é€‰é¡¹å¡æŽ§ä»¶åº”è¦†ç›–æ•´ä¸ªå·¥ä½œåŒº: 
+	m_wndTabs.SetWindowPos (nullptr, -1, -1, cx, cy, SWP_NOMOVE | SWP_NOACTIVATE | SWP_NOZORDER);
 }
 
 void COutputWnd::AdjustHorzScroll(CListBox& wndListBox)
@@ -106,23 +106,23 @@ void COutputWnd::AdjustHorzScroll(CListBox& wndListBox)
 
 void COutputWnd::FillBuildWindow()
 {
-	m_wndOutputBuild.AddString(_T("Éú³ÉÊä³öÕýÏÔÊ¾ÔÚ´Ë´¦¡£"));
-	m_wndOutputBuild.AddString(_T("Êä³öÕýÏÔÊ¾ÔÚÁÐ±íÊÓÍ¼µÄÐÐÖÐ"));
-	m_wndOutputBuild.AddString(_T("µ«Äú¿ÉÒÔ¸ù¾ÝÐèÒª¸ü¸ÄÆäÏÔÊ¾·½Ê½..."));
+	m_wndOutputBuild.AddString(_T("ç”Ÿæˆè¾“å‡ºæ­£æ˜¾ç¤ºåœ¨æ­¤å¤„ã€‚"));
+	m_wndOutputBuild.AddString(_T("è¾“å‡ºæ­£æ˜¾ç¤ºåœ¨åˆ—è¡¨è§†å›¾çš„è¡Œä¸­"));
+	m_wndOutputBuild.AddString(_T("ä½†æ‚¨å¯ä»¥æ ¹æ®éœ€è¦æ›´æ”¹å…¶æ˜¾ç¤ºæ–¹å¼..."));
 }
 
 void COutputWnd::FillDebugWindow()
 {
-	m_wndOutputDebug.AddString(_T("µ÷ÊÔÊä³öÕýÏÔÊ¾ÔÚ´Ë´¦¡£"));
-	m_wndOutputDebug.AddString(_T("Êä³öÕýÏÔÊ¾ÔÚÁÐ±íÊÓÍ¼µÄÐÐÖÐ"));
-	m_wndOutputDebug.AddString(_T("µ«Äú¿ÉÒÔ¸ù¾ÝÐèÒª¸ü¸ÄÆäÏÔÊ¾·½Ê½..."));
+	m_wndOutputDebug.AddString(_T("è°ƒè¯•è¾“å‡ºæ­£æ˜¾ç¤ºåœ¨æ­¤å¤„ã€‚"));
+	m_wndOutputDebug.AddString(_T("è¾“å‡ºæ­£æ˜¾ç¤ºåœ¨åˆ—è¡¨è§†å›¾çš„è¡Œä¸­"));
+	m_wndOutputDebug.AddString(_T("ä½†æ‚¨å¯ä»¥æ ¹æ®éœ€è¦æ›´æ”¹å…¶æ˜¾ç¤ºæ–¹å¼..."));
 }
 
 void COutputWnd::FillFindWindow()
 {
-	m_wndOutputFind.AddString(_T("²éÕÒÊä³öÕýÏÔÊ¾ÔÚ´Ë´¦¡£"));
-	m_wndOutputFind.AddString(_T("Êä³öÕýÏÔÊ¾ÔÚÁÐ±íÊÓÍ¼µÄÐÐÖÐ"));
-	m_wndOutputFind.AddString(_T("µ«Äú¿ÉÒÔ¸ù¾ÝÐèÒª¸ü¸ÄÆäÏÔÊ¾·½Ê½..."));
+	m_wndOutputFind.AddString(_T("æŸ¥æ‰¾è¾“å‡ºæ­£æ˜¾ç¤ºåœ¨æ­¤å¤„ã€‚"));
+	m_wndOutputFind.AddString(_T("è¾“å‡ºæ­£æ˜¾ç¤ºåœ¨åˆ—è¡¨è§†å›¾çš„è¡Œä¸­"));
+	m_wndOutputFind.AddString(_T("ä½†æ‚¨å¯ä»¥æ ¹æ®éœ€è¦æ›´æ”¹å…¶æ˜¾ç¤ºæ–¹å¼..."));
 }
 
 void COutputWnd::UpdateFonts()
@@ -135,7 +135,7 @@ void COutputWnd::UpdateFonts()
 /////////////////////////////////////////////////////////////////////////////
 // COutputList1
 
-COutputList::COutputList()
+COutputList::COutputList() noexcept
 {
 }
 
@@ -151,7 +151,7 @@ BEGIN_MESSAGE_MAP(COutputList, CListBox)
 	ON_WM_WINDOWPOSCHANGING()
 END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
-// COutputList ÏûÏ¢´¦Àí³ÌÐò
+// COutputList æ¶ˆæ¯å¤„ç†ç¨‹åº
 
 void COutputList::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 {
@@ -176,12 +176,12 @@ void COutputList::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 
 void COutputList::OnEditCopy()
 {
-	MessageBox(_T("¸´ÖÆÊä³ö"));
+	MessageBox(_T("å¤åˆ¶è¾“å‡º"));
 }
 
 void COutputList::OnEditClear()
 {
-	MessageBox(_T("Çå³ýÊä³ö"));
+	MessageBox(_T("æ¸…é™¤è¾“å‡º"));
 }
 
 void COutputList::OnViewOutput()
@@ -189,7 +189,7 @@ void COutputList::OnViewOutput()
 	CDockablePane* pParentBar = DYNAMIC_DOWNCAST(CDockablePane, GetOwner());
 	CMDIFrameWndEx* pMainFrame = DYNAMIC_DOWNCAST(CMDIFrameWndEx, GetTopLevelFrame());
 
-	if (pMainFrame != NULL && pParentBar != NULL)
+	if (pMainFrame != nullptr && pParentBar != nullptr)
 	{
 		pMainFrame->SetFocus();
 		pMainFrame->ShowPane(pParentBar, FALSE, FALSE, FALSE);
