@@ -313,7 +313,7 @@ BEGIN_MESSAGE_MAP(nti_dockbar, nti_dockbase)
 //	ON_WM_CREATE()
 //	ON_WM_SIZE()
 //	ON_WM_PAINT()
-//    ON_WM_DESTROY()
+	ON_WM_DESTROY()
 	ON_WM_ERASEBKGND()
 END_MESSAGE_MAP()
 
@@ -364,10 +364,12 @@ void nti_dockbar::SizeChanged(CRect * lpRect, BOOL /*bFloating*/, int /*flags*/)
 {
     g_Width = lpRect->Width();
     g_Height = lpRect->Height();
+
+	int x = lpRect->left, y = lpRect->top;
 	if(!m_hWnd)
-		m_wnd.MoveWindow(0, 0, g_Width, g_Height);
+		m_wnd.MoveWindow(x, y, g_Width, g_Height);
 	else
-		::MoveWindow(m_hWnd, 0, 0, g_Width, g_Height, TRUE);
+		::MoveWindow(m_hWnd, x, y, g_Width, g_Height, TRUE);
 }
 
 //BOOL nti_dockbar::PreTranslateMessage(MSG* pMsg)
@@ -396,4 +398,9 @@ void nti_dockbar::SizeChanged(CRect * lpRect, BOOL /*bFloating*/, int /*flags*/)
 BOOL nti_dockbar::OnEraseBkgnd(CDC* pDC)
 {
 	return TRUE;
+}
+
+void nti_dockbar::OnDestroy()
+{
+	::DestroyWindow(m_hWnd);
 }
