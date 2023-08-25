@@ -13,18 +13,20 @@
 #define nti_dockbase CDockablePane
 #endif //NTI56_WITHOUT_ARX
 
-class nti_dockwnd : public CWnd {
+class nti_dockwnd : public CView {
 	virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam);
 	//afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	//afx_msg void OnDestroy();
 	//afx_msg void OnPaint();
 	//DECLARE_MESSAGE_MAP()
+	virtual void OnDraw(CDC* pDC);
 };
 
 class nti_dockbar : public nti_dockbase
 {
 protected:
 	nti_dockwnd m_wnd;
+	HWND	   m_hWnd;
 public:
 	nti_dockbar() noexcept;
 	virtual ~nti_dockbar();

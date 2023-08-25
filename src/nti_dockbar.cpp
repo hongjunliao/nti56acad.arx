@@ -55,14 +55,14 @@ extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg
 
 static void CALLBACK MyTimerProc(
 
-	HWND hwnd,        // handle to window for timer messages 
+	HWND hWnd,        // handle to window for timer messages 
 	UINT message,     // WM_TIMER message 
 	UINT_PTR idTimer,     // timer identifier 
 	DWORD dwTime)     // current system time 
 {
-	assert(idTimer);
 	nti_dockbar * d = (nti_dockbar *)(idTimer);
-	d->InvalidateRect(0);
+	if(d) d->InvalidateRect(0);
+	else  InvalidateRect(hWnd, 0, TRUE);
 	//   frame->m_imguipane.GetWindowRect();
 }
 
@@ -137,28 +137,19 @@ static int imgui_render(HDC hdc, RECT * rect)
 	return 0;
 }
 
-//BEGIN_MESSAGE_MAP(nti_dockwnd, CWnd)
-//	//	ON_WM_CREATE()
-//	//	ON_WM_SIZE()
-//	//	ON_WM_PAINT()
-//	//    ON_WM_DESTROY()
-//	ON_WM_ERASEBKGND()
-//END_MESSAGE_MAP()
-
-LRESULT nti_dockwnd::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
+static LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-	if (ImGui_ImplWin32_WndProcHandler(GetSafeHwnd(), message, wParam, lParam))
+	if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam))
 		return true;
 
-	switch (message)
+	switch (msg)
 	{
 	case WM_CREATE: {
-		HWND hwnd = GetSafeHwnd();
 		// Initialize OpenGL
-		if (!CreateDeviceWGL(hwnd, &g_MainWindow))
+		if (!CreateDeviceWGL(hWnd, &g_MainWindow))
 		{
-			CleanupDeviceWGL(hwnd, &g_MainWindow);
-			::DestroyWindow(hwnd);
+			CleanupDeviceWGL(hWnd, &g_MainWindow);
+			::DestroyWindow(hWnd);
 			// ::UnregisterClassW(wc.lpszClassName, wc.hInstance);
 			return 1;
 		}
@@ -176,7 +167,96 @@ LRESULT nti_dockwnd::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 		//ImGui::StyleColorsClassic();
 
 		// Setup Platform/Renderer backends
-		ImGui_ImplWin32_InitForOpenGL(hwnd);
+		ImGui_ImplWin32_InitForOpenGL(hWnd);
+		ImGui_ImplOpenGL3_Init();
+
+		SetTimer(hWnd, (UINT_PTR)0, 16, MyTimerProc);
+		break;
+	}
+	case WM_PAINT: {
+		RECT rectobj, *rect = &rectobj;
+		GetClientRect(hWnd, rect);
+
+		PAINTSTRUCT ps;
+		HDC hDC = BeginPaint(hWnd, &ps);
+		imgui_render(hDC, rect);
+		EndPaint(hWnd, &ps);
+
+		break;
+	}
+	case WM_SIZE:
+		if (wParam != SIZE_MINIMIZED)
+		{
+			g_Width = LOWORD(lParam);
+			g_Height = HIWORD(lParam);
+		}
+		return 0;
+	case WM_SYSCOMMAND:
+		if ((wParam & 0xfff0) == SC_KEYMENU) // Disable ALT application menu
+			return 0;
+		break;
+	case WM_DESTROY:
+		ImGui_ImplOpenGL3_Shutdown();
+		ImGui_ImplWin32_Shutdown();
+		ImGui::DestroyContext();
+
+		CleanupDeviceWGL(hWnd, &g_MainWindow);
+		wglDeleteContext(g_hRC);
+		return 0;
+	}
+	return ::DefWindowProcW(hWnd, msg, wParam, lParam);
+
+}
+
+//////////////////////////////////////////////////////////////////////
+
+//BEGIN_MESSAGE_MAP(nti_dockwnd, CWnd)
+//	//	ON_WM_CREATE()
+//	//	ON_WM_SIZE()
+//	//	ON_WM_PAINT()
+//	//    ON_WM_DESTROY()
+//	ON_WM_ERASEBKGND()
+//END_MESSAGE_MAP()
+
+void nti_dockwnd::OnDraw(CDC* pDC)
+{
+	RECT rectobj, *rect = &rectobj;
+	GetClientRect(rect);
+	imgui_render(pDC->m_hDC, rect);
+}
+
+LRESULT nti_dockwnd::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
+{
+	if (ImGui_ImplWin32_WndProcHandler(GetSafeHwnd(), message, wParam, lParam))
+		return true;
+
+	switch (message)
+	{
+	case WM_CREATE: {
+		HWND hWnd = GetSafeHwnd();
+		// Initialize OpenGL
+		if (!CreateDeviceWGL(hWnd, &g_MainWindow))
+		{
+			CleanupDeviceWGL(hWnd, &g_MainWindow);
+			::DestroyWindow(hWnd);
+			// ::UnregisterClassW(wc.lpszClassName, wc.hInstance);
+			return 1;
+		}
+		wglMakeCurrent(g_MainWindow.hDC, g_hRC);
+
+		// Setup Dear ImGui context
+		IMGUI_CHECKVERSION();
+		ImGui::CreateContext();
+		ImGuiIO& io = ImGui::GetIO(); (void)io;
+		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;   // Enable Keyboard Controls
+		io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;    // Enable Gamepad Controls
+
+		// Setup Dear ImGui style
+		ImGui::StyleColorsDark();
+		//ImGui::StyleColorsClassic();
+
+		// Setup Platform/Renderer backends
+		ImGui_ImplWin32_InitForOpenGL(hWnd);
 		ImGui_ImplOpenGL3_Init();
 
 		SetTimer((UINT_PTR)this, 16, MyTimerProc);
@@ -187,8 +267,8 @@ LRESULT nti_dockwnd::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 		GetClientRect(rect);
 
 		PAINTSTRUCT ps;
-		CDC * dc = BeginPaint(&ps);
-		imgui_render(dc->m_hDC, rect);
+		CDC * pDC = BeginPaint(&ps);
+		imgui_render(pDC->m_hDC, rect);
 		EndPaint(&ps);
 
 		break; 
@@ -209,12 +289,12 @@ LRESULT nti_dockwnd::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 		ImGui_ImplWin32_Shutdown();
 		ImGui::DestroyContext();
 
-		HWND hwnd = GetSafeHwnd();
-		CleanupDeviceWGL(hwnd, &g_MainWindow);
+		HWND hWnd = GetSafeHwnd();
+		CleanupDeviceWGL(hWnd, &g_MainWindow);
 		wglDeleteContext(g_hRC);
 		return 0;
 	}
-	return CWnd::WindowProc(message, wParam, lParam);
+	return CView::WindowProc(message, wParam, lParam);
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -222,6 +302,7 @@ LRESULT nti_dockwnd::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 
 nti_dockbar::nti_dockbar() noexcept
 {
+	m_hWnd = 0;
 }
 
 nti_dockbar::~nti_dockbar()
@@ -252,14 +333,17 @@ BOOL nti_dockbar::CreateControlBar(LPCREATESTRUCT lpCreateStruct)
 	if (!nti_dockbase::CreateControlBar(lpCreateStruct))
 		return FALSE;
 
-    // Create application window
-     //ImGui_ImplWin32_EnableDpiAwareness();
-    //WNDCLASSEXW wc = { sizeof(wc), CS_OWNDC, WndProc, 0L, 0L, GetModuleHandle(NULL), NULL, NULL, NULL, NULL, L"ImGui Example", NULL };
-    //::RegisterClassExW(&wc);
-    //HWND hwnd = ::CreateWindowW(wc.lpszClassName, L"Dear ImGui Win32+OpenGL3 Example", WS_OVERLAPPEDWINDOW, 100, 100, 1280, 800, NULL, NULL, wc.hInstance, NULL);
+    //Create application window
+    ImGui_ImplWin32_EnableDpiAwareness();
+    WNDCLASSEXW wc = { sizeof(wc), CS_OWNDC, WndProc, 0L, 0L, GetModuleHandle(NULL), 
+				NULL, NULL, NULL, NULL, L"ntidockbar", NULL };
+    ::RegisterClassExW(&wc);
+    m_hWnd = ::CreateWindow(wc.lpszClassName, L"ntidockbar", WS_CHILD | WS_VISIBLE
+					, 0, 0, 100, 100, GetSafeHwnd(), NULL, wc.hInstance, NULL);
+	assert(m_hWnd);
     
-	m_wnd.Create(_T("STATIC"), _T("Hi"), WS_CHILD | WS_VISIBLE,
-			CRect(0, 0, 20, 20), this, 1534);
+	//m_wnd.Create(_T("STATIC"), _T("Hi"), WS_CHILD | WS_VISIBLE,
+	//		CRect(0, 0, 20, 20), this, 1534);
 	return TRUE;
 }
 
@@ -269,8 +353,8 @@ BOOL nti_dockbar::CreateControlBar(LPCREATESTRUCT lpCreateStruct)
 //    ImGui_ImplWin32_Shutdown();
 //    ImGui::DestroyContext();
 //
-//    HWND hwnd = GetSafeHwnd();
-//    CleanupDeviceWGL(hwnd, &g_MainWindow);
+//    HWND hWnd = GetSafeHwnd();
+//    CleanupDeviceWGL(hWnd, &g_MainWindow);
 //    wglDeleteContext(g_hRC);
 //
 //	return true;
@@ -280,7 +364,10 @@ void nti_dockbar::SizeChanged(CRect * lpRect, BOOL /*bFloating*/, int /*flags*/)
 {
     g_Width = lpRect->Width();
     g_Height = lpRect->Height();
-	m_wnd.MoveWindow(0, 0, g_Width, g_Height);
+	if(!m_hWnd)
+		m_wnd.MoveWindow(0, 0, g_Width, g_Height);
+	else
+		::MoveWindow(m_hWnd, 0, 0, g_Width, g_Height, TRUE);
 }
 
 //BOOL nti_dockbar::PreTranslateMessage(MSG* pMsg)
