@@ -47,7 +47,7 @@
 #undef _DEBUG_THIS_ONLY
 #endif
 
-#ifndef NTI56_WITHOUT_ARX
+#ifdef NTI56_ARX
 
 #include <dbapserv.h>
 #include <rxregsvc.h>

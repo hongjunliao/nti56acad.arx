@@ -57,6 +57,7 @@ set_property(TARGET nti56acad PROPERTY
              MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
 
 target_compile_options(nti56acad PUBLIC
+	-DNTI56_ARX
 	-DHAVE_CONFIG_H -D_GNU_SOURCE -DCMAKE_EXPORT_COMPILE_COMMANDS
 	-D_WIN32 -DUNICODE -D_UNICODE -DHAVE_CONFIG_H -DIMGUI_IMPL_OPENGL_LOADER_GLAD "/MD"
 	-D_AFXDLL -D_CRT_SECURE_NO_WARNINGS)
@@ -72,7 +73,7 @@ target_link_options(nti56acad PUBLIC /DEF:../deps/arx/inc/AcRxDefault.def)
 #set(g_libs libhp imgui "src/mfc/*.cpp")
 #hp_cmake_find_deps(NTI56ACAD_MFC_SRCS NTI56ACAD_MFC_WITH_NULL_ deps cmakes g_withs g_hdrs g_incs g_deps g_libs)
 
-file(GLOB NTI56ACAD_MFC_SRCS "src/mfc/*.cpp" )
+file(GLOB NTI56ACAD_MFC_SRCS "src/mfc/*.cpp"  src/nti_dockbar.cpp)
 
 add_executable(nti56acadmfc ${NTI56ACAD_MFC_SRCS} src/mfc/exmaplemfc.rc)
 target_precompile_headers(nti56acadmfc PRIVATE ${PCH_HEADER} ${PCH_SOURCE})
@@ -82,7 +83,6 @@ target_link_libraries(nti56acadmfc ${imgui_LIBRARIES} ${libhp_LIBRARIES} )
 
 
 target_compile_options(nti56acadmfc PUBLIC
-	-DNTI56_WITHOUT_ARX
 	-D_WIN32 -DUNICODE -D_UNICODE -DHAVE_CONFIG_H 
 	-D_AFXDLL
 	)

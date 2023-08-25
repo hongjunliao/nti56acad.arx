@@ -1,4 +1,12 @@
-﻿
+﻿/*!
+ * This file is PART of nti56acad.arx project
+ * @author hongjun.liao <docici@126.com>, @date 2020/09/11
+ *
+ * dock ctrl bar
+ *
+ * @date 2023/08/25 updated using CAcUiDockControlBar on objectarx and CDockablePane on MFC
+ * */
+
 #include "stdafx.h"
 #include "nti_dockbar.h"
 #include "imgui.h"
@@ -209,95 +217,6 @@ static LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 }
 
 //////////////////////////////////////////////////////////////////////
-
-//BEGIN_MESSAGE_MAP(nti_dockwnd, CWnd)
-//	//	ON_WM_CREATE()
-//	//	ON_WM_SIZE()
-//	//	ON_WM_PAINT()
-//	//    ON_WM_DESTROY()
-//	ON_WM_ERASEBKGND()
-//END_MESSAGE_MAP()
-
-void nti_dockwnd::OnDraw(CDC* pDC)
-{
-	RECT rectobj, *rect = &rectobj;
-	GetClientRect(rect);
-	imgui_render(pDC->m_hDC, rect);
-}
-
-LRESULT nti_dockwnd::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
-{
-	if (ImGui_ImplWin32_WndProcHandler(GetSafeHwnd(), message, wParam, lParam))
-		return true;
-
-	switch (message)
-	{
-	case WM_CREATE: {
-		HWND hWnd = GetSafeHwnd();
-		// Initialize OpenGL
-		if (!CreateDeviceWGL(hWnd, &g_MainWindow))
-		{
-			CleanupDeviceWGL(hWnd, &g_MainWindow);
-			::DestroyWindow(hWnd);
-			// ::UnregisterClassW(wc.lpszClassName, wc.hInstance);
-			return 1;
-		}
-		wglMakeCurrent(g_MainWindow.hDC, g_hRC);
-
-		// Setup Dear ImGui context
-		IMGUI_CHECKVERSION();
-		ImGui::CreateContext();
-		ImGuiIO& io = ImGui::GetIO(); (void)io;
-		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;   // Enable Keyboard Controls
-		io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;    // Enable Gamepad Controls
-
-		// Setup Dear ImGui style
-		ImGui::StyleColorsDark();
-		//ImGui::StyleColorsClassic();
-
-		// Setup Platform/Renderer backends
-		ImGui_ImplWin32_InitForOpenGL(hWnd);
-		ImGui_ImplOpenGL3_Init();
-
-		SetTimer((UINT_PTR)this, 16, MyTimerProc);
-		break;
-	}
-	case WM_PAINT: {
-		RECT rectobj, *rect = &rectobj;
-		GetClientRect(rect);
-
-		PAINTSTRUCT ps;
-		CDC * pDC = BeginPaint(&ps);
-		imgui_render(pDC->m_hDC, rect);
-		EndPaint(&ps);
-
-		break; 
-	}
-	//case WM_SIZE:
-	//	if (wParam != SIZE_MINIMIZED)
-	//	{
-	//		g_Width = LOWORD(lParam);
-	//		g_Height = HIWORD(lParam);
-	//	}
-	//	return 0;
-	case WM_SYSCOMMAND:
-		if ((wParam & 0xfff0) == SC_KEYMENU) // Disable ALT application menu
-			return 0;
-		break;
-	case WM_DESTROY:
-		ImGui_ImplOpenGL3_Shutdown();
-		ImGui_ImplWin32_Shutdown();
-		ImGui::DestroyContext();
-
-		HWND hWnd = GetSafeHwnd();
-		CleanupDeviceWGL(hWnd, &g_MainWindow);
-		wglDeleteContext(g_hRC);
-		return 0;
-	}
-	return CView::WindowProc(message, wParam, lParam);
-}
-
-//////////////////////////////////////////////////////////////////////
 // 构造/析构
 
 nti_dockbar::nti_dockbar() noexcept
@@ -310,24 +229,20 @@ nti_dockbar::~nti_dockbar()
 }
 
 BEGIN_MESSAGE_MAP(nti_dockbar, nti_dockbase)
-//	ON_WM_CREATE()
-//	ON_WM_SIZE()
-//	ON_WM_PAINT()
 	ON_WM_DESTROY()
+#ifdef NTI56_ARX
 	ON_WM_ERASEBKGND()
+#else
+	ON_WM_CREATE()
+	ON_WM_SIZE()
+	//ON_WM_PAINT()
+#endif //#ifdef NTI56_ARX
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // nti_dockbar 消息处理程序
 
-//BOOL nti_dockbar::PreCreateWindow(CREATESTRUCT& cs)
-//{
-//	// TODO: 在此处通过修改
-//	//  CREATESTRUCT cs 来修改窗口类或样式
-//	cs.style |= (WS_CLIPCHILDREN | WS_CLIPSIBLINGS);
-//	return nti_dockbase::PreCreateWindow(cs);
-//}
-
+#ifdef NTI56_ARX
 BOOL nti_dockbar::CreateControlBar(LPCREATESTRUCT lpCreateStruct)
 {
 	if (!nti_dockbase::CreateControlBar(lpCreateStruct))
@@ -341,24 +256,8 @@ BOOL nti_dockbar::CreateControlBar(LPCREATESTRUCT lpCreateStruct)
     m_hWnd = ::CreateWindow(wc.lpszClassName, L"ntidockbar", WS_CHILD | WS_VISIBLE
 					, 0, 0, 100, 100, GetSafeHwnd(), NULL, wc.hInstance, NULL);
 	assert(m_hWnd);
-    
-	//m_wnd.Create(_T("STATIC"), _T("Hi"), WS_CHILD | WS_VISIBLE,
-	//		CRect(0, 0, 20, 20), this, 1534);
 	return TRUE;
 }
-
-//bool nti_dockbar::OnClosing()
-//{
-//    ImGui_ImplOpenGL3_Shutdown();
-//    ImGui_ImplWin32_Shutdown();
-//    ImGui::DestroyContext();
-//
-//    HWND hWnd = GetSafeHwnd();
-//    CleanupDeviceWGL(hWnd, &g_MainWindow);
-//    wglDeleteContext(g_hRC);
-//
-//	return true;
-//}
 
 void nti_dockbar::SizeChanged(CRect * lpRect, BOOL /*bFloating*/, int /*flags*/)
 {
@@ -366,39 +265,44 @@ void nti_dockbar::SizeChanged(CRect * lpRect, BOOL /*bFloating*/, int /*flags*/)
     g_Height = lpRect->Height();
 
 	int x = lpRect->left, y = lpRect->top;
-	if(!m_hWnd)
-		m_wnd.MoveWindow(x, y, g_Width, g_Height);
-	else
-		::MoveWindow(m_hWnd, x, y, g_Width, g_Height, TRUE);
+	::MoveWindow(m_hWnd, x, y, g_Width, g_Height, TRUE);
 }
-
-//BOOL nti_dockbar::PreTranslateMessage(MSG* pMsg)
-//{
-//	return FALSE;
-//	ImGui_ImplWin32_WndProcHandler(GetSafeHwnd(), pMsg->message, pMsg->wParam, pMsg->lParam);
-//	return nti_dockbase::PreTranslateMessage(pMsg);
-//}
-
-//LRESULT nti_dockbar::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
-//{
-//
-//    //	nti_imgui_msghdl(GetSafeHwnd(), message, wParam, lParam);
-//    if(ImGui_ImplWin32_WndProcHandler(GetSafeHwnd(), message, wParam, lParam))
-//        return TRUE;
-//    return nti_dockbase::WindowProc(message, wParam, lParam);
-//}
-
-//void nti_dockbar::PaintControlBar(CDC *pDC)
-//{
-//	RECT rectobj, *rect = &rectobj;
-//	GetClientRect(rect);
-//	imgui_render(pDC->m_hDC, rect);
-//}
 
 BOOL nti_dockbar::OnEraseBkgnd(CDC* pDC)
 {
 	return TRUE;
 }
+#else
+// nti_dockbar 消息处理程序
+
+int nti_dockbar::OnCreate(LPCREATESTRUCT lpCreateStruct)
+{
+	if (nti_dockbase::OnCreate(lpCreateStruct) == -1)
+		return -1;
+
+	//Create application window
+	ImGui_ImplWin32_EnableDpiAwareness();
+	WNDCLASSEXW wc = { sizeof(wc), CS_OWNDC, WndProc, 0L, 0L, GetModuleHandle(NULL),
+				NULL, NULL, NULL, NULL, L"ntidockbar", NULL };
+	::RegisterClassExW(&wc);
+	m_hWnd = ::CreateWindow(wc.lpszClassName, L"ntidockbar", WS_CHILD | WS_VISIBLE
+		, 0, 0, 100, 100, GetSafeHwnd(), NULL, wc.hInstance, NULL);
+	assert(m_hWnd);
+
+	return 0;
+}
+
+void nti_dockbar::OnSize(UINT nType, int cx, int cy)
+{
+	g_Width = cx;
+	g_Height = cy;
+	int x = 0, y = 0;
+	::MoveWindow(m_hWnd, x, y, g_Width, g_Height, TRUE);
+
+	nti_dockbase::OnSize(nType, cx, cy);
+}
+
+#endif //#ifdef NTI56_ARX
 
 void nti_dockbar::OnDestroy()
 {

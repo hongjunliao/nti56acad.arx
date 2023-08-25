@@ -146,8 +146,10 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndProperties.EnableDocking(CBRS_ALIGN_ANY);
 	DockPane(&m_wndProperties);
 
-    m_imguipane.EnableDocking(CBRS_ALIGN_ANY);
-    DockPane(&m_imguipane);
+//    m_imguipane.EnableDocking(CBRS_ALIGN_ANY);
+//    DockPane(&m_imguipane);
+    m_dockbar.EnableDocking(CBRS_ALIGN_ANY);
+    DockPane(&m_dockbar);
 	// 基于持久值设置视觉管理器和样式
 	OnApplicationLook(theApp.m_nAppLook);
 
@@ -220,11 +222,17 @@ BOOL CMainFrame::CreateDockingWindows()
 {
 	BOOL bNameValid;
 
-	// m_imguipane
-	if (!m_imguipane.Create(_T("CImguiPane_1"), this, CRect(0, 0, 200, 200), TRUE,
-            IDV_IMGUIPANE1, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | CBRS_LEFT | CBRS_FLOAT_MULTI))
+//	// m_imguipane
+//	if (!m_imguipane.Create(_T("CImguiPane_1"), this, CRect(0, 0, 200, 200), TRUE,
+//            IDV_IMGUIPANE1, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | CBRS_LEFT | CBRS_FLOAT_MULTI))
+//	{
+//		TRACE0("未能创建“类视图”窗口\n");
+//		return FALSE; // 未能创建
+//	}
+	if (!m_dockbar.Create(_T("m_dockbar"), this, CRect(0, 0, 200, 200), TRUE,
+            IDV_IMGUIPANE1 + 234, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | CBRS_LEFT | CBRS_FLOAT_MULTI))
 	{
-		TRACE0("未能创建“类视图”窗口\n");
+		TRACE0("未能创建“m_dockbar”窗口\n");
 		return FALSE; // 未能创建
 	}
     // 创建类视图
@@ -278,7 +286,7 @@ void CMainFrame::SetDockingWindowIcons(BOOL bHiColorIcons)
 
 	HICON hClassViewIcon = (HICON) ::LoadImage(::AfxGetResourceHandle(), MAKEINTRESOURCE(bHiColorIcons ? IDI_CLASS_VIEW_HC : IDI_CLASS_VIEW), IMAGE_ICON, ::GetSystemMetrics(SM_CXSMICON), ::GetSystemMetrics(SM_CYSMICON), 0);
 	m_wndClassView.SetIcon(hClassViewIcon, FALSE);
-    m_imguipane.SetIcon(hClassViewIcon, FALSE);
+//    m_imguipane.SetIcon(hClassViewIcon, FALSE);
 
 
 	HICON hOutputBarIcon = (HICON) ::LoadImage(::AfxGetResourceHandle(), MAKEINTRESOURCE(bHiColorIcons ? IDI_OUTPUT_WND_HC : IDI_OUTPUT_WND), IMAGE_ICON, ::GetSystemMetrics(SM_CXSMICON), ::GetSystemMetrics(SM_CYSMICON), 0);

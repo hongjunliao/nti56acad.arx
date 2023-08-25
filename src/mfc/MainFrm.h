@@ -8,6 +8,7 @@
 #include "OutputWnd.h"
 #include "PropertiesWnd.h"
 #include "CImguiPane.h"
+#include "../nti_dockbar.h"
 
 class CMainFrame : public CMDIFrameWndEx
 {
@@ -43,8 +44,8 @@ protected:  // 控件条嵌入成员
 	CClassView        m_wndClassView;
 	COutputWnd        m_wndOutput;
 	CPropertiesWnd    m_wndProperties;
-    CImguiPane        m_imguipane;
-
+//    CImguiPane        m_imguipane;
+    nti_dockbar       m_dockbar;
 // 生成的消息映射函数
 protected:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
