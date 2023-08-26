@@ -9,6 +9,7 @@
 
 #include "stdafx.h"
 #include "nti_dockbar.h"
+#include "nti_str.h" //nti_wcstr2a
 #include "imgui.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_win32.h"
@@ -18,6 +19,15 @@
 #include <windows.h>
 #include <GL/GL.h>
 #include <tchar.h>
+
+#ifdef NTI56_ARX
+#include "ArxDbgUiTdcSymTbl.h"
+#include "ArxDbgUtils.h"
+#include "ArxDbgUiTdmEntities.h"
+#endif //#ifdef NTI56_ARX
+ /////////////////////////////////////////////////////////////////////////////////////
+#define W2A(wstr) nti_wcstr2a(wstr)
+ /////////////////////////////////////////////////////////////////////////////////////
 
 // Data stored per platform window
 struct WGL_WindowData { HDC hDC; };
@@ -81,6 +91,76 @@ struct MyItem
     const char* value;
 };
 
+
+/****************************************************************************
+**
+**  ArxDbgUiTdcSymTbl::addOneTable
+**      iterate over the table and collect all the names contained
+**  within it.
+**
+**  **jma
+**
+*************************************/
+
+static void
+ArxDbgUiTdcSymTbl_addOneTable(ImGuiTreeNodeFlags node_flags)
+{
+#ifdef NTI56_ARX
+	Acad::ErrorStatus  es;
+	AcDbDatabase* db = acdbHostApplicationServices()->workingDatabase();
+	AcDbBlockTable* blockTbl;
+	es = db->getBlockTable(blockTbl, AcDb::kForRead);
+    if (es != Acad::eOk) {
+		ArxDbgUtils::rxErrorAlert(es);
+		return;
+    }
+    const AcDbSymbolTable* symTbl = blockTbl;
+
+    // get an iterator over this symbol Table
+    AcDbSymbolTableIterator* tblIter;
+    es = symTbl->newIterator(tblIter);
+    ASSERT(es == Acad::eOk);
+    if (symTbl->isKindOf(AcDbLayerTable::desc()))
+        static_cast<AcDbLayerTableIterator*>(tblIter)->setSkipHidden(false);
+    ASSERT(tblIter != NULL);
+    if (es != Acad::eOk) {
+        ArxDbgUtils::rxErrorAlert(es);
+        return;
+    }
+        // don't sort AcDbViewportTable names, so we know which one is current
+    bool sortAlpha = (symTbl->isKindOf(AcDbViewportTable::desc())) ? false : true;
+
+        // walk table and just collect all the names of the entries
+    AcDbSymbolTableRecord* tblRec;
+    const TCHAR* symName;
+	AcDbObjectIdArray  m_dictObjIdList;
+
+    for (; !tblIter->done(); tblIter->step()) {
+        es = tblIter->getRecord(tblRec, AcDb::kForRead);
+        if (es == Acad::eOk) {
+            tblRec->getName(symName);
+			m_dictObjIdList.append(tblRec->objectId());    // keep track of the objectId for each entry
+			ImGui::TreeNodeEx(W2A(symName), node_flags);
+//			ImGui::TreeNodeEx((void*)(intptr_t)&i, node_flags, symName);
+//			curItem = addOneTreeItem(symName, tblRec->objectId(), parent, sortAlpha); 
+            tblRec->close();
+        }
+        else
+            ArxDbgUtils::rxErrorMsg(es);
+    }
+    delete tblIter;
+	blockTbl->close();
+#else
+	static int node_clicked = 0;
+	char const * data[] = { u8"NTI-光电开关示例", u8"NTI-物流开关示例" };
+	for (int i = 0; i < 2; ++i) {
+		ImGui::TreeNodeEx((void*)(intptr_t)&i, node_flags, data[i]);
+		if (ImGui::IsItemClicked() && !ImGui::IsItemToggledOpen())
+			node_clicked = i;
+	}
+#endif //#ifdef NTI56_ARX
+}
+
 static int imgui_do_render(ImGuiIO& io)
 {
 	static  bool show_demo_window = false;
@@ -99,11 +179,7 @@ static int imgui_do_render(ImGuiIO& io)
 						 /*|ImGuiTreeNodeFlags_SpanAvailWidth*/;
 				node_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen; // ImGuiTreeNodeFlags_Bullet
 				if (ImGui::TreeNode("Block table")) {
-					for (int i = 0; i < 2; ++i) {
-						ImGui::TreeNodeEx((void*)(intptr_t)&i, node_flags, data[i]);
-						if (ImGui::IsItemClicked() && !ImGui::IsItemToggledOpen())
-							node_clicked = i;
-					}
+					ArxDbgUiTdcSymTbl_addOneTable(node_flags);
 					ImGui::TreePop();
 				}
 				if (ImGui::TreeNode("Dimension Style Table")) {

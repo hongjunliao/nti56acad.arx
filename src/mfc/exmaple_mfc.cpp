@@ -11,6 +11,8 @@
 #include "ChildFrm.h"
 #include "exmaple_mfcDoc.h"
 #include "exmaple_mfcView.h"
+#include  "../nti_str.h" //test_nti_str_main
+#include  <assert.h>  //assert
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -134,7 +136,9 @@ BOOL CexmaplemfcApp::InitInstance()
 	CCommandLineInfo cmdInfo;
 	ParseCommandLine(cmdInfo);
 
-
+#ifndef NDEBUG
+	assert(test_nti_str_main(0/*argc*/, 0/*argv*/) == 0);
+#endif
 
 	// 调度在命令行中指定的命令。  如果
 	// 用 /RegServer、/Register、/Unregserver 或 /Unregister 启动应用程序，则返回 FALSE。

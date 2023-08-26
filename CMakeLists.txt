@@ -26,14 +26,14 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 if(NOT NTI56_ACADVER)
 set(NTI56_ACADVER 2018)
 endif()
-set(arx arx/${NTI56_ACADVER}/)
+set(arx arx/arx${NTI56_ACADVER})
 
 set(g_withs 1 1 1 1 1)
 set(g_hdrs .nullfilesub.h .nullfilesub.h .nullfilesub.h .nullfilesrc.h .nullfilesub.h)
 set(g_incs "deps/${arx}/inc-x64/ deps/${arx}/inc/" "deps/libhp/include/" 
 		   "deps/imgui/ deps/imgui/backends/ deps/imgui/examples/" "${PROJECT_BINARY_DIR}/ deps/libhp/deps/" 
 		   "deps/${arx}/samples/database/ARXDBG/Inc/")
-set(g_deps ${arx} libhp imgui .src ARXDBG)
+set(g_deps ${arx} libhp imgui .src ${arx}/samples/database/ARXDBG)
 set(g_libs "accore acad acui22 adui22 ac1st22 acdb22 acge22 acgiapi rxapi AcDrawBridge" 
 		    libhp imgui "src/*.c src/*.cpp" ArxDbg)
 
@@ -78,7 +78,7 @@ target_link_options(nti56acad PUBLIC /DEF:${PROJECT_SOURCE_DIR}/deps/${arx}/inc/
 #set(g_libs libhp imgui "src/mfc/*.cpp")
 #hp_cmake_find_deps(NTI56ACAD_MFC_SRCS NTI56ACAD_MFC_WITH_NULL_ deps cmakes g_withs g_hdrs g_incs g_deps g_libs)
 
-file(GLOB NTI56ACAD_MFC_SRCS "src/mfc/*.cpp"  src/nti_dockbar.cpp)
+file(GLOB NTI56ACAD_MFC_SRCS "src/mfc/*.cpp"  src/nti_dockbar.cpp src/nti_str.cpp)
 
 add_executable(nti56acadmfc ${NTI56ACAD_MFC_SRCS} src/mfc/exmaplemfc.rc)
 target_precompile_headers(nti56acadmfc PRIVATE ${PCH_HEADER} ${PCH_SOURCE})
