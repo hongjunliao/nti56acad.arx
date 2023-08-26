@@ -258,8 +258,15 @@ static int imgui_do_render(ImGuiIO& io)
 		else              ImGui::StyleColorsClassic();
 	}
 	if (ImGui::CollapsingHeader(u8"关于/帮助")) {
-		ImGui::Text("url: git@gitee.com:jun/nti56acad.arx");
+		ImGui::Text("git@gitee.com:jun/nti56acad.arx");
+#ifdef NTI56_ARX
 		ImGui::Text("a simple AotuCAD ObjectARX app");
+		ImGui::Text("build at %s %s for AotuCAD %d", __DATE__, __TIME__, NTI56_ARX);
+#else
+		ImGui::Text("test program in MFC");
+		ImGui::Text("build at %s %s", __DATE__, __TIME__);
+#endif //#ifdef NTI56_ARX
+		ImGui::Text("version %s-%s, %s", "master", "2f2a843", u8"检测到新版本!");
 	}
 
 	ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state

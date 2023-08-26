@@ -23,6 +23,40 @@
 #include "resource.h"
 
 /////////////////////////////////////////////////////////////////////////////////////
+//#include "ArxDbgApp.h"
+//#include "ArxDbgUiDlgSplash.h"
+//#include "ArxDbgDbDictRecord.h"
+//#include "ArxDbgWorldDraw.h"
+//#include "ArxDbgDwgFiler.h"
+//#include "ArxDbgReferenceFiler.h"
+//#include "ArxDbgAppEditorReactor.h"
+//#include "ArxDbgDatabaseReactor.h"
+//#include "ArxDbgDLinkerReactor.h"
+//#include "ArxDbgDocumentReactor.h"
+//#include "ArxDbgEditorReactor.h"
+//#include "ArxDbgEventReactor.h"
+//#include "ArxDbgGsReactor.h"
+//#include "ArxDbgLayoutManagerReactor.h"
+//#include "ArxDbgLongTransactionReactor.h"
+//#include "ArxDbgTransactionReactor.h"
+//#include "ArxDbgDbEntity.h"
+//#include "ArxDbgDbAdeskLogo.h"
+//#include "ArxDbgDbAdeskLogoStyle.h"
+//#include "MapTest.h"
+//#include "ArxDbgUiTdcOptions.h"
+//#include "AcExtensionModule.h"
+//#include "ArxDbgPersistentEntReactor.h"
+//#include "ArxDbgPersistentObjReactor.h"
+//#include "ArxDbgTransientEntReactor.h"
+//#include "ArxDbgTransientObjReactor.h"
+//#include "ArxDbgEdUiContext.h"
+//#include "ArxDbgCmdAdeskLogo.h"
+//#include "ArxDbgCmdSnoop.h"
+//#include "ArxDbgCmdReactors.h"
+//#include "ArxDbgCmdTests.h"
+//#include "ArxDbgUiTdmReactors.h"
+
+/////////////////////////////////////////////////////////////////////////////////////
 //static nti_wnddata g_wnddataobj = { 0 };
 //
 //HWND g_hwnd = 0;
@@ -161,10 +195,15 @@ void unloadApp()
 // Entry points
 //
 /////////////////////////////////////////////////////////////////////////////
+//#ifndef ARXDBG_SHARED
+//int ArxDbgDll_DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved);
+//#endif //#ifndef ARXDBG_SHARED
 
 extern "C" int APIENTRY
 DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
 {
+//	if(!ArxDbgDll_DllMain(hInstance, dwReason, lpReserved))
+//		return 0;
 	// Remove this if you use lpReserved
 	UNREFERENCED_PARAMETER(lpReserved);
 
@@ -178,6 +217,11 @@ DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
 
 extern "C" AcRx::AppRetCode acrxEntryPoint(AcRx::AppMsgCode msg, void* appId)
 {
+//#ifndef ARXDBG_SHARED
+//	if(ArxDbgApp::getApp()->entryPoint(msg, appId) != AcRx::kRetOK)
+//		return AcRx::kRetError;
+//#endif //#ifndef ARXDBG_SHARED
+
 	switch (msg) {
 	case AcRx::kInitAppMsg:
 		acrxDynamicLinker->unlockApplication(appId);
