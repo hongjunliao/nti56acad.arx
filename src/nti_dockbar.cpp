@@ -99,7 +99,7 @@ imgui_render_symtbl(ImGuiTreeNodeFlags node_flags)
 	static AcDbObjectId id;
 #else
 	static int i,t = -1 ,c = -1;
-#endif
+#endif //#ifdef NTI56_ARX
 	//Tree:
 	ImGui::BeginChild("left pane", ImVec2(200, 320), true, ImGuiWindowFlags_AlwaysAutoResize);
 	if (ImGui::TreeNode("Block table")) {
@@ -248,6 +248,28 @@ imgui_render_symtbl(ImGuiTreeNodeFlags node_flags)
 		ImGui::TableSetupColumn("Value");
 		ImGui::TableHeadersRow();
 
+#ifdef NTI56_ARX
+		if (id) {
+			AcDbObject* obj = NULL;
+			Acad::ErrorStatus es = acdbOpenObject(obj, id, AcDb::kForRead);
+			//setExtensionButtons(obj);
+			//setBlockInfoButtons(obj);
+
+			if (es == Acad::eOk) {
+				nti_prop_t p;
+				nti_getprop(obj, p);
+				POSITION posk, posv;
+				for (posk = p._1.GetHeadPosition(), posv = p._2.GetHeadPosition(); posk && posv;) {
+					ImGui::TableNextRow();
+					ImGui::TableSetColumnIndex(0);
+					ImGui::TextUnformatted(nti_wcstr2a((LPCTSTR)p._1.GetNext(posk)));
+					ImGui::TableSetColumnIndex(1);
+					ImGui::TextUnformatted(nti_wcstr2a((LPCTSTR)p._2.GetNext(posv)));
+				}
+				obj->close();
+			}
+		}
+#else
 		for (int row = 0; row < 5; row++)
 		{
 			ImGui::TableNextRow();
@@ -259,64 +281,11 @@ imgui_render_symtbl(ImGuiTreeNodeFlags node_flags)
 				ImGui::TextUnformatted(buf);
 			}
 		}
+#endif //#ifdef NTI56_ARX
+
 		ImGui::EndTable();
 	}
 	ImGui::EndChild();
-//
-//#ifdef NTI56_ARX
-//	Acad::ErrorStatus  es;
-//	AcDbDatabase* db = acdbHostApplicationServices()->workingDatabase();
-//	AcDbBlockTable* tbl;
-//	es = db->getBlockTable(tbl, AcDb::kForRead);
-//    if (es != Acad::eOk) {
-//		ArxDbgUtils::rxErrorMsg(es);
-//		return;
-//    }
-//    const AcDbSymbolTable* symTbl = tbl;
-//
-//    // get an iterator over this symbol Table
-//    AcDbSymbolTableIterator* tblIter;
-//    es = symTbl->newIterator(tblIter);
-//    ASSERT(es == Acad::eOk);
-//    if (symTbl->isKindOf(AcDbLayerTable::desc()))
-//        static_cast<AcDbLayerTableIterator*>(tblIter)->setSkipHidden(false);
-//    ASSERT(tblIter != NULL);
-//    if (es != Acad::eOk) {
-//        ArxDbgUtils::rxErrorMsg(es);
-//        return;
-//    }
-//        // don't sort AcDbViewportTable names, so we know which one is current
-//    bool sortAlpha = (symTbl->isKindOf(AcDbViewportTable::desc())) ? false : true;
-//
-//        // walk table and just collect all the names of the entries
-//    AcDbSymbolTableRecord* tblRec;
-//    const TCHAR* symName;
-//	AcDbObjectIdArray  m_dictObjIdList;
-//
-//    for (; !tblIter->done(); tblIter->step()) {
-//        es = tblIter->getRecord(tblRec, AcDb::kForRead);
-//        if (es == Acad::eOk) {
-//            tblRec->getName(symName);
-//			m_dictObjIdList.append(tblRec->objectId());    // keep track of the objectId for each entry
-//			ImGui::TreeNodeEx(W2A(symName), node_flags);
-////			ImGui::TreeNodeEx((void*)(intptr_t)&i, node_flags, symName);
-////			curItem = addOneTreeItem(symName, tblRec->objectId(), parent, sortAlpha); 
-//            tblRec->close();
-//        }
-//        else
-//            ArxDbgUtils::rxErrorMsg(es);
-//    }
-//    delete tblIter;
-//	tbl->close();
-//#else
-//	static int node_clicked = 0;
-//	char const * data[] = { u8"NTI-光电开关示例", u8"NTI-物流开关示例" };
-//	for (int i = 0; i < 2; ++i) {
-//		ImGui::TreeNodeEx((void*)(intptr_t)&i, node_flags, data[i]);
-//		if (ImGui::IsItemClicked() && !ImGui::IsItemToggledOpen())
-//			node_clicked = i;
-//	}
-//#endif //#ifdef NTI56_ARX
 }
 
 static void
