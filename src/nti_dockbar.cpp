@@ -21,12 +21,11 @@
 #include <tchar.h>
 
 #ifdef NTI56_ARX
+#include "nti_arx.h" //nti_foreach_symtbl
 #include "ArxDbgUiTdcSymTbl.h"
 #include "ArxDbgUtils.h"
 #include "ArxDbgUiTdmEntities.h"
 #endif //#ifdef NTI56_ARX
- /////////////////////////////////////////////////////////////////////////////////////
-#define W2A(wstr) nti_wcstr2a(wstr)
  /////////////////////////////////////////////////////////////////////////////////////
 
 // Data stored per platform window
@@ -92,73 +91,322 @@ struct MyItem
 };
 
 
-/****************************************************************************
-**
-**  ArxDbgUiTdcSymTbl::addOneTable
-**      iterate over the table and collect all the names contained
-**  within it.
-**
-**  **jma
-**
-*************************************/
-
 static void
-ArxDbgUiTdcSymTbl_addOneTable(ImGuiTreeNodeFlags node_flags)
+imgui_render_symtbl(ImGuiTreeNodeFlags node_flags)
 {
+	//for selection state
 #ifdef NTI56_ARX
-	Acad::ErrorStatus  es;
-	AcDbDatabase* db = acdbHostApplicationServices()->workingDatabase();
-	AcDbBlockTable* blockTbl;
-	es = db->getBlockTable(blockTbl, AcDb::kForRead);
-    if (es != Acad::eOk) {
-		ArxDbgUtils::rxErrorAlert(es);
-		return;
-    }
-    const AcDbSymbolTable* symTbl = blockTbl;
-
-    // get an iterator over this symbol Table
-    AcDbSymbolTableIterator* tblIter;
-    es = symTbl->newIterator(tblIter);
-    ASSERT(es == Acad::eOk);
-    if (symTbl->isKindOf(AcDbLayerTable::desc()))
-        static_cast<AcDbLayerTableIterator*>(tblIter)->setSkipHidden(false);
-    ASSERT(tblIter != NULL);
-    if (es != Acad::eOk) {
-        ArxDbgUtils::rxErrorAlert(es);
-        return;
-    }
-        // don't sort AcDbViewportTable names, so we know which one is current
-    bool sortAlpha = (symTbl->isKindOf(AcDbViewportTable::desc())) ? false : true;
-
-        // walk table and just collect all the names of the entries
-    AcDbSymbolTableRecord* tblRec;
-    const TCHAR* symName;
-	AcDbObjectIdArray  m_dictObjIdList;
-
-    for (; !tblIter->done(); tblIter->step()) {
-        es = tblIter->getRecord(tblRec, AcDb::kForRead);
-        if (es == Acad::eOk) {
-            tblRec->getName(symName);
-			m_dictObjIdList.append(tblRec->objectId());    // keep track of the objectId for each entry
-			ImGui::TreeNodeEx(W2A(symName), node_flags);
-//			ImGui::TreeNodeEx((void*)(intptr_t)&i, node_flags, symName);
-//			curItem = addOneTreeItem(symName, tblRec->objectId(), parent, sortAlpha); 
-            tblRec->close();
-        }
-        else
-            ArxDbgUtils::rxErrorMsg(es);
-    }
-    delete tblIter;
-	blockTbl->close();
+	static AcDbObjectId id;
 #else
-	static int node_clicked = 0;
-	char const * data[] = { u8"NTI-光电开关示例", u8"NTI-物流开关示例" };
-	for (int i = 0; i < 2; ++i) {
-		ImGui::TreeNodeEx((void*)(intptr_t)&i, node_flags, data[i]);
-		if (ImGui::IsItemClicked() && !ImGui::IsItemToggledOpen())
-			node_clicked = i;
+	static int i,t = -1 ,c = -1;
+#endif
+	//Tree:
+	ImGui::BeginChild("left pane", ImVec2(200, 320), true, ImGuiWindowFlags_AlwaysAutoResize);
+	if (ImGui::TreeNode("Block table")) {
+#ifdef NTI56_ARX
+		//AcDbObjectIdArray  m_dictObjIdList;
+		nti_foreach_symtbl([node_flags](AcDbDatabase*& db, AcDbSymbolTable*& symTbl)->int {
+			AcDbBlockTable* tbl;
+			Acad::ErrorStatus  es = db->getBlockTable(tbl, AcDb::kForRead);
+			if (es != Acad::eOk) {
+				ArxDbgUtils::rxErrorMsg(es);
+				return -1;
+			}
+			symTbl = tbl;
+			return 0; 
+		}, [/*&m_dictObjIdList, */node_flags](AcDbSymbolTableRecord*& tblRec)->int {
+			const TCHAR* symName;
+			tblRec->getName(symName);
+			//m_dictObjIdList.append(tblRec->objectId());    // keep track of the objectId for each entry
+			ImGui::TreeNodeEx(nti_wcstr2a(symName), 
+					(id == tblRec->objectId() ? ImGuiTreeNodeFlags_Selected | node_flags : node_flags));
+			if (ImGui::IsItemClicked())
+				{ id = tblRec->objectId();}
+			tblRec->close();
+			return 0;
+		});
+#else 
+		char const * data[] = { u8"NTI-光电开关示例", u8"NTI-物流开关示例" };
+		for (i = 0; i < 2; ++i) {
+		ImGui::TreeNodeEx((void*)(intptr_t)&i, 
+			(t == 0 && c == i ? ImGuiTreeNodeFlags_Selected | node_flags : node_flags), data[i]);
+		if (ImGui::IsItemClicked())
+			{ t = 0; c = i;}
 	}
 #endif //#ifdef NTI56_ARX
+		ImGui::TreePop();
+	}
+	if (ImGui::TreeNode("Dimension Style Table")) {
+#ifdef NTI56_ARX
+		//AcDbObjectIdArray  m_dictObjIdList;
+		nti_foreach_symtbl([node_flags](AcDbDatabase*& db, AcDbSymbolTable*& symTbl)->int {
+			AcDbDimStyleTable* tbl;
+			Acad::ErrorStatus  es = db->getDimStyleTable(tbl, AcDb::kForRead);
+			if (es != Acad::eOk) {
+				ArxDbgUtils::rxErrorMsg(es);
+				return -1;
+			}
+			symTbl = tbl;
+			return 0;
+		}, [/*&m_dictObjIdList, */node_flags](AcDbSymbolTableRecord*& tblRec)->int {
+			const TCHAR* symName;
+			tblRec->getName(symName);
+			//m_dictObjIdList.append(tblRec->objectId());    // keep track of the objectId for each entry
+			ImGui::TreeNodeEx(nti_wcstr2a(symName),
+					(id == tblRec->objectId() ? ImGuiTreeNodeFlags_Selected | node_flags : node_flags));
+			if (ImGui::IsItemClicked())
+				{ id = tblRec->objectId();}
+			tblRec->close();
+			return 0;
+		});
+#else
+		char const * data[] = { u8"Dimension Style-1", u8"Dimension Style-2" };
+		for (int i = 0; i < 2; ++i) {
+			ImGui::TreeNodeEx((void*)(intptr_t)&i, 
+					(t == 1 && c == i ? ImGuiTreeNodeFlags_Selected | node_flags : node_flags), data[i]);
+			if (ImGui::IsItemClicked())
+				{ t = 1;c = i;}
+		}
+#endif //#ifdef NTI56_ARX
+		ImGui::TreePop();
+	}
+	if (ImGui::TreeNode("Layer Table")) {
+#ifdef NTI56_ARX
+		//AcDbObjectIdArray  m_dictObjIdList;
+		nti_foreach_symtbl([node_flags](AcDbDatabase*& db, AcDbSymbolTable*& symTbl)->int {
+			AcDbLayerTable* tbl;
+			Acad::ErrorStatus  es = db->getLayerTable(tbl, AcDb::kForRead);
+			if (es != Acad::eOk) {
+				ArxDbgUtils::rxErrorMsg(es);
+				return -1;
+			}
+			symTbl = tbl;
+			return 0;
+		}, [/*&m_dictObjIdList, */node_flags](AcDbSymbolTableRecord*& tblRec)->int {
+			const TCHAR* symName;
+			tblRec->getName(symName);
+			//m_dictObjIdList.append(tblRec->objectId());    // keep track of the objectId for each entry
+			ImGui::TreeNodeEx(nti_wcstr2a(symName),
+					(id == tblRec->objectId() ? ImGuiTreeNodeFlags_Selected | node_flags : node_flags));
+			if (ImGui::IsItemClicked())
+				{ id = tblRec->objectId();}
+			tblRec->close();
+			return 0;
+		});
+#else
+		char const * data[] = { u8"Layer-1", u8"Layer-2" };
+		for (int i = 0; i < 2; ++i) {
+			ImGui::TreeNodeEx((void*)(intptr_t)&i,
+					(t == 2 && c == i ? ImGuiTreeNodeFlags_Selected | node_flags : node_flags), data[i]);
+			if (ImGui::IsItemClicked())
+				{ t = 2; c = i;}
+		}
+#endif //#ifdef NTI56_ARX
+		ImGui::TreePop();
+	}
+	if (ImGui::TreeNode("Linetype Table")) {
+#ifdef NTI56_ARX
+		//AcDbObjectIdArray  m_dictObjIdList;
+		nti_foreach_symtbl([node_flags](AcDbDatabase*& db, AcDbSymbolTable*& symTbl)->int {
+			AcDbLinetypeTable* tbl;
+			Acad::ErrorStatus  es = db->getLinetypeTable(tbl, AcDb::kForRead);
+			if (es != Acad::eOk) {
+				ArxDbgUtils::rxErrorMsg(es);
+				return -1;
+			}
+			symTbl = tbl;
+			return 0;
+		}, [/*&m_dictObjIdList, */node_flags](AcDbSymbolTableRecord*& tblRec)->int {
+			const TCHAR* symName;
+			tblRec->getName(symName);
+			//m_dictObjIdList.append(tblRec->objectId());    // keep track of the objectId for each entry
+			ImGui::TreeNodeEx(nti_wcstr2a(symName),
+					(id == tblRec->objectId() ? ImGuiTreeNodeFlags_Selected | node_flags : node_flags));
+			if (ImGui::IsItemClicked())
+				{ id = tblRec->objectId();}
+			tblRec->close();
+			return 0;
+		});
+#else
+		char const * data[] = { u8"Layer-1", u8"Layer-2" };
+		for (int i = 0; i < 2; ++i) {
+			ImGui::TreeNodeEx((void*)(intptr_t)&i,
+					(t == 3 && c == i ? ImGuiTreeNodeFlags_Selected | node_flags : node_flags), data[i]);
+			if (ImGui::IsItemClicked()/* && !ImGui::IsItemToggledOpen()*/)
+				{t = 3;c = i;}
+		}
+#endif //#ifdef NTI56_ARX
+		ImGui::TreePop();
+	}
+	ImGui::EndChild();
+	ImGui::SameLine();
+	//table: Field/Value
+	ImGui::BeginChild("item view", ImVec2(0, 320/*-ImGui::GetFrameHeightWithSpacing()*/)); // Leave room for 1 line below us
+	static ImGuiTableFlags flags = ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg;
+	if (ImGui::BeginTable("table1", 2, flags)) {
+		ImGui::TableSetupColumn("Field");
+		ImGui::TableSetupColumn("Value");
+		ImGui::TableHeadersRow();
+
+		for (int row = 0; row < 5; row++)
+		{
+			ImGui::TableNextRow();
+			for (int column = 0; column < 2; column++)
+			{
+				ImGui::TableSetColumnIndex(column);
+				char buf[32];
+				sprintf(buf, "%s %d,%d", column == 0 ? "key" : "value", column, row);
+				ImGui::TextUnformatted(buf);
+			}
+		}
+		ImGui::EndTable();
+	}
+	ImGui::EndChild();
+//
+//#ifdef NTI56_ARX
+//	Acad::ErrorStatus  es;
+//	AcDbDatabase* db = acdbHostApplicationServices()->workingDatabase();
+//	AcDbBlockTable* tbl;
+//	es = db->getBlockTable(tbl, AcDb::kForRead);
+//    if (es != Acad::eOk) {
+//		ArxDbgUtils::rxErrorMsg(es);
+//		return;
+//    }
+//    const AcDbSymbolTable* symTbl = tbl;
+//
+//    // get an iterator over this symbol Table
+//    AcDbSymbolTableIterator* tblIter;
+//    es = symTbl->newIterator(tblIter);
+//    ASSERT(es == Acad::eOk);
+//    if (symTbl->isKindOf(AcDbLayerTable::desc()))
+//        static_cast<AcDbLayerTableIterator*>(tblIter)->setSkipHidden(false);
+//    ASSERT(tblIter != NULL);
+//    if (es != Acad::eOk) {
+//        ArxDbgUtils::rxErrorMsg(es);
+//        return;
+//    }
+//        // don't sort AcDbViewportTable names, so we know which one is current
+//    bool sortAlpha = (symTbl->isKindOf(AcDbViewportTable::desc())) ? false : true;
+//
+//        // walk table and just collect all the names of the entries
+//    AcDbSymbolTableRecord* tblRec;
+//    const TCHAR* symName;
+//	AcDbObjectIdArray  m_dictObjIdList;
+//
+//    for (; !tblIter->done(); tblIter->step()) {
+//        es = tblIter->getRecord(tblRec, AcDb::kForRead);
+//        if (es == Acad::eOk) {
+//            tblRec->getName(symName);
+//			m_dictObjIdList.append(tblRec->objectId());    // keep track of the objectId for each entry
+//			ImGui::TreeNodeEx(W2A(symName), node_flags);
+////			ImGui::TreeNodeEx((void*)(intptr_t)&i, node_flags, symName);
+////			curItem = addOneTreeItem(symName, tblRec->objectId(), parent, sortAlpha); 
+//            tblRec->close();
+//        }
+//        else
+//            ArxDbgUtils::rxErrorMsg(es);
+//    }
+//    delete tblIter;
+//	tbl->close();
+//#else
+//	static int node_clicked = 0;
+//	char const * data[] = { u8"NTI-光电开关示例", u8"NTI-物流开关示例" };
+//	for (int i = 0; i < 2; ++i) {
+//		ImGui::TreeNodeEx((void*)(intptr_t)&i, node_flags, data[i]);
+//		if (ImGui::IsItemClicked() && !ImGui::IsItemToggledOpen())
+//			node_clicked = i;
+//	}
+//#endif //#ifdef NTI56_ARX
+}
+
+static void
+imgui_render_dictionaries(ImGuiTreeNodeFlags node_flags)
+{
+	////Tree:
+	//ImGui::BeginChild("left pane", ImVec2(300, 600), true);
+	//static int node_clicked = 0;
+	//char const * data[] = { u8"ACAD_1", u8"ACAD_2" };
+	//ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow
+	//	| ImGuiTreeNodeFlags_OpenOnDoubleClick
+	//	/*|ImGuiTreeNodeFlags_SpanAvailWidth*/;
+	//node_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen; // ImGuiTreeNodeFlags_Bullet
+	//if (ImGui::TreeNode("<Root Directory>")) {
+	//	for (int i = 0; i < 2; ++i) {
+	//		ImGui::TreeNodeEx((void*)(intptr_t)&i, node_flags, data[i]);
+	//		if (ImGui::IsItemClicked() && !ImGui::IsItemToggledOpen())
+	//			node_clicked = i;
+	//	}
+	//	ImGui::TreePop();
+	//}
+	//ImGui::EndChild();
+	//ImGui::SameLine();
+	////table: Field/Value
+	//ImGui::BeginChild("item view", ImVec2(0, 600/*-ImGui::GetFrameHeightWithSpacing()*/)); // Leave room for 1 line below us
+	//static ImGuiTableFlags flags = ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg;
+	//if (ImGui::BeginTable("table1", 2, flags)) {
+	//	ImGui::TableSetupColumn("Field");
+	//	ImGui::TableSetupColumn("Value");
+	//	ImGui::TableHeadersRow();
+
+	//	for (int row = 0; row < 5; row++)
+	//	{
+	//		ImGui::TableNextRow();
+	//		for (int column = 0; column < 2; column++)
+	//		{
+	//			ImGui::TableSetColumnIndex(column);
+	//			char buf[32];
+	//			sprintf(buf, "%s %d,%d", column == 0 ? "key" : "value", column, row);
+	//			ImGui::TextUnformatted(buf);
+	//		}
+	//	}
+	//	ImGui::EndTable();
+	//}
+	//ImGui::EndChild();
+}
+
+static void imgui_render_database()
+{
+	////Image:
+	//ImGui::BeginChild("left pane", ImVec2(300, 600), true);
+	//ImTextureID my_tex_id = io.Fonts->TexID;
+	//float my_tex_w = (float)io.Fonts->TexWidth;
+	//float my_tex_h = (float)io.Fonts->TexHeight;
+	//{
+	//	static bool use_text_color_for_tint = false;
+	//	ImGui::Text("Preview Image");
+	//	ImVec2 pos = ImGui::GetCursorScreenPos();
+	//	ImVec2 uv_min = ImVec2(0.0f, 0.0f);                 // Top-left
+	//	ImVec2 uv_max = ImVec2(1.0f, 1.0f);                 // Lower-right
+	//	ImVec4 tint_col = use_text_color_for_tint ? ImGui::GetStyleColorVec4(ImGuiCol_Text) : ImVec4(1.0f, 1.0f, 1.0f, 1.0f);   // No tint
+	//	ImVec4 border_col = ImGui::GetStyleColorVec4(ImGuiCol_Border);
+	//	ImGui::Image(my_tex_id, ImVec2(my_tex_w, my_tex_h), uv_min, uv_max, tint_col, border_col);
+	//}
+
+	//ImGui::EndChild();
+	//ImGui::SameLine();
+	////table: Field/Value
+	//ImGui::BeginChild("item view", ImVec2(0, 600/*-ImGui::GetFrameHeightWithSpacing()*/)); // Leave room for 1 line below us
+	//static ImGuiTableFlags flags = ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg;
+	//if (ImGui::BeginTable("table1", 2, flags)) {
+	//	ImGui::TableSetupColumn("Field");
+	//	ImGui::TableSetupColumn("Value");
+	//	ImGui::TableHeadersRow();
+
+	//	for (int row = 0; row < 5; row++)
+	//	{
+	//		ImGui::TableNextRow();
+	//		for (int column = 0; column < 2; column++)
+	//		{
+	//			ImGui::TableSetColumnIndex(column);
+	//			char buf[32];
+	//			sprintf(buf, "%s %d,%d", column == 0 ? "key" : "value", column, row);
+	//			ImGui::TextUnformatted(buf);
+	//		}
+	//	}
+	//	ImGui::EndTable();
+	//}
+	//ImGui::EndChild();
+
 }
 
 static int imgui_do_render(ImGuiIO& io)
@@ -168,154 +416,21 @@ static int imgui_do_render(ImGuiIO& io)
 		ImGui::ShowDemoWindow(&show_demo_window);
 
 	if (ImGui::CollapsingHeader(u8"数据库信息")) {
+		ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow
+			| ImGuiTreeNodeFlags_OpenOnDoubleClick
+			/*|ImGuiTreeNodeFlags_SpanAvailWidth*/;
+		node_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen; // ImGuiTreeNodeFlags_Bullet
 		if (ImGui::BeginTabBar("database_info", ImGuiTabBarFlags_None)) {
 			if (ImGui::BeginTabItem(u8"符号表")) {
-				//Tree:
-				ImGui::BeginChild("left pane", ImVec2(300, 600), true);
-				static int node_clicked = 0;
-				char const * data[] = { u8"NTI-光电开关示例", u8"NTI-物流开关示例" };
-				ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow
-						 |ImGuiTreeNodeFlags_OpenOnDoubleClick
-						 /*|ImGuiTreeNodeFlags_SpanAvailWidth*/;
-				node_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen; // ImGuiTreeNodeFlags_Bullet
-				if (ImGui::TreeNode("Block table")) {
-					ArxDbgUiTdcSymTbl_addOneTable(node_flags);
-					ImGui::TreePop();
-				}
-				if (ImGui::TreeNode("Dimension Style Table")) {
-					for (int i = 0; i < 2; ++i) {
-						ImGui::TreeNodeEx((void*)(intptr_t)&i, node_flags, data[i]);
-						if (ImGui::IsItemClicked() && !ImGui::IsItemToggledOpen())
-							node_clicked = i;
-					}
-					ImGui::TreePop();
-				}
-				if (ImGui::TreeNode("Layer Table")) {
-					for (int i = 0; i < 2; ++i) {
-						ImGui::TreeNodeEx((void*)(intptr_t)&i, node_flags, data[i]);
-						if (ImGui::IsItemClicked() && !ImGui::IsItemToggledOpen())
-							node_clicked = i;
-					}
-					ImGui::TreePop();
-				}
-				if (ImGui::TreeNode("Linetype Table")) {
-					for (int i = 0; i < 2; ++i) {
-						ImGui::TreeNodeEx((void*)(intptr_t)&i, node_flags, data[i]);
-						if (ImGui::IsItemClicked() && !ImGui::IsItemToggledOpen())
-							node_clicked = i;
-					}
-					ImGui::TreePop();
-				}
-				ImGui::EndChild();
-			    ImGui::SameLine();
-			    //table: Field/Value
-	            ImGui::BeginChild("item view", ImVec2(0, 600/*-ImGui::GetFrameHeightWithSpacing()*/)); // Leave room for 1 line below us
-			    static ImGuiTableFlags flags = ImGuiTableFlags_Borders |ImGuiTableFlags_RowBg;
-		        if (ImGui::BeginTable("table1", 2, flags))  {
-	                ImGui::TableSetupColumn("Field");
-	                ImGui::TableSetupColumn("Value");
-	                ImGui::TableHeadersRow();
-
-		            for (int row = 0; row < 5; row++)
-		            {
-		                ImGui::TableNextRow();
-		                for (int column = 0; column < 2; column++)
-		                {
-		                    ImGui::TableSetColumnIndex(column);
-		                    char buf[32];
-		                    sprintf(buf, "%s %d,%d", column == 0? "key":"value", column, row);
-		                    ImGui::TextUnformatted(buf);
-		                }
-		            }
-		            ImGui::EndTable();
-		        }
-		        ImGui::EndChild();
+				imgui_render_symtbl(node_flags);
 			    ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Dictionaries")) {
-				//Tree:
-				ImGui::BeginChild("left pane", ImVec2(300, 600), true);
-				static int node_clicked = 0;
-				char const * data[] = { u8"ACAD_1", u8"ACAD_2" };
-				ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow
-						 |ImGuiTreeNodeFlags_OpenOnDoubleClick
-						 /*|ImGuiTreeNodeFlags_SpanAvailWidth*/;
-				node_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen; // ImGuiTreeNodeFlags_Bullet
-				if (ImGui::TreeNode("<Root Directory>")) {
-					for (int i = 0; i < 2; ++i) {
-						ImGui::TreeNodeEx((void*)(intptr_t)&i, node_flags, data[i]);
-						if (ImGui::IsItemClicked() && !ImGui::IsItemToggledOpen())
-							node_clicked = i;
-					}
-					ImGui::TreePop();
-				}
-				ImGui::EndChild();
-			    ImGui::SameLine();
-			    //table: Field/Value
-	            ImGui::BeginChild("item view", ImVec2(0, 600/*-ImGui::GetFrameHeightWithSpacing()*/)); // Leave room for 1 line below us
-			    static ImGuiTableFlags flags = ImGuiTableFlags_Borders |ImGuiTableFlags_RowBg;
-		        if (ImGui::BeginTable("table1", 2, flags))  {
-	                ImGui::TableSetupColumn("Field");
-	                ImGui::TableSetupColumn("Value");
-	                ImGui::TableHeadersRow();
-
-		            for (int row = 0; row < 5; row++)
-		            {
-		                ImGui::TableNextRow();
-		                for (int column = 0; column < 2; column++)
-		                {
-		                    ImGui::TableSetColumnIndex(column);
-		                    char buf[32];
-		                    sprintf(buf, "%s %d,%d", column == 0? "key":"value", column, row);
-		                    ImGui::TextUnformatted(buf);
-		                }
-		            }
-		            ImGui::EndTable();
-		        }
-		        ImGui::EndChild();
+				imgui_render_dictionaries(node_flags);
 			    ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Database")) {
-				//Image:
-				ImGui::BeginChild("left pane", ImVec2(300, 600), true);
-		        ImTextureID my_tex_id = io.Fonts->TexID;
-		        float my_tex_w = (float)io.Fonts->TexWidth;
-		        float my_tex_h = (float)io.Fonts->TexHeight;
-		        {
-		            static bool use_text_color_for_tint = false;
-		            ImGui::Text("Preview Image");
-		            ImVec2 pos = ImGui::GetCursorScreenPos();
-		            ImVec2 uv_min = ImVec2(0.0f, 0.0f);                 // Top-left
-		            ImVec2 uv_max = ImVec2(1.0f, 1.0f);                 // Lower-right
-		            ImVec4 tint_col = use_text_color_for_tint ? ImGui::GetStyleColorVec4(ImGuiCol_Text) : ImVec4(1.0f, 1.0f, 1.0f, 1.0f);   // No tint
-		            ImVec4 border_col = ImGui::GetStyleColorVec4(ImGuiCol_Border);
-		            ImGui::Image(my_tex_id, ImVec2(my_tex_w, my_tex_h), uv_min, uv_max, tint_col, border_col);
-		        }
-
-				ImGui::EndChild();
-			    ImGui::SameLine();
-			    //table: Field/Value
-	            ImGui::BeginChild("item view", ImVec2(0, 600/*-ImGui::GetFrameHeightWithSpacing()*/)); // Leave room for 1 line below us
-			    static ImGuiTableFlags flags = ImGuiTableFlags_Borders |ImGuiTableFlags_RowBg;
-		        if (ImGui::BeginTable("table1", 2, flags))  {
-	                ImGui::TableSetupColumn("Field");
-	                ImGui::TableSetupColumn("Value");
-	                ImGui::TableHeadersRow();
-
-		            for (int row = 0; row < 5; row++)
-		            {
-		                ImGui::TableNextRow();
-		                for (int column = 0; column < 2; column++)
-		                {
-		                    ImGui::TableSetColumnIndex(column);
-		                    char buf[32];
-		                    sprintf(buf, "%s %d,%d", column == 0? "key":"value", column, row);
-		                    ImGui::TextUnformatted(buf);
-		                }
-		            }
-		            ImGui::EndTable();
-		        }
-		        ImGui::EndChild();
+				imgui_render_database();
 			    ImGui::EndTabItem();
 			}
 			ImGui::EndTabBar();

@@ -66,6 +66,9 @@
 #include "adslib.h"
 #include "dbents.h"
 #include "rxregsvc.h"
+#include "AdAChar.h"
+#include "AcString.h"
+#include "DbTableTemplate.h"
 
 #if defined(_DEBUG) && !defined(AC_FULL_DEBUG)
 #define _DEBUG_WAS_DEFINED

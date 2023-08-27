@@ -41,11 +41,11 @@ char *    nti_wcstr2a(const wchar_t * pwUNICODE)
 	}
 
 	//get the length then and buffer
-	int nLength = ::WideCharToMultiByte(CP_ACP, 0, pwUNICODE, -1, NULL, 0, NULL, NULL);
+	int nLength = ::WideCharToMultiByte(CP_UTF8, 0, pwUNICODE, -1, NULL, 0, NULL, NULL);
 	s_pChar = new char[nLength*sizeof(char)];
 
 	//do convert
-	::WideCharToMultiByte(CP_ACP, 0, pwUNICODE, -1, s_pChar, nLength, NULL, NULL);
+	::WideCharToMultiByte(CP_UTF8, 0, pwUNICODE, -1, s_pChar, nLength, NULL, NULL);
 
 	return s_pChar;
 }
