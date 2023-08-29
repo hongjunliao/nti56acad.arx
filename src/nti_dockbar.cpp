@@ -101,8 +101,10 @@ imgui_render_symtbl(ImGuiTreeNodeFlags node_flags)
 	static int i,t = -1 ,c = -1;
 #endif //#ifdef NTI56_ARX
 	//Tree:
-	ImGui::BeginChild("left pane", ImVec2(200, 320), true, ImGuiWindowFlags_AlwaysAutoResize);
+	ImGui::BeginChild("left pane", ImVec2(ImGui::GetContentRegionAvail().x * 0.392f, 400),
+			true, ImGuiWindowFlags_HorizontalScrollbar);
 	if (ImGui::TreeNode("Block table")) {
+		ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
 #ifdef NTI56_ARX
 		//AcDbObjectIdArray  m_dictObjIdList;
 		nti_foreach_symtbl([node_flags](AcDbDatabase*& db, AcDbSymbolTable*& symTbl)->int {
@@ -134,6 +136,7 @@ imgui_render_symtbl(ImGuiTreeNodeFlags node_flags)
 			{ t = 0; c = i;}
 	}
 #endif //#ifdef NTI56_ARX
+		ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
 		ImGui::TreePop();
 	}
 	if (ImGui::TreeNode("Dimension Style Table")) {
@@ -241,8 +244,8 @@ imgui_render_symtbl(ImGuiTreeNodeFlags node_flags)
 	ImGui::EndChild();
 	ImGui::SameLine();
 	//table: Field/Value
-	ImGui::BeginChild("item view", ImVec2(0, 320/*-ImGui::GetFrameHeightWithSpacing()*/)); // Leave room for 1 line below us
-	static ImGuiTableFlags flags = ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg;
+	ImGui::BeginChild("item view", ImVec2(0, 400/*-ImGui::GetFrameHeightWithSpacing()*/));
+	static ImGuiTableFlags flags = ImGuiTableFlags_BordersV | ImGuiTableFlags_BordersOuterH | ImGuiTableFlags_RowBg;
 	if (ImGui::BeginTable("table1", 2, flags)) {
 		ImGui::TableSetupColumn("Field");
 		ImGui::TableSetupColumn("Value");
@@ -387,7 +390,7 @@ static int imgui_do_render(ImGuiIO& io)
 	if (ImGui::CollapsingHeader(u8"数据库信息")) {
 		ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow
 			| ImGuiTreeNodeFlags_OpenOnDoubleClick
-			/*|ImGuiTreeNodeFlags_SpanAvailWidth*/;
+			| ImGuiTreeNodeFlags_SpanFullWidth;
 		node_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen; // ImGuiTreeNodeFlags_Bullet
 		if (ImGui::BeginTabBar("database_info", ImGuiTabBarFlags_None)) {
 			if (ImGui::BeginTabItem(u8"符号表")) {
